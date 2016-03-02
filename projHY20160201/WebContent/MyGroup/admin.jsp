@@ -40,9 +40,9 @@
 <div class="col-md-10 tab-content">
 <div id="groupDiv" class="tab-pane fade in active">
 	<form>
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
-			<tr>
+			<tr class="success">
 				<th>團購編號</th>
 				<th>截止時間</th>
 				<th>團購名稱</th>
@@ -60,9 +60,9 @@
 </div>
 <div id="storeDiv" class="tab-pane fade">	
 	<form>
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
-			<tr>
+			<tr class="success">
 				<th>店家編號</th>
 				<th>店家名稱</th>
 				<th>修改店家</th>
@@ -76,9 +76,9 @@
 </div>
 <div id="adminDiv" class="tab-pane fade">
 	<form>
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
-			<tr>
+			<tr class="success">
 				<th>員工編號</th>
 				<th>員工部門</th>
 				<th>員工姓名</th>

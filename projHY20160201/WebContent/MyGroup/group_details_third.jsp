@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script language=JavaScript src="${pageContext.request.contextPath}/js/FileSaver.min.js"></script>
 <title>Insert title here</title>
 
@@ -18,7 +20,10 @@
 	<jsp:include page="/header.jsp"/>
 	
 <!-------------------------------------內容寫在下面 --------------------------------------------->
-	
+<div align="right">
+<button class="btn btn-link"><Img Src="images/excel.png">匯出Excel</button>
+</div>	
+
 <div id="div_excel">
 <form>
 	<table>
@@ -43,7 +48,6 @@
 </form>
 </div>
 
-<button>匯出Excel</button>
 
 
 <!-------------------------------------內容寫在上面 --------------------------------------------->

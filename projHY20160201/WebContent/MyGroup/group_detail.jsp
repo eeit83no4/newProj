@@ -21,7 +21,7 @@
 	text-align:left; 
 }
 #uppertable td{
-	padding: 8px;
+ 	padding: 8px; 
 }
 
 .borderless td, .borderless th {
@@ -46,7 +46,6 @@
 			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
 			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<c:if test='${EndSec > 0}'><input type="button" style="margin:3px" class="btn btn-default" value="立即截止"  onclick="go3(${group_no}, ${group_status})"></c:if></td></tr>
-			<td><input type="button" id ="excelbtn" value="匯出Excel"></td>
 			
 		</c:forEach>
 		</table>
@@ -56,22 +55,23 @@
 <%-- 	<c:if test='${group_status >= 1}'> --%>
 		<c:if test='${status == "進行中"}'>
 <%-- 			<c:if test='${EndSec > 0}'> --%>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id=""><br>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="editBtn"><br>
 <%-- 			</c:if> --%>
 		
 <%-- 			<c:if test='${EndSec < 0}'> --%>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="" onclick="go1(${group_no}, ${group_status}, ${EndSec})"><br/>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="" onclick="go2(${group_no}, ${group_status}, ${EndSec})"><br/>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no}, ${group_status}, ${EndSec})"><br/>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" onclick="go2(${group_no}, ${group_status}, ${EndSec})"><br/>
 <%-- 			</c:if> --%>
 		</c:if>
 <%-- 		</c:if> --%>
 	</div>
 	
 </div>
-
 <br>
 
-
+<div align="right">
+<button id ="excelbtn" class="btn btn-link"><Img Src="images/excel.png">匯出Excel</button>
+</div>
 
 <div class="col-md-12">
   <ul class="nav nav-tabs">
@@ -150,6 +150,7 @@ function go1(groupno, group_status, EndSec){
 		}	
 	}else{
 		alert("非發起人或共同管理者,手別賤");
+		$('#succBtn').prop("disabled",true);
 	}
 }
 
@@ -162,6 +163,7 @@ function go2(groupno2, group_status2, EndSec2){
 		}	
 	}else{
 		alert("非發起人或共同管理者,手別賤");
+		$('#failBtn').prop("disabled",true);
 	}
 }
 	

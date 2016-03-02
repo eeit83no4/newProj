@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 
 <title>Insert title here</title>
@@ -18,7 +19,7 @@
 	<jsp:include page="/header.jsp"/>
 	
 <!-------------------------------------內容寫在下面 --------------------------------------------->
-
+<hr>
 <form>
 	<table>
 	<thead>
@@ -45,7 +46,7 @@
 			<td>${bean[5]}</td>
 			<td><input type="button" value="查詢" onclick="go(${bean[6]})"></td> 
 		</tr>
-	</c:forEach>	
+	</c:forEach>
 	</tbody>
 </table>
 </form>

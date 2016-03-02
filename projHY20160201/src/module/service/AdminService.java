@@ -1,5 +1,6 @@
 package module.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +47,12 @@ public class AdminService {
 	}
 	// ------------------訂單維護-----------------------------------
 	public List<Map> orderMaintain(){
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		List<Map> finalresult = new ArrayList();
 		for(_16_Group_RecordVO grvo : gr.getAll()){
 			Map m = new HashMap();
 			m.put("團購編號",grvo.getGroup_no()); //刪除訂單用
-			m.put("截止時間",grvo.getEnd_date());
+			m.put("截止時間",format.format(grvo.getEnd_date()).toString());
 			m.put("團購名稱",grvo.getGroup_name());
 			m.put("店家",grvo.getStoreVO().getStore_name());
 			m.put("發起人",grvo.getEmployeeVO().getName());

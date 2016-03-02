@@ -115,8 +115,8 @@ public class MyGroupService {
 	public String getTimeSec(java.util.Date times) {
 
 //		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY");
-//		SimpleDateFormat format = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy",Locale.ENGLISH);
+//		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY");
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd a HH:mm:ss");
 
 		java.util.Date d1 = new java.util.Date();
 		java.util.Date d2 = times;
@@ -324,6 +324,7 @@ public class MyGroupService {
 	// ------------------抓出"明細列表"所需資料------------------
 	// ----回傳: (員工ID、員工姓名)+(商品名稱、數量、原價、折價後價錢、付款狀態、商品屬性)+(訂購時間)
 		public List<String[]> orderDetail_detail_new(Integer group_no) {
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 			List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 			Set<_17_Group_UserVO> users = gr.findById(group_no).getGroup_Users();
 			for (_17_Group_UserVO a : users) {
@@ -337,7 +338,7 @@ public class MyGroupService {
 						starray[4] = b.getOprice().toString();
 						starray[5] = b.getOprice_after().toString();
 						starray[6] = b.getOclass();
-						starray[7] = a.getOrder_time().toString(); // 訂購時間
+						starray[7] = format.format(a.getOrder_time()).toString(); // 訂購時間
 					sbs.add(starray);				
 				}
 			}
@@ -346,6 +347,7 @@ public class MyGroupService {
 
 	// ------------------查詢此人參加的所有進行中團購項目------------------
 	public List<String[]> searchMyAllGroup_ing(Integer user_id) {
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 		MyGroupService mgs = new MyGroupService();
 		MyGroupService myGroupService = new MyGroupService();
@@ -355,7 +357,7 @@ public class MyGroupService {
 			_16_Group_RecordVO b = gr.findById(a.getGroup_RecordVO().getGroup_no());
 			if(a.getGroup_RecordVO().getStatus().equals("進行中")){
 			try {
-				starray[0] = b.getEnd_date().toString();
+				starray[0] = format.format(b.getEnd_date()).toString();
 				starray[1] = b.getGroup_name();
 				starray[2] = b.getStoreVO().getStore_name();
 				starray[3] = b.getEmployeeVO().getName();
@@ -374,6 +376,7 @@ public class MyGroupService {
 	
 	// ------------------查詢此人參加的所有已完成團購項目------------------
 		public List<String[]> searchMyAllGroup_ed(Integer user_id) {
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 			List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 			MyGroupService myGroupService = new MyGroupService();
 			for (_17_Group_UserVO a : gu.findByGroupUserId(user_id)) {
@@ -382,7 +385,7 @@ public class MyGroupService {
 				_16_Group_RecordVO b = gr.findById(a.getGroup_RecordVO().getGroup_no());
 				if(!a.getGroup_RecordVO().getStatus().equals("進行中")){
 				try {
-					starray[0] = b.getEnd_date().toString();
+					starray[0] = format.format(b.getEnd_date()).toString();
 					starray[1] = b.getGroup_name();
 					starray[2] = b.getStoreVO().getStore_name();
 					starray[3] = b.getEmployeeVO().getName();
@@ -402,12 +405,13 @@ public class MyGroupService {
 	
 	// ------------------查詢個人歷史訂購紀錄------------------
 		public List<Map> personalHistoryRecord(Integer user_id){
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 			List<Map> finalResult= new ArrayList(); // 大袋子
 			for (_17_Group_UserVO a : gu.findByGroupUserId(user_id)) {//抓出此人有參加哪些團				
 
 				for(_18_Order_DetailVO b : a.getOrder_Details()){ //
 					Map m = new HashMap(); //小袋子
-					m.put("截止時間", a.getGroup_RecordVO().getEnd_date().toString());
+					m.put("截止時間", format.format(a.getGroup_RecordVO().getEnd_date()).toString());
 					m.put("團購名稱", a.getGroup_RecordVO().getGroup_name());
 					m.put("店家", b.getOstore_name());
 					m.put("商品名稱", b.getOitem_name());

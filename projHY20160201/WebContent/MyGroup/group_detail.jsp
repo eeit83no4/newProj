@@ -45,7 +45,7 @@
 			<tr><th style="width:10%;">團購名稱:</th> <td style="width:30%;">${attr[0]}</td> <th style="width:12%;">公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
 			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
-			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<a href="<c:url value='/xxx.controller?prodaction=已完成的團購&gn=1'/>"></td></tr>
+			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<c:if test='${EndSec > 0}'><input type="button" style="margin:3px" class="btn btn-default" value="立即截止"  onclick="go3(${group_no}, ${group_status})"></c:if></td></tr>
 			<td><input type="button" id ="excelbtn" value="匯出Excel"></td>
 			
 		</c:forEach>
@@ -53,16 +53,18 @@
 	</div>
 	
 	<div class="col-md-2" style="text-align:right;">
+<%-- 	<c:if test='${group_status >= 1}'> --%>
 		<c:if test='${status == "進行中"}'>
-			<c:if test='${EndSec > 0}'>
+<%-- 			<c:if test='${EndSec > 0}'> --%>
 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id=""><br>
-			</c:if>
+<%-- 			</c:if> --%>
 		
-			<c:if test='${EndSec < 0}'>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id=""><br>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id=""><br>
-			</c:if>
+<%-- 			<c:if test='${EndSec < 0}'> --%>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="" onclick="go1(${group_no}, ${group_status}, ${EndSec})"><br/>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="" onclick="go2(${group_no}, ${group_status}, ${EndSec})"><br/>
+<%-- 			</c:if> --%>
 		</c:if>
+<%-- 		</c:if> --%>
 	</div>
 	
 </div>
@@ -86,7 +88,6 @@
 				<th>商品名稱</th>
 				<th>數量</th>
 				<th>單價</th>
-				<th>已付數</th>
 				<th>訂購者細項</th>		
 			</tr>
 		</thead>
@@ -103,7 +104,7 @@
 			<th>數量</th>
 			<th>總價</th>
 			<th>計算後總價</th>
-			<th>商品</th>
+			<th>商品</th>			
 		</tr>
 		</thead>	
 	<tbody id="tb2"></tbody>		
@@ -119,8 +120,7 @@
 			<th>商品名稱</th>
 			<th>數量</th>
 			<th>單價</th>
-			<th>計算後</th>			
-			<th>付款狀態</th>
+			<th>計算後</th>
 			<th>備註</th>
 			<th>訂購時間</th>
 		</tr>
@@ -133,6 +133,7 @@
 </div>
 
 
+
 <!-------------------------------------內容寫在上面 --------------------------------------------->
 	<!-- 	載入底部 -->
 	<jsp:include page="/footer.jsp"/>
@@ -140,6 +141,41 @@
 
 <!--------------------------------- javaScript ------------------------------------->
 <script>     	  
+function go1(groupno, group_status, EndSec){
+	if(group_status >= 1){
+		if(EndSec <= 0){
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;
+		}else{
+			alert("截止時間還沒到!");
+		}	
+	}else{
+		alert("非發起人或共同管理者,手別賤");
+	}
+}
+
+function go2(groupno2, group_status2, EndSec2){
+	if(group_status2 >= 1){
+		if(EndSec2 <= 0){
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
+		}else{
+			alert("截止時間還沒到!");
+		}	
+	}else{
+		alert("非發起人或共同管理者,手別賤");
+	}
+}
+	
+function go3(groupno3, group_status3){
+	if(group_status3 >= 1){
+		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
+	}else{
+		alert("非發起人或共同管理者,手別賤");
+	}
+	
+}
+
+	   
+	   
 	   
 	   $(function(){			   
 		    
@@ -148,7 +184,7 @@
 			   var bb = new Array();
 			   var index = 4;
 			   for(var j = 0; j<ByItem.length; j++){
-				   if(j<4){
+				   if(j<3){
 				    aa[j] = $("<td></td>").text(ByItem[j]);	
 				   }else{
 					   if(ByItem[j+2]==null){
@@ -168,19 +204,21 @@
 		   
 		   $.each(${detail_ByUser}, function(index, ByUser){
 			   var aa = new Array();
-			   var bb = new Array(ByUser.length-5);
-			   var index=0;
+			   var bb = new Array();
+			   var killer=0;
 			   for(var j = 0; j<ByUser.length; j++){
 				   if(j<5){
-					   aa[j] = $("<td></td>").text(ByUser[j]);					   
+					   aa[j] = $("<td></td>").text(ByUser[j]);
+					   console.log('first'+j);
 				    }else{
+				    	console.log('else'+j);
 				    	if(ByUser[j+2]==null){
-				    		bb[index] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
+				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
 				    	}else{
-				    		bb[index] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'    '+ByUser[j+2]+'<br/>');
+				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'    '+ByUser[j+2]+'<br/>');
 				    	}				    	
 				    	j=j+2;
-				    	index++;
+				    	killer++;
 				    }					
 			   }	
 			   aa[5]=$("<td></td>").append(bb);
@@ -198,6 +236,7 @@
 			   var row = $("<tr></tr>").append(aa);			   
 			   $('#tb3').append(row);								
 			});
+		   
 		   
 		   $(function () {
 			    $('#excelbtn').click(function () {

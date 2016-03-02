@@ -11,9 +11,9 @@
 	        <li><a href="<c:url value='/StorePage/SelectStoreName.jsp'/>">店家資訊</a></li>
 	        <li><a href="#">我的團購</a>
 	        <ul class="sub-menu">
-	            <li><a href="<c:url value='/xxx.controller?prodaction=進行中的團購&uid=1'/>">進行中的團購</a></li>
-	            <li><a href="<c:url value='/xxx.controller?prodaction=已完成的團購&uid=1'/>">已完成的團購</a></li>
-	            <li><a href="<c:url value='/xxx.controller?prodaction=個人歷史訂購紀錄&uid=1'/>">個人歷史訂購紀錄</a></li>
+	            <li><a href="<c:url value='/xxx.controller?prodaction=進行中的團購'/>">進行中的團購</a></li>
+	            <li><a href="<c:url value='/xxx.controller?prodaction=已完成的團購'/>">已完成的團購</a></li>
+	            <li><a href="<c:url value='/xxx.controller?prodaction=個人歷史訂購紀錄'/>">個人歷史訂購紀錄</a></li>
 	          </ul></li>
 	        <li><a href="#">管理者模式</a>
 	        <ul class="sub-menu">

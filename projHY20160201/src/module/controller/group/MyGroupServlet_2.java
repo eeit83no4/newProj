@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import module.dao._16_Group_RecordDAO;
+import module.model._04_EmployeeVO;
 import module.service.MyGroupService;
 import module.util.HibernateUtil;
 import net.sf.json.JSONArray;
@@ -29,12 +30,13 @@ public class MyGroupServlet_2 extends HttpServlet {
 		//接收資料		
 		String temp_group_no = req.getParameter("xxx");
 		String prodaction = req.getParameter("prodaction");
+		_04_EmployeeVO emp = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
 		//轉換資料
 		Integer group_no = Integer.parseInt(temp_group_no); 
 		//驗證資料
 		//呼叫model		
 		//根據model執行結果顯示view
-		List<String[]> detailDetail = myGroupService.orderDetail_detail(group_no);
+		List<String[]> detailDetail = myGroupService.orderDetail_detail_new(group_no);
 		JSONArray jSONObject=JSONArray.fromObject(detailDetail);//轉換json
 		List<List<String>> detailByUser = myGroupService.orderDetail_ByUser(group_no);
 		JSONArray jSONObject2=JSONArray.fromObject(detailByUser);//轉換json
@@ -49,6 +51,7 @@ public class MyGroupServlet_2 extends HttpServlet {
 		req.setAttribute("EndSec", longSec);
 		req.setAttribute("EndDay", longDay);
 		req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
+		req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));		
 						
 		req.setAttribute("detail_Detail", jSONObject);
 		req.setAttribute("detail_ByUser", jSONObject2);

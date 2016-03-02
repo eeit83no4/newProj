@@ -5,11 +5,15 @@
 <html>
 <head>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-	<form action="<c:url value='/insertStore.action' />" method="get">
+<body class="home">
+<div id="wrap">
+	<jsp:include page="/header.jsp"/>
+	
+	<form action="<c:url value='/insertStoreAction.action' />" method="get">
 	
 	
 		店家名稱: <input type="text" value="草莓店" id="name" name="store" placeholder="店家名稱" /><br />
@@ -20,7 +24,7 @@
 		<input type="submit" value="新增店家" name="submit" id="id">
 		
 		
-  		
+  		<input type="submit" name="sub" value="1"><br />
 
 	</form>
 	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -55,6 +59,7 @@
 		
 		
 	</script>
-	
+	<jsp:include page="/footer.jsp"/>
+</div>
 </body>
 </html>

@@ -5,11 +5,9 @@
 <struts>
 	<constant name="" value=""></constant>
 	
-	<package name="insertStore" namespace="/" extends="struts-default">
-		<action name="insertStore" class="module.controller.InsertStoreAction">													   
-<!-- 			    <result name="input">/InsertStore/InsertStore.jsp</result>	 -->
-					<result name="input">/InsertStore/upStore3.jsp</result>
-<!-- 			    <result name="input">/index.jsp</result>				     -->
+	<package name="insertStoreAction" namespace="/" extends="struts-default">
+		<action name="insertStoreAction" class="module.controller.InsertStoreAction">			                                       											   
+<!-- 					<result name="input">/InsertStore/upStore3.jsp</result> -->
 				<result name="success">/InsertStore/upStore3.jsp</result>
 		</action>		
 	</package>
@@ -48,4 +46,12 @@
 		</action>		
 	</package>
 	
+	<package name="SelectItem" namespace="/" extends="struts-default">
+		<action name="SelectItemAction" class="module.controller.SelectItemAction">	
+		                                       	                                                    											   
+<!-- 			    <result name="input">/InsertStore/upStore.jsp</result>	 -->
+<!-- 			    <result name="input">/index.jsp</result>				     -->
+				<result name="success">/InsertStore/upStore3.jsp</result>
+		</action>		
+	</package>
 </struts>

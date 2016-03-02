@@ -1,21 +1,20 @@
 package module.service;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import module.dao._06_Store_ClassDAO;
-import module.dao._06_Store_Class_InterfaceDAO;
-import module.dao._07_StoreDAO;
-import module.dao._07_Store_InterfaceDAO;
-import module.dao._21_Store_In_ClassDAO;
-import module.dao._21_Store_In_Class_InterfaceDAO;
 import module.model._06_Store_ClassVO;
 import module.model._07_StoreVO;
+import module.model._12_ItemVO;
 import module.model._21_Store_In_ClassVO;
 import module.util.HibernateUtil;
+import net.sf.json.JSONObject;
 
 public class GetStoreClass {
 	private SessionFactory sessionFactory;
@@ -70,6 +69,28 @@ public class GetStoreClass {
 		}
 		return list;
 	}
+	
+	public List<_12_ItemVO> get07IsItemAll(_07_StoreVO bean7) {
+		Query query= getSession().createQuery("from _12_ItemVO where storeVO=?");
+		query.setParameter(0, bean7);
+		return query.list();
+	}
+	public Object get07IsItemAllJson(_07_StoreVO bean7) {
+		 List<_12_ItemVO> bb =get07IsItemAll(bean7);
+			Map<String,Map<String,String>> data=new HashMap<>();
+		 for(_12_ItemVO list:bb){			 
+			 	Map<String,String> dataMap=new HashMap<>();
+				System.out.println(list);
+				dataMap.put("getItem_no", Integer.toString(list.getItem_no()));
+				dataMap.put("item_name",list.getItem_name());
+//				dataMap.put("pic", Byte.toString(list.getPic()));
+				
+				data.put(list.getItem_name(), dataMap);
+				 }
+				 JSONObject json=JSONObject.fromObject(data);	
+//				 System.out.println(json);
+				 return json;
+	}
 	//進入點
 	public static void main(String[] args) {
 		try {
@@ -80,10 +101,20 @@ public class GetStoreClass {
 		
 
 		//輸入店家PK  得到跨兩個table的店家類型
-		bean.setStore_no(13);
-		String aa = getStoreClass.getStoreString(bean);
-		System.out.println(aa);
-	
+//		bean.setStore_no(13);
+//		String aa = getStoreClass.getStoreString(bean);
+//		System.out.println(aa);
+		
+//		JSONObject json=new JSONObject();	
+				
+		_07_StoreVO bean7=new _07_StoreVO();
+		bean7.setStore_no(1);
+//		 List<_12_ItemVO> bb = getStoreClass.get07IsItemAll(bean7);
+//		 System.out.println(bb);
+		 
+		Object cc = getStoreClass.get07IsItemAllJson(bean7);
+		 System.out.println(cc);
+		 
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
 			HibernateUtil.closeSessionFactory();

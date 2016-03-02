@@ -1,12 +1,20 @@
 package module.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.RequestAware;
+
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
+import module.model._12_ItemVO;
+import module.service.GetStoreClass;
 import module.service._07_StoreService;
 
-public class InsertStoreAction extends ActionSupport {
+public class InsertStoreAction extends ActionSupport implements RequestAware {
 	
 	private String store;
 	private String storeClass;
@@ -15,6 +23,13 @@ public class InsertStoreAction extends ActionSupport {
 	private String item;
 	private String address;	
 	private String submit;	
+	private String sub;	
+	public String getSub() {
+		return sub;
+	}
+	public void setSub(String sub) {
+		this.sub = sub;
+	}
 	public String getSubmit() {
 		return submit;
 	}
@@ -63,7 +78,13 @@ public class InsertStoreAction extends ActionSupport {
 	public void setClass1(String class1) {
 		this.phone = class1;
 	}
+	private Map<String, Object> request;
 	@Override
+	public void setRequest(Map<String, Object> request) {
+		this.request=request;		
+	}
+	
+	
 	public void validate() {
 //		_07_StoreVO bean7 = new _07_StoreVO();
 //		System.out.println(store);
@@ -125,11 +146,12 @@ public class InsertStoreAction extends ActionSupport {
 //			}
 //		}
 //		
-		if(store!=null || store.length()!=0){
-		System.out.println(store);
-		System.out.println(phone);
-		System.out.println(address);
 		
+	}
+	
+	
+	@Override
+	public String execute() throws Exception {
 		_07_StoreVO bean=new _07_StoreVO();
 		bean.setStore_name(store);
 		bean.setPhone(phone);
@@ -140,36 +162,28 @@ public class InsertStoreAction extends ActionSupport {
 		bean4.setUser_id(166);
 		bean.setEmployeeVO(bean4);
 		
+		_07_StoreVO bean7 = new _07_StoreVO();;
+		if(sub==null){
 		_07_StoreService storeService=new _07_StoreService();
-//		storeService.insertStore(bean, storeClass.replace(" ", ""));
-		if("新增店家".equals(submit)){
-//			System.out.println("aa");
-			submit="新增店家";
-		}else{
-//			System.out.println("bb");			
+		Integer StoreNo = storeService.insertStore(bean, storeClass.replace(" ", ""));
+//		System.out.println(StoreNo);
+		request.put("StoreNo", StoreNo);		
+		bean7.setStore_no(StoreNo);
+			}else{
+			request.put("StoreNo", sub);					
+			bean7.setStore_no(Integer.parseInt(sub.trim()));
 			}
-		}
+			
+		
+		GetStoreClass getStoreClass = new GetStoreClass();  
+//		List<_12_ItemVO> getItemAll = getStoreClass.get07IsItemAll(bean7);
+//		System.out.println(getItemAll);
+		
+		 Object getItemAll = getStoreClass.get07IsItemAllJson(bean7);
+//		System.out.println(getItemAll);
+		
+		request.put("getItemAll", getItemAll);
+		return "success";
 	}
 	
-	@Override
-	public String execute() throws Exception {
-//		if(store==null || store.length()==0){
-//			this.addFieldError("store", "");
-//			System.out.println(store);		
-//		}	
-		
-//		_07_StoreVO bean=new _07_StoreVO();
-//		bean.setStore_name(store);
-//		_07_StoreService storeService=new _07_StoreService();
-//		storeService.insertStore(bean, storeClass.replace(" ", ""));
-		
-		if("新增店家".equals(submit)){
-			System.out.println(submit);
-			
-		}else{
-			System.out.println("bb");			
-			}		
-		
-		return SUCCESS;
-	}
 }

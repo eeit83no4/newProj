@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
@@ -14,16 +16,26 @@
 }
 </style>
 </head>
-<body>
+<body class="home">
+<div id="wrap">
+	<jsp:include page="/header.jsp"/>
+<%-- 	${getItemAll.綠茶} --%>
+<%-- <c:set var="length" value="${fn:length(getItemAll)}"/> --%>
+<%-- +++++${length} --%>
+<%-- ${fn:length(getItemAll)} --%>
+
+<%-- ${StoreNo} --%>
+<%-- <c:forEach var="i" items="${getItemAll}"> --%>
+<%-- 	${i.item_name}	 --%>
+	
+<%-- </c:forEach> --%>
 	<form action="<c:url value='/insertStore.action' />" method="get">		
 		<div style="float: left; border: 10px;margin: 125px " id="left"></div>
-<!-- 			<input type="text" value="草莓牛奶" name="item" /><br /> -->
-<!-- 			<input type="button"  id="Ibtn" value="新增商品" /> -->
 			<input type="button" value="+" id="but88" /><br />
 		<div style="float: left; border: 10px;margin: 125px" id="right">
-			品名: <input type="text" value="草莓牛奶" name="item" />
-			<input type="button" id="bt0" value="+"/>
-			<div id="99"><input type="button" id="but99" value="+"/></div>
+			<span id="itemP" style="display:none">品名: <span/> <input type="text" value="草莓牛奶" name="item" id="itemName" style="display:none"/><br />
+			<input type="button" id="bt0" value="+" style="display:none"/>
+			<div id="99"><input type="button" id="but99" value="+" style="display:none"/></div>
 		</div>
 		
 		<div id="dialog" title="Basic dialog">
@@ -37,12 +49,32 @@
 </div>
 		<input type="submit" value="確定新增" id="id">
 	</form>
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script>
 	ii=0;
 	jsonData = null;
-		$(function(){		
+		$(function(){			
+			
+			//長出商品總量
+			$.each(${getItemAll},function(key,value){
+// 				alert(key+'==='+value.getItem_no);
+// 				alert(value.getItem_no)
+				 $('#but88').before($('<a>').attr('href','#')
+ 						                                  //<c:url value="/SelectItemServlet.select?item_no='+value.getItem_no+'" />
+													    .attr('name','item')
+													    .attr('class','item')
+													    .text(value.item_name)
+													    .append($('<br>')))
+			})
+			//SHOW
+			$('.item').click(function() {
+// 				$(this).show()	
+// 					alert($(this).attr('name'))
+				$('input').show()
+				$('#itemP').show()
+				}
+			)
 			 $( "#dialog" ).dialog({
 				 modal: true,		 
 			      autoOpen: false,	
@@ -51,6 +83,7 @@
 			    		  if($('#AAB').val() != ''){
 			    		  $('input[id^="but88"]').before($('<a>').attr('href','#')
 			    				  								 .attr('name','item')
+			    				  								 .attr('class','item')
 									.text($('#AAB').val())												
 											).before($('<br>')) 			    		  
 			              var first11=$('input[name=first]:checked').val()	
@@ -244,6 +277,7 @@
 			    	}
 			    }			
 	</script>
-	
+	<jsp:include page="/footer.jsp"/>
+</div>
 </body>
 </html>

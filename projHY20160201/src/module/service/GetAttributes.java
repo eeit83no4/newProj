@@ -51,10 +51,10 @@ public class GetAttributes {
 			 
 			 GetAttributes att=new GetAttributes();
 			 //----最後再包json就可以了
-			 JSONObject json=JSONObject.fromObject(att.find3nds(2));
+			 JSONObject json=JSONObject.fromObject(att.find3nds(3));
 			 System.out.println(json);
 			
-		 
+			 
 
 			 
 

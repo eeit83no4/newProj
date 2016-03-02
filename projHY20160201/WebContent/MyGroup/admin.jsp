@@ -31,13 +31,14 @@
 
 <div class="container col-md-2">
   <ul class="nav nav-pills nav-stacked">
-    <li class="active"><a href="#">團購維護</a></li>
-    <li><a href="#">店家維護</a></li>
-    <li><a href="#">管理員維護</a></li>
+    <li class="active"><a data-toggle="tab" href="#groupDiv">團購維護</a></li>
+    <li><a data-toggle="tab" href="#storeDiv">店家維護</a></li>
+    <li><a data-toggle="tab" href="#adminDiv">管理員維護</a></li>
   </ul>
 </div>
 
-<div class="col-md-10">
+<div class="col-md-10 tab-content">
+<div id="groupDiv" class="tab-pane fade in active">
 	<form>
 		<table class="table table-hover table-bordered">
 		<thead>
@@ -56,7 +57,8 @@
 		</tbody>
 		</table>
 	</form>
-	
+</div>
+<div id="storeDiv" class="tab-pane fade">	
 	<form>
 		<table class="table table-hover table-bordered">
 		<thead>
@@ -71,7 +73,8 @@
 		</tbody>
 		</table>
 	</form>
-	
+</div>
+<div id="adminDiv" class="tab-pane fade">
 	<form>
 		<table class="table table-hover table-bordered">
 		<thead>
@@ -86,7 +89,7 @@
 		</tbody>
 		</table>
 	</form>
-	
+</div>
 </div>	
 
 
@@ -125,7 +128,7 @@ $(function(){
 		$('#tb_store').append(row);
 	});
 	
-	$.each(${all_store}, function(index, bean){
+	$.each(${all_admin}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.員工編號);
 		var cell2 = $("<td></td>").text(bean.員工部門);
 		var cell3 = $("<td></td>").text(bean.員工姓名);

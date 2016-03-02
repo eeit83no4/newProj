@@ -81,19 +81,14 @@ public class AdminService {
 				m.put("員工編號", evo.getUser_id());
 				m.put("員工部門", evo.getOrganizationVO().getOrg_name());
 				m.put("員工姓名", evo.getName());
-				System.out.println(evo.getUser_id());
-//				System.out.println(a.findAuthByUserId(evo.getUser_id()).get(0));
-				if(a.findAuthByUserId(evo.getUser_id())!=null){
-					System.out.println(a.findAuthByUserId(evo.getUser_id()));
-					m.put("管理員資格", a.findAuthByUserId(evo.getUser_id()));
+				if(a.findAuthByUserId(evo.getUser_id()).size()!=0){
+					m.put("管理員資格", a.findAuthByUserId(evo.getUser_id()).get(0));
 				} 
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}			
 			finalresult.add(m);
-			System.out.println(m.get("管理員資格"));
-		}
-		
+		}		
 		return finalresult;
 	}
 

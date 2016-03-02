@@ -29,11 +29,11 @@ public class AdminService {
 			
 			AdminService as = new AdminService();
 			// ------------------訂單維護-----------------------------------
-			System.out.println(as.orderMaintain());			
+//			System.out.println(as.orderMaintain());			
 			// ------------------店家維護-----------------------------------
 //			System.out.println(as.storeMaintain());			
 			// ------------------管理員維護---------------------------------
-//			System.out.println(as.adminMaintain());		
+			System.out.println(as.adminMaintain());		
 		
 			
 		
@@ -49,7 +49,7 @@ public class AdminService {
 		List<Map> finalresult = new ArrayList();
 		for(_16_Group_RecordVO grvo : gr.getAll()){
 			Map m = new HashMap();
-			m.put("訂單編號",grvo.getGroup_no()); //刪除訂單用
+			m.put("團購編號",grvo.getGroup_no()); //刪除訂單用
 			m.put("截止時間",grvo.getEnd_date());
 			m.put("團購名稱",grvo.getGroup_name());
 			m.put("店家",grvo.getStoreVO().getStore_name());
@@ -81,7 +81,9 @@ public class AdminService {
 				m.put("員工編號", evo.getUser_id());
 				m.put("員工部門", evo.getOrganizationVO().getOrg_name());
 				m.put("員工姓名", evo.getName());
-				m.put("管理員資格", a.findById(evo.getUser_id()).getAuth()); /////////////////////////怪///////////////////////////////
+				if(a.findAuthByUserId(evo.getUser_id()).size()!=0){
+					m.put("管理員資格", a.findAuthByUserId(evo.getUser_id()).get(0));
+				} 
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}			

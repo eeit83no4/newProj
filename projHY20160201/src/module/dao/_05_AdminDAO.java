@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import module.model._04_EmployeeVO;
 import module.model._05_AdminVO;
 import module.util.HibernateUtil;
 
@@ -46,10 +45,14 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 	}
 	
 	public List<_05_AdminVO> findAuthByUserId(Integer user_id){
+//		_04_EmployeeDAO _04dao=new _04_EmployeeDAO();
+//		_04dao.findById(user_id).getAdms()
 		Query query = getSession().createQuery("select auth from _05_AdminVO where user_id=?");
 		query.setParameter(0, user_id);
 		return query.list();
+		
 	}
+
 	
 	
 	public static void main(String[] args) {
@@ -58,7 +61,7 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 			_05_AdminDAO dao=new _05_AdminDAO();
 			_05_AdminVO bean=new _05_AdminVO();
 			
-			System.out.println(dao.findAuthByUserId(100));
+			System.out.println(dao.findAuthByUserId(166).get(0));
 //			System.out.println(dao.findById(1));
 //			System.out.println(dao.getAll());
 			

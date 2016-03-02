@@ -15,12 +15,7 @@
 	            <li><a href="<c:url value='/xxx.controller?prodaction=已完成的團購&uid=1'/>">已完成的團購</a></li>
 	            <li><a href="<c:url value='/xxx.controller?prodaction=個人歷史訂購紀錄&uid=1'/>">個人歷史訂購紀錄</a></li>
 	          </ul></li>
-	        <li><a href="#">管理者模式</a>
-	        <ul class="sub-menu">
-	            <li><a href="<c:url value='/admin.controller?prodaction=訂單維護&uid=1'/>">訂單維護</a></li>
-	            <li><a href="<c:url value='/admin.controller?prodaction=店家維護&uid=1'/>">店家維護</a></li>
-	            <li><a href="<c:url value='/admin.controller?prodaction=管理員維護&uid=1'/>">管理員維護</a></li>
-	          </ul></li></li>
+	        <li><a href="<c:url value='/admin.controller?prodaction=團購維護&uid=1'/>">管理者模式</a></li>
 	        <li><a href="${pageContext.request.contextPath}/signout.jsp">登出</a></li>
 	      </ul>
 	    </div>

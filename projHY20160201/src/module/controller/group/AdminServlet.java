@@ -24,18 +24,21 @@ public class AdminServlet extends HttpServlet {
 		
 		
 		
-		if(prodaction.equals("訂單維護")){
+//		if(prodaction.equals("團購維護")){
 			List<Map> all_order = adminservice.orderMaintain();
-			JSONArray jSONObject=JSONArray.fromObject(all_order);
-//			System.out.println(jSONObject);
-			req.setAttribute("all_order", jSONObject);
+			JSONArray jSONObject1=JSONArray.fromObject(all_order);
+			List<Map> all_store = adminservice.storeMaintain();
+			JSONArray jSONObject2=JSONArray.fromObject(all_store);
+			List<Map> all_admin = adminservice.adminMaintain();
+			JSONArray jSONObject3=JSONArray.fromObject(all_admin);
+			
+			req.setAttribute("all_order", jSONObject1);
+			req.setAttribute("all_store", jSONObject2);
+			req.setAttribute("all_admin", jSONObject3);
 			req.getRequestDispatcher("/MyGroup/admin.jsp").forward(req, resp);
 			
-		}else if(prodaction.equals("店家維護")){
 			
-		}else if(prodaction.equals("管理員維護")){
-			
-		}
+
 		
 		
 		

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.xml.internal.txw2.Document;
 
-@WebServlet("/CreateGroutservlet.controller")
-public class CreateGroutservlet extends HttpServlet{
+@WebServlet("/CreateGroupservlet.controller")
+public class CreateGroupservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String store_no = request.getParameter("store_no"); 

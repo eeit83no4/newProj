@@ -14,11 +14,11 @@ import module.util.HibernateUtil;
 
 
 
-public class CreateGroutService {
+public class CreateGroupService {
 	public static _07_StoreDAO Dao07 =new _07_StoreDAO();
 	
 	private SessionFactory sessionFactory;
-	public CreateGroutService() {
+	public CreateGroupService() {
 		sessionFactory = HibernateUtil.getSessionFactory();
 	}
 	public Session getSession() {
@@ -30,7 +30,7 @@ public class CreateGroutService {
 	public static void main(String args[]){		
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			CreateGroutService CGS=new CreateGroutService();
+			CreateGroupService CGS=new CreateGroupService();
 			CGS.findStoreAndInsert(1);
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
@@ -56,10 +56,10 @@ public class CreateGroutService {
 			storeVO.setStore_no(store_no);
 			bean.setUse_by_group(storeVO);
 //			System.out.println(store);
-			
 //			System.out.println(bean);
-			
 			Dao07.insert(bean);
+			
+			
 			
 			
 //		System.out.println(store);	

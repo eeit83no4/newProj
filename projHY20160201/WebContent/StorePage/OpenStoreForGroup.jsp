@@ -90,7 +90,7 @@
 			$(":input:checkbox:checked").each(function(){
 // 					console.log($(this).val());
 				itemno.push($(this).val());
-// 				console.log(itemno);
+				console.log(itemno);
 			})
 			
 			xml.onreadystatechange = function(){
@@ -100,9 +100,9 @@
 					}
 				}
 			}
-				var storeno=${storeno};
+// 				var storeno=${store_no};
 				
-				xml.open("get", "/projHY20160201/CreateGroutservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
+				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
 				xml.send();	
 		})
 	

@@ -84,7 +84,7 @@
     <div id="table_ByItem" class="tab-pane fade in active">
       <table class="table table-hover table-bordered">
 		<thead>
-			<tr>
+			<tr class="info">
 				<th>商品名稱</th>
 				<th>數量</th>
 				<th>單價</th>
@@ -98,7 +98,7 @@
     <div id="table_ByUser" class="tab-pane fade">
       <table class="table table-hover table-bordered">
 		<thead>
-		<tr>
+		<tr class="info">
 			<th>員工編號</th>
 			<th>訂購人</th>
 			<th>數量</th>
@@ -114,7 +114,7 @@
     <div id="table_Detail" class="tab-pane fade">
 	<table class="table table-hover table-bordered">
 		<thead>
-		<tr>
+		<tr class="info">
 			<th>員工編號</th>
 			<th>訂購人</th>
 			<th>商品名稱</th>
@@ -242,7 +242,7 @@ function go3(groupno3, group_status3){
 		   
 		   $(function () {
 			    $('#excelbtn').click(function () {
-			        var blob = new Blob([document.getElementById('table_ByItem').innerHTML], {
+			        var blob = new Blob([document.getElementById('table_Detail').innerHTML], {
 			            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
 			        });
 			        var strFile = "Group.xls";

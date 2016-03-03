@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" />
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" /> --%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -21,9 +21,9 @@
 <!-------------------------------------內容寫在下面 --------------------------------------------->
 <hr>
 <form>
-	<table>
+	<table class="table table-hover table-bordered table table-condensed">
 	<thead>
-	<tr>
+	<tr class="info">
 		<th>截止時間</th>
 		<th>團購編號</th>
 		<th>團購名稱</th>
@@ -44,7 +44,7 @@
 			<td>${bean[3]}</td>
 			<td>${bean[4]}</td>
 			<td>${bean[5]}</td>
-			<td><input type="button" value="查詢" onclick="go(${bean[6]})"></td> 
+			<td><input type="button" class="btn btn-default btn-xs" value="查詢" onclick="go(${bean[6]})"></td> 
 		</tr>
 	</c:forEach>
 	</tbody>

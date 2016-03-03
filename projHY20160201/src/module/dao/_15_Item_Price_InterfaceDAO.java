@@ -10,5 +10,6 @@ public interface _15_Item_Price_InterfaceDAO {
 	public void delete(Integer price_no);
 	public _15_Item_PriceVO findById(Integer price_no);
 	public List<_15_Item_PriceVO> getAll();
+	public List<_15_Item_PriceVO> getItemAll(Integer itemNo);
 
 }

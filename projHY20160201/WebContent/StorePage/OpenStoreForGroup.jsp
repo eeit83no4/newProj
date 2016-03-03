@@ -88,7 +88,7 @@
 			var xml = new XMLHttpRequest();
 			var itemno=[];
 			$(":input:checkbox:checked").each(function(){
-// 					console.log($(this).val());
+					console.log($(this).val());
 				itemno.push($(this).val());
 				console.log(itemno);
 			})

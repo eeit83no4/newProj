@@ -81,6 +81,10 @@ public class _15_Item_PriceDAO implements _15_Item_Price_InterfaceDAO {
 	public List<_15_Item_PriceVO> getAll() {
 		return getSession().createQuery("from _15_Item_PriceVO").list();		
 	}
+	@Override
+	public List<_15_Item_PriceVO> getItemAll(Integer itemNo) {
+		return getSession().createQuery("from _15_Item_PriceVO where item_no="+itemNo).list();		
+	}
 
 
 

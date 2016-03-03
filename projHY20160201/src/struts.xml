@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="" value=""></constant>
+	
+	<package name="insertStoreAction" namespace="/" extends="struts-default">
+		<action name="insertStoreAction" class="module.controller.InsertStoreAction">			                                       											   
+<!-- 					<result name="input">/InsertStore/upStore3.jsp</result> -->
+				<result name="success">/InsertStore/upStore3.jsp</result>
+		</action>		
+	</package>
+	
+	<package name="emailCheck" namespace="/login" extends="struts-default">
+		<action name="checkEmailAction" class="module.controller.Login.checkEmailAction">
+		
+		</action>
+	</package>
+	<package name="login" namespace="/login" extends="struts-default">
+		<action name="loginAction" class="module.controller.Login.loginAction">
+
+		</action>
+	</package>
+	<package name="showItems" namespace="/userOrder" extends="struts-default">
+		<action name="showItemsAction" class="module.controller.userOrder.showItemsAction">
+			<result name="success">/userOrder/userOrderTest3.jsp</result>
+		</action>
+	</package>
+	<package name="showpic" namespace="/userOrder" extends="struts-default">
+		<action name="showPicAction" class="module.controller.userOrder.showPicAction">		
+		</action>	
+	</package>
+	<package name="userOrder" namespace="/userOrder" extends="struts-default">
+		<action name="userOrderAction" class="module.controller.userOrder.userOrderAction">
+		
+		</action>
+	
+	</package>
+	
+	<package name="Store2" namespace="/" extends="struts-default">
+		<action name="GetStoreDataAction" class="module.controller.GetStoreDataAction">		                                                    											   
+			    <result name="input">/InsertStore/upStore.jsp</result>	
+<!-- 			    <result name="input">/index.jsp</result>				     -->
+				<result name="success">/InsertStore/upStore2.jsp</result>
+		</action>		
+	</package>
+	
+	<package name="SelectItem" namespace="/" extends="struts-default">
+		<action name="SelectItemAction" class="module.controller.SelectItemAction">	
+		                                       	                                                    											   
+<!-- 			    <result name="input">/InsertStore/upStore.jsp</result>	 -->
+<!-- 			    <result name="input">/index.jsp</result>				     -->
+				<result name="success">/InsertStore/upStore3.jsp</result>
+		</action>		
+	</package>
+</struts>

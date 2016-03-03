@@ -34,7 +34,9 @@ public class AdminService {
 			// ------------------店家維護-----------------------------------
 //			System.out.println(as.storeMaintain());			
 			// ------------------管理員維護---------------------------------
-			System.out.println(as.adminMaintain());		
+//			System.out.println(as.adminMaintain());		
+			// ------------------修改auth---------------------------------
+//			as.updateAuthByUserId("3", "A");
 		
 			
 		
@@ -51,7 +53,7 @@ public class AdminService {
 		List<Map> finalresult = new ArrayList();
 		for(_16_Group_RecordVO grvo : gr.getAll()){
 			Map m = new HashMap();
-			m.put("團購編號",grvo.getGroup_no()); //刪除訂單用
+			m.put("團購編號",grvo.getGroup_no());
 			m.put("截止時間",format.format(grvo.getEnd_date()).toString());
 			m.put("團購名稱",grvo.getGroup_name());
 			m.put("店家",grvo.getStoreVO().getStore_name());
@@ -67,7 +69,8 @@ public class AdminService {
 		List<Map> finalresult = new ArrayList();
 		for(_07_StoreVO svo : s.getAll()){
 			Map m = new HashMap();
-			m.put("店家編號", svo.getStore_no());//刪除店家用
+			m.put("店家編號", svo.getStore_no());
+			m.put("建立者", svo.getEmployeeVO().getName());
 			m.put("店家名稱", svo.getStore_name());
 			finalresult.add(m);
 		}		
@@ -92,6 +95,11 @@ public class AdminService {
 			finalresult.add(m);
 		}		
 		return finalresult;
+	}
+	
+	// ------------------修改auth---------------------------------
+	public void updateAuthByUserId(String user_id,String auth){
+			a.updateAuthByUserId(user_id, auth);
 	}
 
 }

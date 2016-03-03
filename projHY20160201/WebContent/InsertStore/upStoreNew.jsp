@@ -32,7 +32,7 @@
 <%-- 	${i.item_name}	 --%>
 	
 <%-- </c:forEach> --%>
-	<form action="<c:url value='/insertStoreAction.action' />" method="get">
+	<form action="<c:url value='/insertStore.action' />" method="get">
 	<div class="container col-md-2">
   <ul class="nav nav-pills nav-stacked" id="item">
   </ul>
@@ -46,10 +46,12 @@
 		
 		<div id="dialog" title="Basic dialog">
   		<input type="text" value="" id="AAB"/><br/>
-  		<input type="radio" name="first" value="飲料" id="radio" checked="checked" />飲料
+  		<input type="radio" name="first" value="飲料" />飲料
   		<input type="radio" name="first" value="便當" />便當
   		<input type="radio" name="first" value="甜點" />甜點
   		<input type="radio" name="first" value="其他" />其他
+<!--   		<a id="a" href="#">OK</a> -->
+  		
 </div>
 		<input type="submit" value="確定新增" id="id">
 	</form>
@@ -59,8 +61,6 @@
 	
 	ii=0;
 	jsonData = null;
-	itemId = null;
-	first55 = null;
 		$(function(){	
 			
 			//長出商品總量
@@ -71,91 +71,54 @@
 						 									  .attr('class','item')
 						 									  .text(value.item_name)))
 			})
-			
-			//偷偷把商品存進資料庫
-			$('.item').click(function(){
-				var arr=[];
-				$('input[name="attributes"]').each(function(){
-					arr.push($(this).val());
-				})
-				var jsonString=JSON.stringify(arr);
-// 				console.log(jsonString);
-				var storeNo=${StoreNo}
-				var itemName=$('#itemName').val();
-				$.ajax({
-					'type':'get',
-					'url':'/projHY20160201/SelectItemServlet.insert',
-					'data':{jsonString,itemId,itemName,storeNo,first55},
-					'success':function(){
-// 						alert('aa')
-					}
-				})
-			})
-			
-			
-			//SHOW  點擊使用ajax抓出資料
+			//SHOW
 			$('.item').click(function() {
 				$('#itemName').val($(this).text())
-				itemId = $(this).attr('name').substr(4,100);
 				$.ajax({
 					'type':'get',
 					'url':'/projHY20160201/SelectItemServlet.select',
 					'datatype':'json',
-					'data':{'item_no':itemId},
+					'data':{'item_no':$(this).attr('name').substr(4,100)},
 					'success':function(data){
 // 						alert(data)
 						jsonData = data;
 						item();						
 					}
 				})
-				//取得物品第一層
-				$.ajax({
-					'type':'get',
-					'url':'/projHY20160201/SelectFirstServlet.select',
-					'datatype':'json',
-					'data':{'item_no':itemId},
-					'success':function(data2){						
-						first55 = data2.first;
-					}
-				})
-				
 				$(this).show()	
 				$('input').show()
 				$('#itemP').show()
 				}
 			)
 			
-			//彈跳視窗內容
-			 $( "#dialog" ).dialog({				 
+			//彈跳視窗
+			 $( "#dialog" ).dialog({
 				 modal: true,		 
 			      autoOpen: false,	
 			      buttons:{
 			    	  確定: function() {
 			    		  $('li').attr('class','')
-			    		  if($('#AAB').val() != ''){			    		  
+			    		  if($('#AAB').val() != ''){
 			    		  $('#item').append($('<li>').attr('class','active')
 			    				                    .prepend($('<a>').attr('data-toggle','tab')
 								                    .attr('href','#')
 									  .attr('name','item')
 									  .attr('class','item')									  
-									  .text($('#AAB').val())))	
-						var first11=$('input[name=first]:checked').val()	
-			              ii=0;			    		  
-			    		  firstFunction(first11);
+									  .text($('#AAB').val())))			    		  
+			              var first11=$('input[name=first]:checked').val()	
+			              ii=0;
+			    		  first(first11);
 			              $(this).dialog( "close" )
-			              $('#itemName').val($('#AAB').val())
-			              first55 = $('#AAB').val()
 			              $('#AAB').val('')			              
 			              $('input').show()
 						  $('#itemP').show()
 			              item();
 			    		  }
-			    	  }		      	
+			    	  }			      	
 			      }
 			    });			 
-				//點擊彈出視窗
-			    $( "#but88" ).click(function() {						
-			    	$( "#dialog" ).dialog( "open" );			      
+			    $( "#but88" ).click(function() {
+			      $( "#dialog" ).dialog( "open" );			      
 			    });
 				
 // 			$('input[id^="bt"]').click(function(){
@@ -175,43 +138,35 @@
 			    	$('div[id^="div"]').remove();
 			    	$.each(jsonData, function(x, val){			
 			    	    if (x=="defaultClass"){
-// 			    	    	for( ii = 0; ii < val.length; ii++){
-			    	        $.each(val , function(applier, a_val){	
-							
-								
-								$.each(a_val,function(index2,target){						
-									//index2第二層
-// 									console.log('index2='+index2+', target='+target)
-// 									console.log(ii)
-									$("#99").before($('<div>').attr('id','div'+ii)
-											 .append($('<input>').attr('type','text')
-						                      			         .attr('name','attributes')
-						                      			         .attr('value',index2)
-						                	                     .attr('class','classDDD'+ii)).append($('<br>')));
-													if(index2 == "Size"){$('input[class^=classD]').prop('readonly','readonly')}
-									//target第三層
-													for(var y = 0; y < target.length; y++){
-														$('#bt'+ii).remove();
-											           	$("#div"+ii).append($('<input>').attr('type','text')
-											           									.attr('name','attributes')
-											           								   .attr('value',target[y])
-											           								   .attr('class','class'+ii)
-											           								   .attr('style','width: 50px'))
-											           								   		.append($('<input>').attr('type','button')
-											           								   							.attr('id','bt'+ii)
-											           								   							.attr('value','+'))
-											           								if(y == target.length-1){$("#right").append($('<br>'));}
-														 }
-								
-									ii++;
-								})
-
-		    	      		});                
-
+			    	    	for( ii = 0; ii < val.length; ii++){
+			    	        $.each(val[ii] , function(applier, a_val){	
+//			    		        	console.log(i);
+//			    					alert(a_val);
+							console.log('applier='+applier+', target='+a_val)
+			    				$("#99").before($('<div>').attr('id','div'+ii)
+			    											 .append($('<input>').attr('type','text')
+			    						                      			         .attr('name','attributes')
+			    						                      			         .attr('value',applier)
+			    						                	                     .attr('class','classDDD'+ii)).append($('<br>')));
+			    					if(applier == "SIZE"){$('input[class^=classD]').prop('readonly','readonly')}	                    
+			    				for(var y = 0; y < a_val.length; y++){
+			    				$('#bt'+ii).remove();
+			    	           	$("#div"+ii).append($('<input>').attr('type','text')
+			    	           									.attr('name','attributes')
+			    	           								   .attr('value',a_val)
+			    	           								   .attr('class','class'+ii)
+			    	           								   .attr('style','width: 50px'))
+			    	           								   		.append($('<input>').attr('type','button')
+			    	           								   							.attr('id','bt'+ii)
+			    	           								   							.attr('value','+'))
+			    	           								if(y == a_val.length-1){$("#right").append($('<br>'));}
+			    				  }
+			    	      		});                
+			    	      	  }
 			    	    }
 			    	});
 			    		
-	    		}
+			    		}
 			//++屬性根細項  (新增)
 			$('input[id^="but99"]').click(function(){
 				$("#99").before($('<div>').attr('id','div'+ii)
@@ -265,7 +220,7 @@
 				})	
 				
 				$('input[id^="but99"]').click(function(){
-// 					alert($(this).id())
+					alert($(this).id())
 				})
 		})//load end
 		
@@ -310,8 +265,8 @@
 //  			alert('aa')
 		}
 		
-		function firstFunction(first11){
-			    	switch (first11){
+		function first(first){
+			    	switch (first){
 					case "飲料":			    
 // 				var jsonData1 = {defaultClass :[
 // 							 {SIZE : ['特大(30)', '大(25)' , '中(20)', '小(15)']},
@@ -319,7 +274,7 @@
 // 					        {甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)']}
 // 							]}
 				var jsonData1 = {defaultClass :[
-							 {Size : ['特大(30)', '大(25)' , '中(20)', '小(15)'],
+							 {SIZE : ['特大(30)', '大(25)' , '中(20)', '小(15)'],
 					       		冷熱 : ['正常冰(0)','少冰(0)', '去冰(0)' ,'溫(0)'],
 					 		       甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)']}
 							]}
@@ -327,14 +282,14 @@
 					break;
 				case "便當":
 				var jsonData2 = {defaultClass :[
-				  							 {Size : ['基本(50)', '加大(60)']},
+				  							 {SIZE : ['基本(50)', '加大(60)']},
 				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']},				  					       
 				  				]}
 				jsonData = jsonData2;
 					break;
 					case "甜點":						
 				var jsonData3 = {defaultClass :[
-				  							 {Size : ['大(45)' , '中(35)', '小(25)']},
+				  							 {SIZE : ['大(45)' , '中(35)', '小(25)']},
 				  					        {口味 : ['巧克力(0)','草莓(0)', '奶油(0)' ,'花生(0)']},
 				  					        {其他 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)']}
 				  				]}
@@ -342,7 +297,7 @@
 					break;
 				case "其他":
 				var jsonData4 = {defaultClass :[
-				  							 {Size : ['大(150)' , '中(100)', '小(50)']},
+				  							 {SIZE : ['大(150)' , '中(100)', '小(50)']},
 				  					        {顏色 : ['紅色(0)','黑色(0)', '白色(0)']},
 				  					        {其他 : ['加配件(30)','加套件(50)']}
 				  				]}

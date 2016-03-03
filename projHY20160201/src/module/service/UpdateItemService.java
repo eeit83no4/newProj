@@ -32,30 +32,19 @@ public class UpdateItemService {
 	private  _12_ItemDAO _12DAO=new _12_ItemDAO();
 
 	public void UpdateItem(_12_ItemVO bean){
-		List<_12_ItemVO> bean12 = getItemId(bean);	
-		for(_12_ItemVO list:bean12){
-			int no = list.getItem_no();	
-			System.out.println(no);
+			int no = bean.getItem_no();	
 			_12_ItemVO VO=_12DAO.findById(no);
-			VO.setItem_no(no);		
-//			List<_13_Item_Class_ThirdVO> aa = getItemClassThirdId(no);
-//			for(_13_Item_Class_ThirdVO list22:aa){
-//				Integer no2 = list22.getClass_ThirdVO().getClass3_no();
-////				System.out.println(no2);	
-//				Integer no3 = list22.getClass_ThirdVO().getClass_SecondVO().getClass2_no();
-//				System.out.println(no3);
-//			}
-			deleteItem(VO);
-		}	
+			deleteItem(VO);	
 	}
 	public void deleteItem(_12_ItemVO bean){
 		getSession().delete(bean);
 	}
 	public List<_12_ItemVO> getItemId(_12_ItemVO bean) {
-		Query query= getSession().createQuery("from _12_ItemVO where storeVO=?");
+		Query query= getSession().createQuery("from _12_ItemVO where storeVO=? and item_name=?");
 		_07_StoreVO VO=new _07_StoreVO();
 		VO.setStore_no(bean.getStoreVO().getStore_no());
 		query.setParameter(0, VO);
+		query.setParameter(1, bean.getItem_name());
 		return query.list();
 	}
 //	public List<_13_Item_Class_ThirdVO> getItemClassThirdId(int no){
@@ -70,18 +59,22 @@ public class UpdateItemService {
 			 HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();	
 
 		UpdateItemService updateStoreService = new UpdateItemService();  
-		_12_ItemVO bean12 = new _12_ItemVO();	
-		_07_StoreVO bean7 = new _07_StoreVO();	
 		
-		bean7.setStore_no(10);
+		_07_StoreVO bean7 = new _07_StoreVO();		
+		bean7.setStore_no(8);
+		_12_ItemVO bean12 = new _12_ItemVO();	
 		bean12.setStoreVO(bean7);
+		bean12.setItem_no(7);
 		updateStoreService.UpdateItem(bean12);
+		
+
+		
 		
 		//09第一層屬性
 		_09_Class_FirstVO bean9=new _09_Class_FirstVO();
 		bean9.setClass1_name("飲料"); 
 		//12物品
-		bean7.setStore_no(10);	//參考店家
+		bean7.setStore_no(3);	//參考店家
 		bean12.setStoreVO(bean7);  
 		bean12.setItem_name("鐵觀音");
 //		bean12.setPic(null); //照片

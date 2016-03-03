@@ -41,12 +41,12 @@ public class OpenStoreForGroupService {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			OpenStoreForGroupService att=new OpenStoreForGroupService();
-			int store_no=1;
-			System.out.println(att.findItemsNoByStore(store_no));
-			System.out.println(att.findItemsByStore(store_no));
-			System.out.println(att.find2nds(store_no));
-			System.out.println(att.find3nds(store_no));
-			System.out.println(att.findSizePricesbyStore(store_no));
+//			int store_no=1;
+//			System.out.println(att.findItemsNoByStore(store_no));
+//			System.out.println(att.findItemsByStore(store_no));
+//			System.out.println(att.find2nds(store_no));
+//			System.out.println(att.find3nds(store_no));
+//			System.out.println(att.findSizePricesbyStore(store_no));
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
 			HibernateUtil.closeSessionFactory();

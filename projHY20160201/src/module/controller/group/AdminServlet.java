@@ -20,25 +20,29 @@ public class AdminServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String prodaction = req.getParameter("prodaction");
+		String prodaction =null;
+		prodaction = req.getParameter("prodaction");
+		String auth = req.getParameter("auth");
+		String user_id = req.getParameter("user_id");
 		
 		
-		
-//		if(prodaction.equals("團購維護")){
-			List<Map> all_order = adminservice.orderMaintain();
-			JSONArray jSONObject1=JSONArray.fromObject(all_order);
-			List<Map> all_store = adminservice.storeMaintain();
-			JSONArray jSONObject2=JSONArray.fromObject(all_store);
-			List<Map> all_admin = adminservice.adminMaintain();
-			JSONArray jSONObject3=JSONArray.fromObject(all_admin);
+		if(prodaction!=null){
+			if(prodaction.equals("主畫面")){
+				List<Map> all_order = adminservice.orderMaintain();
+				JSONArray jSONObject1=JSONArray.fromObject(all_order);
+				List<Map> all_store = adminservice.storeMaintain();
+				JSONArray jSONObject2=JSONArray.fromObject(all_store);
+				List<Map> all_admin = adminservice.adminMaintain();
+				JSONArray jSONObject3=JSONArray.fromObject(all_admin);				
+				req.setAttribute("all_order", jSONObject1);
+				req.setAttribute("all_store", jSONObject2);
+				req.setAttribute("all_admin", jSONObject3);
+				req.getRequestDispatcher("/MyGroup/admin.jsp").forward(req, resp);	
+			}		
 			
-			req.setAttribute("all_order", jSONObject1);
-			req.setAttribute("all_store", jSONObject2);
-			req.setAttribute("all_admin", jSONObject3);
-			req.getRequestDispatcher("/MyGroup/admin.jsp").forward(req, resp);
-			
-			
-
+		}else if(auth.equals("A")||auth.equals("B")){
+			adminservice.updateAuthByUserId(user_id, auth);
+		}
 		
 		
 		

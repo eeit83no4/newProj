@@ -21,14 +21,6 @@
 <br>
 <br>
 
-<!-- <div class="container col-md-2 "> -->
-<!--   <div class="btn-group-vertical"> -->
-<!--     <button type="button" class="btn btn-primary btn-lg">團購維護</button> -->
-<!--     <button type="button" class="btn btn-primary btn-lg" onclick="goStore()">店家維護</button> -->
-<!--     <button type="button" class="btn btn-primary btn-lg" onclick="goAdmin('adm')">管理員維護</button> -->
-<!--   </div> -->
-<!-- </div> -->
-
 <div class="container col-md-2">
   <ul class="nav nav-pills nav-stacked">
     <li class="active"><a data-toggle="tab" href="#groupDiv">團購維護</a></li>
@@ -64,6 +56,7 @@
 		<thead>
 			<tr class="success">
 				<th>店家編號</th>
+				<th>建立者</th>
 				<th>店家名稱</th>
 				<th>修改店家</th>
 				<th>刪除店家</th>
@@ -101,7 +94,6 @@
 <!--------------------------------- javaScript ------------------------------------->
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 <script language="JavaScript">
-
 $(function(){
 	$.each(${all_order}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.團購編號);
@@ -120,11 +112,12 @@ $(function(){
 	
 	$.each(${all_store}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.店家編號);
-		var cell2 = $("<td></td>").text(bean.店家名稱);
-		var cell3 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
-		var cell4 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
+		var cell2 = $("<td></td>").text(bean.建立者);
+		var cell3 = $("<td></td>").text(bean.店家名稱);
+		var cell4 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
+		var cell5 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
 		
-		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4]);
+		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5]);
 		$('#tb_store').append(row);
 	});
 	
@@ -132,11 +125,26 @@ $(function(){
 		var cell1 = $("<td></td>").text(bean.員工編號);
 		var cell2 = $("<td></td>").text(bean.員工部門);
 		var cell3 = $("<td></td>").text(bean.員工姓名);
-		var cell4 = $("<td></td>").text(bean.管理員資格);
-		
+		if(bean.管理員資格 == 'A'){
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox" checked>');
+		}else{
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox">');
+		}		
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4]);
 		$('#tb_admin').append(row);
 	});
+	
+	var xml = new XMLHttpRequest();
+	 $('#tb_admin').on('click','.aaa',function(){
+		 var user_id = $(this).attr("id"); //id即員工編號
+		 if($(this).prop("checked")){
+			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=A", true);
+			xml.send();
+		}else{
+			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=B", true);
+			xml.send();
+		}
+	 });
 	
 	
 });
@@ -144,6 +152,10 @@ $(function(){
 function go(groupno){
 	location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
 }
+
+// function name(user_id){
+// 	location.href='<c:url value="/admin.controller?user_id='+user_id+'"/>';
+// }
 // function goStore(){
 // 	location.href='<c:url value="/admin.controller?prodaction=店家維護"/>';
 // }

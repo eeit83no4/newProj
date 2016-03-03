@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +24,6 @@
 <c:if test="${empty LoginOK}">
 	<c:redirect url="index.jsp"/>
 </c:if>
-<h1>hello ${LoginOK.user_id}</h1>
 <!-- 	載入底部 -->
 	<jsp:include page="/footer.jsp"/>
 </div>

@@ -112,6 +112,7 @@ public class OpenStoreForGroupServlet extends HttpServlet {
 		req.setAttribute("sizeprices", sizeprice);
 		req.setAttribute("class2Lists", class2List);
 		req.setAttribute("class3Lists", class3List);
+		req.setAttribute("store_no", store_no);
 		
 //		req.setAttribute("c2", c2);
 

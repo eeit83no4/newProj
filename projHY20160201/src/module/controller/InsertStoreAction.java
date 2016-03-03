@@ -23,7 +23,7 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 	private String item;
 	private String address;	
 	private String submit;	
-	private String sub;	
+	private String sub;		
 	public String getSub() {
 		return sub;
 	}
@@ -86,6 +86,10 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 	
 	
 	public void validate() {
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//		System.out.println(item);
+		System.out.println(attributes);
+		
 //		_07_StoreVO bean7 = new _07_StoreVO();
 //		System.out.println(store);
 //		System.out.println(storeClass.replace(" ", ""));

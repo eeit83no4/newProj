@@ -87,8 +87,9 @@ public class InsertItemService {
 				_11_Class_ThirdVO bean11 = new _11_Class_ThirdVO();  //new一個袋子		
 //				bean11.setClass_SecondVO(bean10);		 //放參考值 10的PK				
 				int no = list.indexOf("(");
+				int no2 = list.indexOf(")");
 				bean11.setClass3_name(list.substring(0 , no));   //砍字串   超熱,有點溫,普通熱,冰冰涼涼的,去冰的
-				String extra = list.substring(no+1 , list.length()-1);   //砍字串   0.0 ,0.0 ,0.0 ,5.0 ,10.0
+				String extra = list.substring(no+1 , no2);   //砍字串   0.0 ,0.0 ,0.0 ,5.0 ,10.0
 				double dExtra = Double.parseDouble(extra);
 			
 			
@@ -186,13 +187,16 @@ public class InsertItemService {
 		//bean13 第三層屬性
 		String thirdName="超熱(0),有點溫(0),普通熱(0),冰冰涼涼的(5),去冰的(10)";	
 	
-//		insertSecondService.insertSecond( bean9,bean12,bean10,thirdName);  //傳入四個參數
+		insertSecondService.insertSecond( bean9,bean12,bean10,thirdName);  //傳入四個參數
 		
 		
 		
-		String attributes="SIZE, 特大(30), 大(25), 中(20), 小(15), 冷熱, 正常冰(0), 少冰(0), 去冰(0), 溫(0), 甜度, 正常(0), 半糖(0), 少糖(0), 無糖(0)";
-//		ArrayList bb = insertSecondService.cuttingHtmlString(attributes);
-//		System.out.println(bb.get(0));
+//		String attributes="SIZE, 特大(30), 大(25), 中(20), 小(15), 冷熱, 正常冰(0), 少冰(0), 去冰(0), 溫(0), 甜度, 正常(0), 半糖(0), 少糖(0), 無糖(0)";
+
+		String attributes="加料,加雞塊(10.0),加飯飯(5.0),Size,不分大小(55)";
+		
+		ArrayList bb = insertSecondService.cuttingHtmlString(attributes);
+		System.out.println(bb.get(1));
 		
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();

@@ -70,7 +70,7 @@
 <br>
 
 <div align="right">
-<button id ="excelbtn" class="btn btn-link"><Img Src="images/excel.png">匯出Excel</button>
+<button id ="excelbtn" class="btn btn-link"><Img Src="../images/excel.png">匯出Excel</button>
 </div>
 
 <div class="col-md-12">

@@ -324,7 +324,7 @@ public class MyGroupService {
 	// ------------------抓出"明細列表"所需資料------------------
 	// ----回傳: (員工ID、員工姓名)+(商品名稱、數量、原價、折價後價錢、付款狀態、商品屬性)+(訂購時間)
 		public List<String[]> orderDetail_detail_new(Integer group_no) {
-			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 			List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 			Set<_17_Group_UserVO> users = gr.findById(group_no).getGroup_Users();
 			for (_17_Group_UserVO a : users) {
@@ -347,7 +347,7 @@ public class MyGroupService {
 
 	// ------------------查詢此人參加的所有進行中團購項目------------------
 	public List<String[]> searchMyAllGroup_ing(Integer user_id) {
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 		List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 		MyGroupService mgs = new MyGroupService();
 		MyGroupService myGroupService = new MyGroupService();
@@ -376,7 +376,7 @@ public class MyGroupService {
 	
 	// ------------------查詢此人參加的所有已完成團購項目------------------
 		public List<String[]> searchMyAllGroup_ed(Integer user_id) {
-			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 			List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
 			MyGroupService myGroupService = new MyGroupService();
 			for (_17_Group_UserVO a : gu.findByGroupUserId(user_id)) {
@@ -405,7 +405,7 @@ public class MyGroupService {
 	
 	// ------------------查詢個人歷史訂購紀錄------------------
 		public List<Map> personalHistoryRecord(Integer user_id){
-			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 			List<Map> finalResult= new ArrayList(); // 大袋子
 			for (_17_Group_UserVO a : gu.findByGroupUserId(user_id)) {//抓出此人有參加哪些團				
 

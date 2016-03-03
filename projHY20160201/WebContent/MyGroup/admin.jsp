@@ -132,7 +132,12 @@ $(function(){
 		var cell1 = $("<td></td>").text(bean.員工編號);
 		var cell2 = $("<td></td>").text(bean.員工部門);
 		var cell3 = $("<td></td>").text(bean.員工姓名);
-		var cell4 = $("<td></td>").text(bean.管理員資格);
+		if(bean.管理員資格 != null){
+			var cell4 = $("<td></td>").text(bean.管理員資格);
+		}else{
+			var cell4 = $("<td></td>").append('<input type="button" value="指派管理員" class="btn btn-default btn-xs" onclick="name('+bean.員工編號+')">');
+		}
+		
 		
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4]);
 		$('#tb_admin').append(row);
@@ -143,6 +148,10 @@ $(function(){
 
 function go(groupno){
 	location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
+}
+
+function name(user_id){
+	location.href='<c:url value="/admin.controller?user_id='+user_id+'"/>';
 }
 // function goStore(){
 // 	location.href='<c:url value="/admin.controller?prodaction=店家維護"/>';

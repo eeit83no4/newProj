@@ -47,7 +47,7 @@ public class AdminService {
 	}
 	// ------------------訂單維護-----------------------------------
 	public List<Map> orderMaintain(){
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 		List<Map> finalresult = new ArrayList();
 		for(_16_Group_RecordVO grvo : gr.getAll()){
 			Map m = new HashMap();

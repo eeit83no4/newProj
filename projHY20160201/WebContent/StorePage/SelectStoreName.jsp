@@ -110,7 +110,7 @@
 	}
 	
 	function updata(upstore_no){
-		location.href='<c:url value="/StoreServlet.select?upstore_no="/>'+upstore_no;
+		location.href='<c:url value="/insertStoreAction?upstore_no="/>'+upstore_no;
 	}
 	function dldata(dlstore_no){
 		var xml = new XMLHttpRequest();

@@ -25,7 +25,7 @@ public class DeleteStoreService {
 		
 		bean = new _07_StoreVO();
 		bean = _07DAO.findById(13);
-		bean.setPublic_state("9");
+		bean.setPublic_state("3");
 		bean.setFinal_update(new java.util.Date());			
 		deleteStoreService.deleteStore(bean);
 		

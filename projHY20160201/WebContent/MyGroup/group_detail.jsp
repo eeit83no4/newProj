@@ -172,6 +172,7 @@
 <script>
 var xml = new XMLHttpRequest();
 
+//----------------完成團購按鈕-------------------------------
 function go1(groupno){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;	
 }
@@ -219,7 +220,7 @@ function go2(groupno2){
 	
 	
 	
-	
+//----------------立即截止按鈕-------------------------------	
 function go3(groupno3){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
 }

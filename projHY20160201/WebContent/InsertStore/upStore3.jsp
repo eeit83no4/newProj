@@ -56,7 +56,7 @@
 		電話: <input type="text" value="093435737" id="phone" name="phone" placeholder="電話" /><br />		
 		地址: <input type="text" value="大安區" id="phone" name="address" placeholder="地址" /><br />			
  		類型: <div id="showBlock" ></div> 					
-		<input type="submit" name="submit" value="送出" id="id">
+		<input type="submit" name="submit" value="送出" id="id">		
 		</div>
 	</form>
 	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -69,7 +69,7 @@
 			jsonData = null;
 			itemId = null;
 			first55 = null;		
-				
+			storeNo = null;
 			//長出店家類型 名稱
 			$('#name').val('${data.storeName}');	 
 			    var b="${data.storeClass}";
@@ -100,8 +100,11 @@
 			})
 			
 			//偷偷把商品存進資料庫		
-				$('.item').click(function(){
-// 					alert(first55);	 				
+// 				$('.item').click(function(){
+ 				 $('.item').on('click',insertItem)	
+ 				 
+ 				 
+ 				 function insertItem(){
 					var arr=[];
 					$('input[name="attributes"]').each(function(){
 						arr.push($(this).val());
@@ -109,7 +112,7 @@
 					})
 					var jsonString=JSON.stringify(arr);
 //	 				console.log(jsonString);
-					var storeNo=${StoreNo}
+					storeNo='${StoreNo}'
 					var itemName=$('#itemName').val();
 					$.ajax({
 						'type':'get',
@@ -121,7 +124,8 @@
 // 							itemId = data3.itemNoS;
 // 						}
 					})
-				})	
+ 				 }
+// 				})	
 			
 			//SHOW  點擊使用ajax抓出資料
 			$('.item').click(function() {
@@ -304,7 +308,10 @@
 				})
 				
 				
-				
+				$('#id').click(function(){
+					 insertItem();
+					alert('aa')
+				})
 				
 		})//load end
 		function killer(aa){

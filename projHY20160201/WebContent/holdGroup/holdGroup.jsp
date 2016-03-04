@@ -220,7 +220,7 @@ table,tr,td{
 		//--------------按下發起團購-----------------
 		$('#holdGroup').click(function(){
 			var storeNumber=$("#sotre_NO").text();
-			console.log(storeNumber);
+			location.href='/projHY20160201/OpenStoreForGroupServlet.select?store_no='+storeNumber;
 		})
 		
 		

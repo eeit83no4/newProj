@@ -20,4 +20,6 @@ public interface _04_Employee_interfaceDAO {
 
 	public void delete(Integer user_id);
 
+	void update(List<_04_EmployeeVO> finbydep);
+
 }

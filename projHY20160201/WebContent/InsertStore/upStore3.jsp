@@ -32,14 +32,14 @@
 <%-- 	${i.item_name}	 --%>
 	
 <%-- </c:forEach> --%>
-	<form action="<c:url value='/insertStoreAction.action' />" method="get">
+	<form action="<c:url value='/insertStoreAction2.action' />" method="get">
 	<div class="container col-md-2">
   <ul class="nav nav-pills nav-stacked" id="item">
   </ul>
   <input type="button" value="+" id="but88" /><br />
 </div>			
 		<div style="float: left; border: 10px;margin: 125px" id="right">
-			<span id="itemP" style="display:none">品名: <span/> <input type="text" value="" name="item" id="itemName" style="display:none"/><br />
+			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none"/><br />
 			<input type="button" id="bt0" value="+" style="display:none"/>
 			<div id="99"><input type="button" id="but99" value="+" style="display:none"/></div>
 		</div>
@@ -51,18 +51,45 @@
   		<input type="radio" name="first" value="甜點" />甜點
   		<input type="radio" name="first" value="其他" />其他
 </div>
-		<input type="submit" value="確定新增" id="id">
+	<div>
+		店家名稱: <input type="text" value="草莓店" id="name" name="store" placeholder="店家名稱" /><br />
+		電話: <input type="text" value="093435737" id="phone" name="phone" placeholder="電話" /><br />		
+		地址: <input type="text" value="大安區" id="phone" name="address" placeholder="地址" /><br />			
+ 		類型: <div id="showBlock" ></div> 					
+		<input type="submit" name="submit" value="送出" id="id">
+		</div>
 	</form>
 	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script>
+	var txtId = 1;
 	
-	ii=0;
-	jsonData = null;
-	itemId = null;
-	first55 = null;
 		$(function(){	
+			ii=0;
+			jsonData = null;
+			itemId = null;
+			first55 = null;		
+				
+			//長出店家類型 名稱
+			$('#name').val('${data.storeName}');	 
+			    var b="${data.storeClass}";
+			    var c=b.split(",");			    
+			    var d="${data.storeClassAll}";
+			    var e=d.split(",");
+			    for (var i = 0; i < e.length; i++) {
+				    $("#showBlock").append('<input type="checkbox" id="div' + txtId + '" name="storeClass"  value="'+e[i]+'" />'+e[i]+'');
+				    txtId++;
+				    }
+				for(var i = 0; i < c.length; i++){
+					for (var y = 0; y < e.length; y++) {
+						if(c[i] == (e[y])){
+							$('input[value="'+c[i]+'"]').prop("checked",true);
+								break;
+							}					
+						}
+					}
 			
+				
 			//長出商品總量
 			$.each(${getItemAll},function(key,value){
 				 $('#item').prepend($('<li>').prepend($('<a>').attr('data-toggle','tab')
@@ -72,26 +99,29 @@
 						 									  .text(value.item_name)))
 			})
 			
-			//偷偷把商品存進資料庫
-			$('.item').click(function(){
-				var arr=[];
-				$('input[name="attributes"]').each(function(){
-					arr.push($(this).val());
-				})
-				var jsonString=JSON.stringify(arr);
-// 				console.log(jsonString);
-				var storeNo=${StoreNo}
-				var itemName=$('#itemName').val();
-				$.ajax({
-					'type':'get',
-					'url':'/projHY20160201/SelectItemServlet.insert',
-					'data':{jsonString,itemId,itemName,storeNo,first55},
-					'success':function(){
-// 						alert('aa')
-					}
-				})
-			})
-			
+			//偷偷把商品存進資料庫		
+				$('.item').click(function(){
+// 					alert(first55);	 				
+					var arr=[];
+					$('input[name="attributes"]').each(function(){
+						arr.push($(this).val());
+		 				console.log($(this).val());
+					})
+					var jsonString=JSON.stringify(arr);
+//	 				console.log(jsonString);
+					var storeNo=${StoreNo}
+					var itemName=$('#itemName').val();
+					$.ajax({
+						'type':'get',
+						'url':'/projHY20160201/SelectItemServlet.insert',
+// 						'datatype':'json',
+						'data':{jsonString,itemId,itemName,storeNo,first55},
+// 						'success':function(data3){
+// 							alert("1")
+// 							itemId = data3.itemNoS;
+// 						}
+					})
+				})	
 			
 			//SHOW  點擊使用ajax抓出資料
 			$('.item').click(function() {
@@ -102,8 +132,7 @@
 					'url':'/projHY20160201/SelectItemServlet.select',
 					'datatype':'json',
 					'data':{'item_no':itemId},
-					'success':function(data){
-// 						alert(data)
+					'success':function(data){						
 						jsonData = data;
 						item();						
 					}
@@ -115,7 +144,11 @@
 					'datatype':'json',
 					'data':{'item_no':itemId},
 					'success':function(data2){						
+// 						alert(data2.first)
 						first55 = data2.first;
+// 						alert(first55)
+						
+						
 					}
 				})
 				
@@ -123,8 +156,9 @@
 				$('input').show()
 				$('#itemP').show()
 				}
-			)
+			)	
 			
+	
 			//彈跳視窗內容
 			 $( "#dialog" ).dialog({				 
 				 modal: true,		 
@@ -158,27 +192,13 @@
 			    	$( "#dialog" ).dialog( "open" );			      
 			    });
 				
-// 			$('input[id^="bt"]').click(function(){
-// 				var getId=$(this).attr('id');
-// 				var no=getId.substring(2);
-// 			    $('input[id^=bt'+no+']').before($('<input>').attr('type','text')
-// 			    								.attr('name','attributes')
-// 	           								   .attr('placeholder','加布丁(10)')
-// 	           								   .attr('class','class'+ii)
-// 	           								   .attr('style','width: 65px')
-// 	           								   .attr('onblur','bbb(this)'))
-
-// 			})
-			
 			  //長出第二層屬性 第三層
 			    function item(){
 			    	$('div[id^="div"]').remove();
 			    	$.each(jsonData, function(x, val){			
 			    	    if (x=="defaultClass"){
 // 			    	    	for( ii = 0; ii < val.length; ii++){
-			    	        $.each(val , function(applier, a_val){	
-							
-								
+			    	        $.each(val , function(applier, a_val){							
 								$.each(a_val,function(index2,target){						
 									//index2第二層
 // 									console.log('index2='+index2+', target='+target)
@@ -188,7 +208,7 @@
 						                      			         .attr('name','attributes')
 						                      			         .attr('value',index2)
 						                	                     .attr('class','classDDD'+ii)).append($('<br>')));
-													if(index2 == "Size"){$('input[class^=classD]').prop('readonly','readonly')}
+													if(index2 == "Size"){$('input[value="Size"]').prop('readonly','readonly')}
 									//target第三層
 													for(var y = 0; y < target.length; y++){
 														$('#bt'+ii).remove();
@@ -199,7 +219,7 @@
 											           								   .attr('style','width: 50px'))
 											           								   		.append($('<input>').attr('type','button')
 											           								   							.attr('id','bt'+ii)
-											           								   							.attr('value','+'))
+											           								   							.attr('value','+').attr('onclick','killer(this)'))
 											           								if(y == target.length-1){$("#right").append($('<br>'));}
 														 }
 								
@@ -212,6 +232,21 @@
 			    	});
 			    		
 	    		}
+	    		
+	    		
+			    	
+// 	    		$('input').click(function(){
+// 					alert("aa")
+// 					var getId=$(this).attr('id');
+// 					var no=getId.substring(2);
+// 				    $('input[id^=bt'+no+']').before($('<input>').attr('type','text')
+// 				    								.attr('name','attributes')
+// 		           								   .attr('placeholder','加布丁(10)')
+// 		           								   .attr('class','class'+ii)
+// 		           								   .attr('style','width: 65px')
+// 		           								   .attr('onblur','bbb(this)'))
+
+// 				})
 			//++屬性根細項  (新增)
 			$('input[id^="but99"]').click(function(){
 				$("#99").before($('<div>').attr('id','div'+ii)
@@ -267,8 +302,22 @@
 				$('input[id^="but99"]').click(function(){
 // 					alert($(this).id())
 				})
+				
+				
+				
+				
 		})//load end
-		
+		function killer(aa){
+// 			alert($(aa).attr('id'));
+				var getId=$(aa).attr('id');
+				var no=getId.substring(2);
+			    $('input[id^="bt'+no+'"]').before($('<input>').attr('type','text')
+			    								.attr('name','attributes')
+	           								   .attr('placeholder','加布丁(10)')
+	           								   .attr('class','class'+ii)
+	           								   .attr('style','width: 65px')
+	           								   .attr('onblur','bbb(this)'))
+		}
 		
 		function abc(obj){	
 			var getId=$(obj).attr('id');

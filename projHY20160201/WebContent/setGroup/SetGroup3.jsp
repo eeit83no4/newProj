@@ -301,24 +301,24 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 
 //--------------------依部門分類------------------------------------------------------
 			$("#select1").change(function() {
+				var holdUser='1';//主揪				
 				if($(this).val()=='所有部門'){
-					$("#inem1").empty();
-					
+					$("#inem1").empty();					
 					<c:forEach var="bean" items="${emdep}">
 						var i=0;
 						$.each(userIds,function(no,vo){
-							//排除已邀請的和主揪自己
+							//排除已邀請的
 							if('${bean[0]}'==vo){
-								i=1;
-							}else if('${bean[0]}'=='1'){
+								console.log("vo="+vo);
+								console.log("holdUser="+holdUser);
 								i=1;
 							}
 						})
-						if(i==0){
+						//排除主揪自己
+						if(i==0&&'${bean[0]}'!=holdUser){
 							$("#inem1").append('<label><input type="checkbox" name="inp" value='+'${bean[0]}'+'*'+'${bean[1]}'+'>'+'${bean[1]}'+'</label><br>')
 						}						
-					</c:forEach>
-				
+					</c:forEach>				
 				}else{
 					$(":selected").each(function() {				
 						var depp= $(this).val();				
@@ -333,14 +333,13 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 								var i=0;
 								$.each(data,function(index,value){//(1,2,3,4,5)									
 									$.each(userIds,function(no,vo){//[1,2]
-										//排除已邀請的和主揪自己
+										//排除已邀請的
 										if(value[0]==vo){
-											i=1;
-										}else if(value[0]=='1'){
 											i=1;
 										}
 									})
-									if(i==0){
+									//排除主揪自己
+									if(i==0&&value[0]!=holdUser){
 										$("#inem1").append('<label><input type="checkbox" name="inp" value='+value[0]+'*'+value[1]+'>'+value[1]+'</label><br>')										
 									}
 									i=0;

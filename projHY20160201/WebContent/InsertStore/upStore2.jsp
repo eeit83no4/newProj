@@ -24,8 +24,7 @@
 		<input type="submit" value="新增店家" name="submit" id="id">
 		
 		
-  		<input type="submit" name="sub" value="5"><br />
-
+  		<input type="submit" name="sub" value="1"><br />
 	</form>
 	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -51,7 +50,7 @@
 								break;
 							}					
 						}
-					}	
+					}
 		})
 		
 		

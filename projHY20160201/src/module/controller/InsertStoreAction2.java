@@ -15,7 +15,7 @@ import module.service.GetStoreClass;
 import module.service.GetStoreDataService;
 import module.service._07_StoreService;
 
-public class InsertStoreAction extends ActionSupport implements RequestAware {
+public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	
 	private String store;
 	private String storeClass;

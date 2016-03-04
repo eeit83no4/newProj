@@ -45,25 +45,33 @@
 			<tr><th style="width:10%;">團購名稱:</th> <td style="width:30%;">${attr[0]}</td> <th style="width:12%;">公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
 			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
-			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<c:if test='${EndSec > 0}'><input type="button" style="margin:3px" class="btn btn-default" value="立即截止"  onclick="go3(${group_no}, ${group_status})"></c:if></td></tr>
+			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<c:if test='${group_status >= 1}'><c:if test='${EndSec > 0}'><input type="button" style="margin:3px" class="btn btn-default" value="立即截止"  onclick="go3(${group_no})"></c:if></c:if>
+																		<c:if test='${group_status == 0}'><c:if test='${EndSec > 0}'><input type="button" style="margin:3px" disabled class="btn btn-default" value="立即截止"  onclick="go3(${group_no})"></c:if></c:if> 
+																		</td></tr>
 			
 		</c:forEach>
 		</table>
 	</div>
 	
 	<div class="col-md-2" style="text-align:right;">
-<%-- 	<c:if test='${group_status >= 1}'> --%>
 		<c:if test='${status == "進行中"}'>
-<%-- 			<c:if test='${EndSec > 0}'> --%>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="editBtn"><br>
-<%-- 			</c:if> --%>
+<!-- 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="editBtn"><br>		 -->
+			<c:if test='${group_status >= 1}'>
+				 <c:if test='${EndSec < 0}'>
+					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
+					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
+				</c:if>
+				<c:if test='${EndSec > 0}'>
+					<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
+					<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
+				</c:if>
+			</c:if>
 		
-<%-- 			<c:if test='${EndSec < 0}'> --%>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no}, ${group_status}, ${EndSec})"><br/>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
-<%-- 			</c:if> --%>
+			<c:if test='${group_status == 0}'> 
+				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
+				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
+			</c:if>
 		</c:if>
-<%-- 		</c:if> --%>
 	</div>
 	
 </div>
@@ -150,7 +158,7 @@
 			<textarea id="failreason" style="width:200px;height:100px;"></textarea>
         </div>        
         <div class="modal-footer">
-        	<button type="button" id="failreasonbtn" class="btn btn-default" data-dismiss="modal">送出</button>
+        	<button type="button" id="failreasonbtn" class="btn btn-default" data-dismiss="modal" onclick="go2(${group_no})">送出</button>
         	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
       </div>
@@ -164,39 +172,56 @@
 <script>
 var xml = new XMLHttpRequest();
 
-function go1(groupno, group_status, EndSec){
-	if(group_status >= 1){
-		if(EndSec <= 0){
-			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;
-		}else{
-			alert("截止時間還沒到!");
-		}	
-	}else{
-		alert("非發起人或共同管理者,手別賤");
-		$('#succBtn').prop("disabled",true);
-	}
+function go1(groupno){
+	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;	
 }
 
-function go2(groupno2, group_status2, EndSec2){
-	if(group_status2 >= 1){
-		if(EndSec2 <= 0){
-			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
-		}else{
-			alert("截止時間還沒到!");
-		}	
-	}else{
-		alert("非發起人或共同管理者,手別賤");
-		$('#failBtn').prop("disabled",true);
-	}
+
+
+
+
+
+
+
+
+// 把錯誤彈跳視窗的text值抓到後用帶參數的方式傳給go2，之後就交給你了 > <
+
+
+
+
+
+
+<!--------------------------------- 訂購失敗的方法(上) ------------------------------------->
+function go2(groupno2){
+			
+		
+		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
+		
+		
 }
+
+<!--------------------------------- 訂購失敗的方法(下) ------------------------------------->
+
 	
-function go3(groupno3, group_status3){
-	if(group_status3 >= 1){
-		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
-	}else{
-		alert("非發起人或共同管理者,手別賤");
-	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+function go3(groupno3){
+	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
 }
 
 	   

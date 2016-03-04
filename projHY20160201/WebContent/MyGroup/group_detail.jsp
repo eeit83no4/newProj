@@ -274,7 +274,7 @@ function go3(groupno3, group_status3){
 			   return false;
 			});
          
-		//----------------表單送出-------------------------------
+		//----------------訂購失敗按鈕-------------------------------
 		$('#failreasonbtn').on('click',function(){			
 			var aaa=$('#failreason').val();
 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+aaa, true);

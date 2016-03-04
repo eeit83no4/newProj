@@ -1,5 +1,6 @@
 package module.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -58,9 +59,10 @@ public class _04_EmployeeDAO implements _04_Employee_interfaceDAO  {
 		getSession().save(employeeVO);			
 	}
 	@Override
-	public void update(_04_EmployeeVO employeeVO){
-		getSession().update(employeeVO);
+	public void update(List<_04_EmployeeVO> finbydep){
+		getSession().update(finbydep);
 	}
+	
 	@Override
 	public void delete(Integer user_id){
 		_04_EmployeeVO employeeVO = new _04_EmployeeVO();
@@ -119,6 +121,48 @@ public class _04_EmployeeDAO implements _04_Employee_interfaceDAO  {
 		} finally {
 			HibernateUtil.closeSessionFactory();
 		}
+	}
+public List<String[]> getAllEmp() {
+		
+		Query query= getSession().createQuery("select user_id,name from _04_EmployeeVO");
+		List<Object[]> list =query.list();
+
+		List<String[]> lis=new ArrayList<>() ;
+			for(Object[] a:list){
+				String[] k=new String[2];
+				k[0]=String.valueOf(a[0]);
+				k[1]=String.valueOf(a[1]);
+				lis.add(k);
+			}
+			return lis;
+	}
+	String FIND_BY_DEP="select user_id,name from _04_EmployeeVO where dep_id=?";
+	public List<String[]> findByDep(String dep) {
+//		return getSession().createQuery("select name from _04_EmployeeVO where dep_id=?" + dep_id).list();
+		List<String[]> list= null;
+		Query query = getSession().createQuery(FIND_BY_DEP);
+		query.setParameter(0, dep);
+		list = query.list();
+		List<String[]> lis=new ArrayList<>() ;
+		for(Object[] a:list){
+			String[] k=new String[2];
+			k[0]=String.valueOf(a[0]);
+			k[1]=String.valueOf(a[1]);
+			lis.add(k);
+		}
+		return lis;
+		
+		
+		
+	}
+	public List getAllDep() {
+		return getSession().createQuery("select org_id from _01_OrganizationVO").list();
+		
+	}
+	@Override
+	public void update(_04_EmployeeVO employeeVO) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

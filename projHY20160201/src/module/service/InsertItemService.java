@@ -37,6 +37,7 @@ public class InsertItemService {
 	}
 	
 	public int getClassFirstId(_09_Class_FirstVO bean) {
+		System.out.println(bean);
 		Query query= getSession().createQuery("from _09_Class_FirstVO where class1_name=?");
 		query.setParameter(0, bean.getClass1_name());
 		List<_09_Class_FirstVO> list22 = query.list();
@@ -52,9 +53,13 @@ public class InsertItemService {
 		Integer pk12 = 0;		
 		
 //第一層屬性
+		if(bean9.getClass1_name() != null && bean9.getClass1_name().length()>0){
 		int pk9 = getClassFirstId(bean9);  //用"便當" 取得PK2
 		bean9.setClass1_no(pk9);
+		}
 //新增商品Item
+		System.out.println(bean12.getItem_no());
+		System.out.println("pppppppppppppppppppppppppppppppppppp"+bean12.getItem_no());
 		if(bean12.getItem_no() ==null){
 			bean12.setClass_firstVO(bean9);
 			_12DAO.insert(bean12);
@@ -117,6 +122,7 @@ public class InsertItemService {
 			bean13.setClass_ThirdVO(bean11);	//複合PK
 			bean13.setClass3_name(bean11.getClass3_name());  //名子抄一遍  超熱,有點溫...
 			bean13.setExtra(dExtra);		//價格 0.0 ,0.0 ,0.0 ,5.0 ,10.0
+//			getSession().merge(bean13);
 			_13DAO.insert(bean13);		
 		}//for end	
 			return pk12;
@@ -124,7 +130,8 @@ public class InsertItemService {
 	
 	public ArrayList  cuttingHtmlString(String attributes){
 //		System.out.println(attributes);		
-		String bb = attributes.replace(" ", "");
+		String bb = attributes.replace(" ", "").replace("\"", "");
+		System.out.println(bb);
 		while(true){
 			attributes = bb;
 			bb = bb.replace(",,", ",");
@@ -141,10 +148,10 @@ public class InsertItemService {
 			if(no==-1){
 				if(list2 != null){
 //					System.out.println(list2);	
-					aList.add(list2);
+					aList.add(list2.replace("[", "").replace("]", ""));
 				}
 //				System.out.println(split[i]);
-				aList.add(split[i]);
+				aList.add(split[i].replace("[", "").replace("]", ""));
 				list2=null;
 			}		
 			else{
@@ -157,10 +164,13 @@ public class InsertItemService {
 
 			if(i == split.length-1){
 //				System.out.println(list2);
-				aList.add(list2);
+				aList.add(list2.replace("[", "").replace("]", ""));
 			}
 		}
 //		System.out.println(aList.get(1));
+		for(Object list:aList){
+			System.out.println(list);
+		}
 		return aList;
 	}
 	

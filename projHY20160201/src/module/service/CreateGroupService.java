@@ -78,7 +78,15 @@ public class CreateGroupService {
 //			System.out.println(newstoreno);	
 //			System.out.println(itemno);	
 	}
+	
+/*-------------------------------------------------------------------------------------------------------------------------------*/
 
+	public void dlData(Integer dlstore_no){
+		_07_StoreVO store=Dao07.findById(dlstore_no);
+		store.setPublic_state("9");
+		Dao07.update(store);
+	}
+	
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 	
 	//發起團購新增商品

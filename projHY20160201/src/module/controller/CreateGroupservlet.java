@@ -52,7 +52,7 @@ public class CreateGroupservlet extends HttpServlet{
 //			System.out.println("int****"+b);
 //		}
 /*----------------------------------------------------------------------------------------------------------*/
-
+		
 		int i=0;
 		CreateGroupService dao=new CreateGroupService();
 		dao.findStoreAndInsert(store_no, user_id);

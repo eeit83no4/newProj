@@ -15,7 +15,7 @@ import module.service.GetStoreClass;
 import module.service.GetStoreDataService;
 import module.service._07_StoreService;
 
-public class InsertStoreAction extends ActionSupport implements RequestAware {
+public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	
 	private String store;
 	private String storeClass;
@@ -94,7 +94,16 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 	
 	
 	public void validate() {
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		System.out.println(store);
+		System.out.println(storeClass);
+		System.out.println(phone);
 		System.out.println(attributes);
+		System.out.println(item);
+		System.out.println(address);
+		System.out.println(submit);
+		System.out.println(sub);
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 	}
 	
 	private GetStoreDataService getStoreDataService=new GetStoreDataService();

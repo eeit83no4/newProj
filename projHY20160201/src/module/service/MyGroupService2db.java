@@ -12,7 +12,8 @@ public class MyGroupService2db {
 				MyGroupService2db mg = new MyGroupService2db();
 				
 //				mg.updateGroupStatus_success(2);
-				mg.updateGroupEndDate(4);
+//				mg.updateGroupEndDate(4);
+//				mg.updateForFail(3, "ssssss");
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -46,6 +47,16 @@ public class MyGroupService2db {
 		
 		grdao.update(a);
 		
+	}
+	
+	/*-------------修改團購狀態、失敗原因-----------------------------------------------------------------*/
+	public void updateForFail(Integer group_no,String failure){
+		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
+		_16_Group_RecordVO vo = grdao.findById(group_no);
+		vo.setStatus("失敗");
+		System.out.println("failure"+failure);
+		vo.setFailure(failure);
+		grdao.update(vo);
 	}
 
 }

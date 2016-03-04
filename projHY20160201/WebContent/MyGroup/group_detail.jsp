@@ -45,9 +45,14 @@
 			<tr><th style="width:10%;">團購名稱:</th> <td style="width:30%;">${attr[0]}</td> <th style="width:12%;">公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
 			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
-			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})<c:if test='${group_status >= 1}'><c:if test='${EndSec > 0}'><input type="button" style="margin:3px" class="btn btn-default" value="立即截止"  onclick="go3(${group_no})"></c:if></c:if>
-																		<c:if test='${group_status == 0}'><c:if test='${EndSec > 0}'><input type="button" style="margin:3px" disabled class="btn btn-default" value="立即截止"  onclick="go3(${group_no})"></c:if></c:if> 
-																		</td></tr>
+			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})
+			<c:if test='${group_status >= 1 && EndSec > 0}'>
+					<input type="button" style="margin:3px" class="btn btn-default-xs btn-xs" value="立即截止"  onclick="go3(${group_no})">
+			</c:if>
+			<c:if test='${group_status == 0 && EndSec > 0}'>
+					<input type="button" style="margin:3px" disabled class="btn btn-default btn-xs" value="立即截止"  onclick="go3(${group_no})">
+			</c:if> 
+			</td></tr>
 			
 		</c:forEach>
 		</table>
@@ -62,13 +67,13 @@
 					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 				</c:if>
 				<c:if test='${EndSec > 0}'>
-					<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
+					<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go2(${group_no})"><br/>
 					<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 				</c:if>
 			</c:if>
 		
 			<c:if test='${group_status == 0}'> 
-				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
+				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go3(${group_no})"><br/>
 				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 			</c:if>
 		</c:if>
@@ -302,8 +307,8 @@ function go3(groupno3){
          
 		//----------------訂購失敗按鈕-------------------------------
 		$('#failreasonbtn').on('click',function(){			
-			var aaa=$('#failreason').val();
-			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+aaa, true);
+			var failreason=$('#failreason').val();
+			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
 			xml.send();
 			$('#failBtn').prop("disabled",true);
 		});

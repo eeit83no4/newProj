@@ -56,10 +56,8 @@
 					<div class='GroupLeft'>
 						<div class='userNumber'>${ingGroup.usersNumber}</div>
 						<div class='amount'>$${ingGroup.amount}</div>
-					</div>
-					
-					
-					<div class='GroupRight'><a href='#'>${ingGroup.holderName}發起的${ingGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
+					</div>					
+					<div class='GroupRight'>${ingGroup.holderName}發起的${ingGroup.groupName}→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
 				</div>
 				<div class='divBlock'></div>
 			</c:forEach>
@@ -74,7 +72,7 @@
 				<a href='<c:url value="/userOrder/holdGroupServlet.controller?storeNo="/>${latestStore.store_no}'>${latestStore.store_name}</a><br/>
 			</c:forEach>			
 		</div>
-		<a href='#'>更多...</a><br/>
+		<a href='<c:url value="/userOrder/holdGroupServlet.controller"/>'>更多...</a><br/>
 	</div>	
 	<!-------------------------------- 我發起的團購 ----------------------------------------->
 	<c:if test='${!empty myGroups}'>
@@ -85,8 +83,7 @@
 				<div class='Group'>
 					<div class='GroupLeft'>
 						<div class='userNumber'>${myGroup.usersNumber}</div>
-						<div class='amount'>$${myGroup.amount}</div>
-						<div class='manageGroup'><a href='#'>管理...</a></div>			
+						<div class='amount'>$${myGroup.amount}</div>									
 					</div>
 					
 					<div class='GroupRight'><a href='#'>我發起的${myGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${myGroup.groupNo}'>我也要訂</a></div>			

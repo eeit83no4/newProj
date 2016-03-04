@@ -101,5 +101,10 @@ public class AdminService {
 	public void updateAuthByUserId(String user_id,String auth){
 			a.updateAuthByUserId(user_id, auth);
 	}
+	
+	// ------------------刪除團購---------------------------------
+	public void delete(Integer group_no){
+		gr.delete(group_no);
+	}
 
 }

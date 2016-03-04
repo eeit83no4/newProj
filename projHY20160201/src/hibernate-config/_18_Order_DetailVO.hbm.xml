@@ -8,7 +8,7 @@
         <id name="detail_no" column="detail_no" >          
             <generator class="identity" />
         </id>
-        <many-to-one name="group_userVO" class="module.model._17_Group_UserVO" lazy="false">
+        <many-to-one name="group_userVO" class="module.model._17_Group_UserVO" cascade="all" lazy="false">
         	<column name="group_user_no"></column>
         </many-to-one>
 <!--         <property name="group_user_no" column="group_user_no"/> -->

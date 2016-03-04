@@ -34,7 +34,7 @@
         <property name="order_time">
             <column name="order_time" />
             </property>
-        <many-to-one name="group_RecordVO" class="module.model._16_Group_RecordVO" lazy="false">
+        <many-to-one name="group_RecordVO" class="module.model._16_Group_RecordVO" cascade="all" lazy="false">
         	<column name="group_no"></column>
         </many-to-one>
         <many-to-one name="employeeVO" class="module.model._04_EmployeeVO" lazy="false">

@@ -31,7 +31,6 @@ public class loginAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() throws Exception {
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		_04_EmployeeVO mb;
 		_04_EmployeeDAO dao=new _04_EmployeeDAO();	
 		//透過使用者的email取的使用者在資料庫的資料

@@ -35,7 +35,7 @@ public class _16_Group_RecordDAO implements _16_Group_Record_InterfaceDAO {
 			//-------------------------
 //			System.out.println(dao.getAll());
 			//-----------------------
-			System.out.println(dao.findById(1));
+//			System.out.println(dao.findById(1));
 			//------------------------
 //			_04_EmployeeVO emp=new _04_EmployeeVO();
 //			emp.setUser_id(166);
@@ -74,7 +74,8 @@ public class _16_Group_RecordDAO implements _16_Group_Record_InterfaceDAO {
 //			bean.setShipment("ppppppppppppppppppppppppppppppppppppppppppppppp");			
 //			dao.update(bean);
 			//---------------------------
-//			dao.delete(4);
+			
+//			dao.delete(3);
 
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -97,9 +98,9 @@ public class _16_Group_RecordDAO implements _16_Group_Record_InterfaceDAO {
 	/*----------------------------------------------------------------------------------------------*/
 	@Override
 	public void delete(Integer group_no) {
-		_16_Group_RecordVO group_RecordVO = new _16_Group_RecordVO();
-		group_RecordVO.setGroup_no(group_no);
-		getSession().delete(group_RecordVO);
+		_16_Group_RecordDAO dao = new _16_Group_RecordDAO();
+		dao.findById(group_no);
+		getSession().delete(dao.findById(group_no));
 	}
 
 	/*----------------------------------------------------------------------------------------------*/

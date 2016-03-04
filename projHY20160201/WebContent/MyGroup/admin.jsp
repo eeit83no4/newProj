@@ -85,7 +85,6 @@
 </div>
 </div>	
 
-
 <!-------------------------------------內容寫在上面 --------------------------------------------->
 	<!-- 	載入底部 -->
 	<jsp:include page="/footer.jsp"/>
@@ -94,7 +93,9 @@
 <!--------------------------------- javaScript ------------------------------------->
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 <script language="JavaScript">
-$(function(){
+var xml = new XMLHttpRequest();
+$(function(){	
+	//動態生成團購維護表格
 	$.each(${all_order}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.團購編號);
 		var cell2 = $("<td></td>").text(bean.截止時間);
@@ -103,13 +104,18 @@ $(function(){
 		var cell5 = $("<td></td>").text(bean.發起人);
 		var cell6 = $("<td></td>").text(bean.訂單狀態);
 		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.團購編號+')">');
-		var cell8 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.團購編號+')">');
-		
+		var cell8 = $("<td></td>").append($('<input/>')
+								  .attr('type','button')
+								  .attr('value','刪除')
+								  .attr('class','btn btn-default btn-xs')
+								  .attr('onclick','if(confirm("確定要刪除 :'+bean.團購編號+'號  '+bean.團購名稱+' 嗎??"))deletGroup('+bean.團購編號+')'))
+								  .attr('id',bean.團購編號);
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]);
 		$('#tb_group').append(row);			
 
 	});
 	
+	//動態生成店家維護表格
 	$.each(${all_store}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.店家編號);
 		var cell2 = $("<td></td>").text(bean.建立者);
@@ -121,37 +127,50 @@ $(function(){
 		$('#tb_store').append(row);
 	});
 	
+	//動態生成管理員維護表格
 	$.each(${all_admin}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.員工編號);
 		var cell2 = $("<td></td>").text(bean.員工部門);
 		var cell3 = $("<td></td>").text(bean.員工姓名);
 		if(bean.管理員資格 == 'A'){
-			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox" checked>');
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'"type="checkbox" checked>');
 		}else{
-			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox">');
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'"type="checkbox">');
 		}		
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4]);
 		$('#tb_admin').append(row);
 	});
 	
-	var xml = new XMLHttpRequest();
-	 $('#tb_admin').on('click','.aaa',function(){
+	//管理員維護checkbox狀態寫回資料庫      //checkbox的id為員工編號
+	 $('#tb_admin').on('click','input[type="checkbox"]',function(){
 		 var user_id = $(this).attr("id"); //id即員工編號
 		 if($(this).prop("checked")){
-			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=A", true);
+			xml.open("get", "/projHY20160201/admin.controller?prodaction=管理員維護&user_id="+user_id+"&auth=A", true);
 			xml.send();
 		}else{
-			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=B", true);
+			xml.open("get", "/projHY20160201/admin.controller?prodaction=管理員維護&user_id="+user_id+"&auth=B", true);
 			xml.send();
-		}
+		}		 
 	 });
-	
+
 	
 });
 
-function go(groupno){
-	location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
-}
+	//團購維護--刪除團購
+	function deletGroup(groupno){
+	$("#"+groupno).parent("tr").remove();
+	xml.open("get", "/projHY20160201/admin.controller?prodaction=刪除團購&groupno="+groupno, true);
+	xml.send();
+	}
+	//店家維護--店家團購
+
+	
+	
+	
+	//
+	function go(groupno){
+		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
+	}
 
 // function name(user_id){
 // 	location.href='<c:url value="/admin.controller?user_id='+user_id+'"/>';

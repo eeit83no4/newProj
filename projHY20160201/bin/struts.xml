@@ -3,12 +3,18 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<constant name="" value=""></constant>
+	
 	
 	<package name="insertStoreAction" namespace="/" extends="struts-default">
 		<action name="insertStoreAction" class="module.controller.InsertStoreAction">			                                       											   
-<!-- 					<result name="input">/InsertStore/upStore3.jsp</result> -->
+<!-- 					<result name="success2">/InsertStore/dom.jsp</result> -->
 				<result name="success">/InsertStore/upStore3.jsp</result>
+		</action>		
+	</package>
+	<package name="insertStoreAction2" namespace="/" extends="struts-default">
+		<action name="insertStoreAction2" class="module.controller.InsertStoreAction2">			                                       											   
+<!-- 					<result name="success2">/InsertStore/dom.jsp</result> -->
+				<result name="success">/InsertStore/dom.jsp</result>
 		</action>		
 	</package>
 	

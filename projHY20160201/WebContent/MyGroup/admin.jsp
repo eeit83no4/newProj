@@ -1,0 +1,168 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body class="home">
+<div id="wrap">
+	<!-- 	載入導覽列 -->
+	<jsp:include page="/header.jsp"/>
+
+<!-------------------------------------內容寫在下面 --------------------------------------------->
+<br>
+<br>
+
+<div class="container col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+    <li class="active"><a data-toggle="tab" href="#groupDiv">團購維護</a></li>
+    <li><a data-toggle="tab" href="#storeDiv">店家維護</a></li>
+    <li><a data-toggle="tab" href="#adminDiv">管理員維護</a></li>
+  </ul>
+</div>
+
+<div class="col-md-10 tab-content">
+<div id="groupDiv" class="tab-pane fade in active">
+	<form>
+		<table class="table table-hover table-bordered table table-condensed">
+		<thead>
+			<tr class="success">
+				<th>團購編號</th>
+				<th>截止時間</th>
+				<th>團購名稱</th>
+				<th>店家</th>
+				<th>發起人</th>
+				<th>訂單狀態</th>
+				<th>修改團購</th>
+				<th>刪除團購</th>
+			</tr>	
+		</thead>
+		<tbody id="tb_group">
+		</tbody>
+		</table>
+	</form>
+</div>
+<div id="storeDiv" class="tab-pane fade">	
+	<form>
+		<table class="table table-hover table-bordered table table-condensed">
+		<thead>
+			<tr class="success">
+				<th>店家編號</th>
+				<th>建立者</th>
+				<th>店家名稱</th>
+				<th>修改店家</th>
+				<th>刪除店家</th>
+			</tr>	
+		</thead>
+		<tbody id="tb_store">
+		</tbody>
+		</table>
+	</form>
+</div>
+<div id="adminDiv" class="tab-pane fade">
+	<form>
+		<table class="table table-hover table-bordered table table-condensed">
+		<thead>
+			<tr class="success">
+				<th>員工編號</th>
+				<th>員工部門</th>
+				<th>員工姓名</th>
+				<th>管理員資格</th>
+			</tr>	
+		</thead>
+		<tbody id="tb_admin">
+		</tbody>
+		</table>
+	</form>
+</div>
+</div>	
+
+
+<!-------------------------------------內容寫在上面 --------------------------------------------->
+	<!-- 	載入底部 -->
+	<jsp:include page="/footer.jsp"/>
+</div>
+
+<!--------------------------------- javaScript ------------------------------------->
+<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+<script language="JavaScript">
+$(function(){
+	$.each(${all_order}, function(index, bean){
+		var cell1 = $("<td></td>").text(bean.團購編號);
+		var cell2 = $("<td></td>").text(bean.截止時間);
+		var cell3 = $("<td></td>").text(bean.團購名稱);
+		var cell4 = $("<td></td>").text(bean.店家);
+		var cell5 = $("<td></td>").text(bean.發起人);
+		var cell6 = $("<td></td>").text(bean.訂單狀態);
+		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.團購編號+')">');
+		var cell8 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.團購編號+')">');
+		
+		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]);
+		$('#tb_group').append(row);			
+
+	});
+	
+	$.each(${all_store}, function(index, bean){
+		var cell1 = $("<td></td>").text(bean.店家編號);
+		var cell2 = $("<td></td>").text(bean.建立者);
+		var cell3 = $("<td></td>").text(bean.店家名稱);
+		var cell4 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
+		var cell5 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
+		
+		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5]);
+		$('#tb_store').append(row);
+	});
+	
+	$.each(${all_admin}, function(index, bean){
+		var cell1 = $("<td></td>").text(bean.員工編號);
+		var cell2 = $("<td></td>").text(bean.員工部門);
+		var cell3 = $("<td></td>").text(bean.員工姓名);
+		if(bean.管理員資格 == 'A'){
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox" checked>');
+		}else{
+			var cell4 = $("<td></td>").append('<input id="'+bean.員工編號+'" class="aaa" type="checkbox">');
+		}		
+		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4]);
+		$('#tb_admin').append(row);
+	});
+	
+	var xml = new XMLHttpRequest();
+	 $('#tb_admin').on('click','.aaa',function(){
+		 var user_id = $(this).attr("id"); //id即員工編號
+		 if($(this).prop("checked")){
+			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=A", true);
+			xml.send();
+		}else{
+			xml.open("get", "/projHY20160201/admin.controller?user_id="+user_id+"&auth=B", true);
+			xml.send();
+		}
+	 });
+	
+	
+});
+
+function go(groupno){
+	location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
+}
+
+// function name(user_id){
+// 	location.href='<c:url value="/admin.controller?user_id='+user_id+'"/>';
+// }
+// function goStore(){
+// 	location.href='<c:url value="/admin.controller?prodaction=店家維護"/>';
+// }
+
+
+</script>
+
+
+</body>
+</html>

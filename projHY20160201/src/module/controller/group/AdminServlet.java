@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.model._04_EmployeeVO;
 import module.service.AdminService;
 import net.sf.json.JSONArray;
 @WebServlet(
@@ -20,13 +21,16 @@ public class AdminServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String prodaction =null;
-		prodaction = req.getParameter("prodaction");
+
+//		_04_EmployeeVO employeeVO = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
+//		System.out.println(employeeVO.getUser_id()); //登入者的ID
+		//接收資料
+		String prodaction = req.getParameter("prodaction");
 		String auth = req.getParameter("auth");
 		String user_id = req.getParameter("user_id");
+		String group_noString = req.getParameter("groupno");
 		
-		
-		if(prodaction!=null){
+	
 			if(prodaction.equals("主畫面")){
 				List<Map> all_order = adminservice.orderMaintain();
 				JSONArray jSONObject1=JSONArray.fromObject(all_order);
@@ -38,14 +42,14 @@ public class AdminServlet extends HttpServlet {
 				req.setAttribute("all_store", jSONObject2);
 				req.setAttribute("all_admin", jSONObject3);
 				req.getRequestDispatcher("/MyGroup/admin.jsp").forward(req, resp);	
-			}		
+			}
+			else if(prodaction.equals("刪除團購")){
+				Integer group_no=Integer.valueOf(group_noString).intValue();
+				adminservice.delete(group_no);
+			}else if(prodaction.equals("管理員維護")){
+				adminservice.updateAuthByUserId(user_id, auth);
+			}
 			
-		}else if(auth.equals("A")||auth.equals("B")){
-			adminservice.updateAuthByUserId(user_id, auth);
-		}
-		
-		
-		
 	}
 
 	@Override

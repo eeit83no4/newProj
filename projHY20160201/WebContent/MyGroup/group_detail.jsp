@@ -60,7 +60,7 @@
 		
 <%-- 			<c:if test='${EndSec < 0}'> --%>
 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no}, ${group_status}, ${EndSec})"><br/>
-				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" onclick="go2(${group_no}, ${group_status}, ${EndSec})"><br/>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 <%-- 			</c:if> --%>
 		</c:if>
 <%-- 		</c:if> --%>
@@ -68,6 +68,8 @@
 	
 </div>
 <br>
+
+
 
 <div align="right">
 <button id ="excelbtn" class="btn btn-link"><Img Src="../images/excel.png">匯出Excel</button>
@@ -137,10 +139,31 @@
 <!-------------------------------------內容寫在上面 --------------------------------------------->
 	<!-- 	載入底部 -->
 	<jsp:include page="/footer.jsp"/>
+    <!-- 	訂購失敗理由視窗 -->
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header label-danger">
+          <h4 class="modal-title"><b>輸入訂購失敗原因</h4>
+        </div>        
+        <div class="modal-body" align="center">
+			<textarea id="failreason" style="width:200px;height:100px;"></textarea>
+        </div>        
+        <div class="modal-footer">
+        	<button type="button" id="failreasonbtn" class="btn btn-default" data-dismiss="modal">送出</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
 </div>
 
 <!--------------------------------- javaScript ------------------------------------->
-<script>     	  
+<script>
+var xml = new XMLHttpRequest();
+
 function go1(groupno, group_status, EndSec){
 	if(group_status >= 1){
 		if(EndSec <= 0){
@@ -180,7 +203,7 @@ function go3(groupno3, group_status3){
 	   
 	   
 	   $(function(){			   
-		    
+		 //----------------抓表1-------------------------------
 		   $.each(${detail_ByItem}, function(index, ByItem){
 			   var aa = new Array();
 			   var bb = new Array();
@@ -204,6 +227,7 @@ function go3(groupno3, group_status3){
 			   $('#tb1').append(row);								
 			});
 		   
+		 //----------------抓表2-------------------------------
 		   $.each(${detail_ByUser}, function(index, ByUser){
 			   var aa = new Array();
 			   var bb = new Array();
@@ -211,9 +235,9 @@ function go3(groupno3, group_status3){
 			   for(var j = 0; j<ByUser.length; j++){
 				   if(j<5){
 					   aa[j] = $("<td></td>").text(ByUser[j]);
-					   console.log('first'+j);
+// 					   console.log('first'+j);
 				    }else{
-				    	console.log('else'+j);
+// 				    	console.log('else'+j);
 				    	if(ByUser[j+2]==null){
 				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
 				    	}else{
@@ -229,7 +253,7 @@ function go3(groupno3, group_status3){
 			   $('#tb2').append(row);								
 			});
 		   
-		   
+		 //----------------抓表3-------------------------------
 		   $.each(${detail_Detail}, function(index, Detail){
 			   var aa = new Array(Detail.length);
 			   for(var j = 0; j<Detail.length; j++){	  
@@ -240,16 +264,23 @@ function go3(groupno3, group_status3){
 			});
 		   
 		   
-		   $(function () {
-			    $('#excelbtn').click(function () {
-			        var blob = new Blob([document.getElementById('table_Detail').innerHTML], {
-			            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-			        });
-			        var strFile = "Group.xls";
-			        saveAs(blob, strFile);
-			        return false;
-			    });
+         //----------------excel下載-------------------------------
+			$('#excelbtn').click(function () {
+			   var blob = new Blob([document.getElementById('table_Detail').innerHTML], {
+			       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+			   });
+			   var strFile = "Group.xls";
+			   saveAs(blob, strFile);
+			   return false;
 			});
+         
+		//----------------表單送出-------------------------------
+		$('#failreasonbtn').on('click',function(){			
+			var aaa=$('#failreason').val();
+			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+aaa, true);
+			xml.send();
+			$('#failBtn').prop("disabled",true);
+		});
 
 	});
 

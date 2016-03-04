@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         
-        <set name="group_Users" table="group_user" lazy="true" cascade="all" inverse="false">
+        <set name="group_Users" table="group_user" lazy="true" cascade="all" inverse="true" >
         	<key column="group_no"></key>
         	<one-to-many class="module.model._17_Group_UserVO"/>
         </set>

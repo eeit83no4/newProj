@@ -84,7 +84,7 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 //			bean.setAuth("d");
 //			dao.update(bean);
 			//Delete
-//			dao.delete(6);
+//			dao.delete(1);
 			
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();

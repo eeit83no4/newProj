@@ -8,21 +8,38 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <style type="text/css">
-
+#allstore{
+width:400px;
+height:300px;
+border: 3px green double; 
+overflow:scroll;
+float:left
+}
+#mystore{
+border: 3px green double; 
+margin-left:420px;
+width:400px;
+overflow:scroll;
+}
 </style>
 </head>
 <body  class="home">
 <div id="wrap">
 	<!-- 	載入導覽列 -->
 	<jsp:include page="/header.jsp"/>
-	<div>
-		<input type="text" id="txtSearch" name="keyword" autocomplete="off">
+	<div id="allstore">	
+		<div>
+			<input type="text" id="txtSearch" name="keyword" autocomplete="off">
+		</div>
+		<div id="div1"></div>
 	</div>
-	<div id="div1"></div>
-	<div>
-		<input type="text" id="sotretext" name="mystoreneme" autocomplete="off">
-	</div>
-	<div id="div2"></div>
+	<!-- ------------------- -->
+	<div id="mystore">	
+		<div>
+			<input type="text" id="sotretext" name="mystoreneme" autocomplete="off">
+		</div>
+		<div id="div2"></div>
+	</div>	
 	<!-- 判斷使用者是否有登入 -->
 <c:if test="${empty LoginOK}">
 	<c:redirect url="index.jsp"/>
@@ -74,19 +91,7 @@
 							//改呼叫Servlet
 							eleBtn.setAttribute("href","/projHY20160201/OpenStoreForGroupServlet.select?store_no="+datas.list[j][0]);
 							eleBtn.appendChild(txtBtn);
-							var upBtn = document.createElement("input");
-							upBtn.setAttribute("type","button");
-							upBtn.setAttribute("value","修改");
-							upBtn.setAttribute("onclick","updata("+datas.list[j][0]+")");
-							var dlBtn = document.createElement("input");
-							dlBtn.setAttribute("type","button");
-							dlBtn.setAttribute("id",datas.list[j][0]);
-							dlBtn.setAttribute("value","刪除");
-							dlBtn.setAttribute("onclick","dldata("+datas.list[j][0]+")");
-							
 							p.appendChild(eleBtn);
-							p.appendChild(upBtn);
-							p.appendChild(dlBtn);
 							eleDiv.appendChild(p);							
 						}
 						show.appendChild(eleDiv);
@@ -96,9 +101,20 @@
 							var p=document.createElement("p");
 							var eleBtn = document.createElement("a");
 							eleBtn.setAttribute("style","text-decoration:none");
-							eleBtn.setAttribute("href","OpenStoreForGroup.jsp?store_no="+datas.mylists[i][0]);
+							eleBtn.setAttribute("href","/projHY20160201/OpenStoreForGroupServlet.select?store_no="+datas.mylists[i][0]);
 							eleBtn.appendChild(txtBtn1);
+							var upBtn = document.createElement("input");
+							upBtn.setAttribute("type","button");
+							upBtn.setAttribute("value","修改");
+							upBtn.setAttribute("onclick","updata("+datas.list[i][0]+")");
+							var dlBtn = document.createElement("input");
+							dlBtn.setAttribute("type","button");
+							dlBtn.setAttribute("id",datas.list[i][0]);
+							dlBtn.setAttribute("value","刪除");
+							dlBtn.setAttribute("onclick","dldata("+datas.list[i][0]+")");
 							p.appendChild(eleBtn);
+							p.appendChild(upBtn);
+							p.appendChild(dlBtn);
 							eleDivX.appendChild(p);							
 						}
 						showmystore.appendChild(eleDivX);

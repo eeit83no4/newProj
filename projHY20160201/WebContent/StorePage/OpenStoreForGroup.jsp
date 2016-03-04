@@ -11,6 +11,7 @@
 <style>
  #storename{
  margin-top: 10px;
+ font-size: 24px;
  }
  #f1 { 
  top:0px;
@@ -18,18 +19,23 @@
  height:500px;
  border: 3px green double; 
  overflow:scroll;
+ font-size: 24px;
  }
  dt{
  margin-left: 40px;
+ font-size: 24px;
  }
  dd{
  margin-left: 60px;
+ font-size: 24px;
  }
  .text{
  width: 48px;
+ font-size: 24px;
  }
  span{
  margin-right: 12px;
+ font-size: 24px;
  }
 </style>
 </head>
@@ -41,9 +47,9 @@
 
 	<form action="/projHY20160201/CreateGroutservlet.controller" method="post">
 	<div id="storename">
-		店名:<input type="text" name="group_name" value="${store.store_name}"><br>
-		電話:<input type="text" name="phone" value="${store.phone}"><br>
-		地址:<input type="text" name="address" value="${store.address}">
+		店名:<span style="font-size: 24px" name="group_name">${store.store_name}</span><br>
+		電話:<span style="font-size: 24px" name="phone">${store.phone}</span><br>
+		地址:<span style="font-size: 24px" name="address">${store.address}</span>
 	</div>
 	
 	<div id="f1" class="col-md-5"></div>

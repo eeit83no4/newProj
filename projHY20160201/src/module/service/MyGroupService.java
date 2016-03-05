@@ -454,7 +454,7 @@ public class MyGroupService {
 		int result = 0;
 		for(_17_Group_UserVO a:gu.findByGroupUserId2(group_user_id, group_no)){
 			if(!a.getCo_holder().equals("C")){
-				result = 1;			
+				result = 1;		//有權限	
 			}			
 		}	
 		return result;		

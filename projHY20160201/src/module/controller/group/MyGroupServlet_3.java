@@ -28,7 +28,7 @@ public class MyGroupServlet_3 extends HttpServlet {
 		String temp_group_no = req.getParameter("xxx");
 		String prodaction = req.getParameter("prodaction");
 		_04_EmployeeVO emp = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
-		
+		String failure = req.getParameter("failure");
 		//轉換資料
 		Integer group_no = Integer.parseInt(temp_group_no); 
 		//驗證資料
@@ -95,6 +95,10 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.setAttribute("detailUpper", detailUpper);
 			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
 						
+			
+		}else if(prodaction.equals("訂購失敗")){
+			MyGroupService2db mgsService = new MyGroupService2db();
+			mgsService.updateForFail(group_no, failure);
 			
 		}
 

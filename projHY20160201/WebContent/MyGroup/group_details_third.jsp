@@ -8,6 +8,7 @@
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" /> --%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script language=JavaScript src="${pageContext.request.contextPath}/js/FileSaver.min.js"></script>
 <title>Insert title here</title>
@@ -61,7 +62,8 @@
 <script language="JavaScript"> 
 	
 	$(function(){
-		console.log('${select[0].店家}');
+// 		console.log('${select[0].店家}');
+		var sum=0;
 		$.each(${select}, function(index, bean){
 			var cell1 = $("<td></td>").text(bean.截止時間);
 			var cell2 = $("<td></td>").text(bean.團購名稱);
@@ -72,11 +74,12 @@
 			var cell7 = $("<td></td>").text(bean.數量);
 			var cell8 = $("<td></td>").text(bean.實付金額);
 			var cell9 = $("<td></td>").text(bean.實付小計);
-			
+			sum=sum+bean.實付小計;
 			var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9]);
-			$('#tb').append(row);			
-
+			$('#tb').append(row);
 		});
+// 		console.log(sum);
+		$('#tb').append("<tr><td colspan='9' class='text-right'>"+"<b>總計:</b>&nbsp&nbsp&nbsp"+sum+"</td></tr>");
 		
 		$(function () {
 		    $('Button').click(function () {

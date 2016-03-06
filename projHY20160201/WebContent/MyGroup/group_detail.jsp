@@ -201,7 +201,7 @@ function go1(groupno){
 function go2(groupno2){
 			
 		
-		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
+		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno;
 		
 		
 }
@@ -227,7 +227,7 @@ function go2(groupno2){
 	
 //----------------立即截止按鈕-------------------------------	
 function go3(groupno3){
-	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
+	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno;		
 }
 
 	   

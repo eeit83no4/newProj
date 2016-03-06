@@ -115,10 +115,17 @@ public class createItemServlet extends HttpServlet {
 		//4.-新增第二第三層屬性class2,class3及新增item_class_third
 		newItemsService.insertItemClassThird(itemNo, class2class3, extraStuff);
 		//---------------開始跳轉----------------
-		if(errorMsg!=null||errorMsg.size()>0){
+		if(!errorMsg.isEmpty()){
 			request.setAttribute("errorMsg", errorMsg);
-			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);			
+			request.setAttribute("storeNo", storeNo);
+			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
+			return;			
+		}else{
+			request.setAttribute("storeNo", storeNo);
+			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
+			return;
 		}
+		
 		
 	}
 

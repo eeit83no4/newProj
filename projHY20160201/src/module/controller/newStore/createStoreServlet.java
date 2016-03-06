@@ -25,7 +25,15 @@ public class createStoreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		_07_StoreVO storeVO=new _07_StoreVO();
 		
-		 
+		String storeNoForUpdate=request.getParameter("storeNo");
+		
+		
+		if(storeNoForUpdate!=null&&storeNoForUpdate.trim().length()>0){
+			
+		}else{
+			
+		}
+		
 		String storeName=request.getParameter("storeName");
 		String storePhone=request.getParameter("storePhone");
 		String storeAdd=request.getParameter("storeAdd");

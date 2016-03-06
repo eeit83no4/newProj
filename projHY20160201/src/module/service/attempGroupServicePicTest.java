@@ -102,12 +102,10 @@ public class attempGroupServicePicTest {
 //	}
 	
 	//使用緩衝區
-	public String xxxBuffer(){
-		
+	public String xxxBuffer(){		
 		File file=new File("C:/temp/zhaopai.jpg");//來源，使用者瀏覽器
 		byte[] bFile=new byte[(int)file.length()];		
-		String picPath=null;//目的地，本機儲存路徑
-		
+		String picPath=null;//目的地，本機儲存路徑		
 		FileOutputStream fileOutputStream;
 		try {
 			int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱

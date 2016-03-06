@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,8 +45,9 @@
 				<font><a href='#'>青茶</a></font>&nbsp;&nbsp;
 			</div>
 			<!--  -->
-			<form>
-				<span>商品名稱：</span><input type='text' name='itemName' size='20' required="required"/><span class='required'>(必填)</span><br/>
+			<form enctype="multipart/form-data" action='<c:url value="/newStore/createItemServlet.controller"/>' method='post'>
+				<input type='text' name='storeNo' value='${storeNo}' style='display:none'>
+				<span>商品名稱：</span><input type='text' name='itemName' size='20' required="required"/><span class='required'>${errorMsg.noItemName}(必填)</span><br/>
 				<span>商品類型：</span>
 				<label><input type='radio' name='itemClass1st' value='飲料' checked='checked'>飲料</label>
 				<label><input type='radio' name='itemClass1st' value='便當'>便當</label>
@@ -53,8 +55,9 @@
 				<label><input type='radio' name='itemClass1st' value='其他'>其他</label><br/>
 				<!-- 商品大小價錢區 -->
 				<span>商品價錢：</span><input type='text' size='60' name='SizePrice' required="required"/><span class='required'>(必填)</span><br/>
+				<span class='required'>${errorMsg.noSizePrice}</span><br/>
 				<!-- 商品照片 -->
-				<span>商品照片：</span><input type="file" accept="image/*" /><hr/>
+				<span>商品照片：</span><input type="file" name='itemPic' accept="image/*" /><hr/>
 				<!-- 第二第三層屬性區 -->
 				<span>商品細項(單選)：</span><br/>
 				<textarea name='class2class3' rows="4" cols="50"></textarea><hr/>
@@ -63,7 +66,7 @@
 				<textarea name='extraStuff' rows="4" cols="50"></textarea><br/>
 				<!--  -->
 				<div id='newItemButton'>
-					<input type='button' value='新增商品'>
+					<input type='submit' value='新增商品'>
 				</div>
 				<!--  -->
 				<div id='newItemButton'>
@@ -92,6 +95,7 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script>
 	$(function(){
+		var storeNo='${storeNo}';//店家編號
 		//-----彈跳視窗
 	    $( "#dialog" ).dialog({
 	        autoOpen: false,	        

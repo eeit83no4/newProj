@@ -19,6 +19,9 @@
 .required{
 	color:red;
 }
+#nextBT{
+	text-align:center;
+}
 </style>
 </head>
 <body  class="home">
@@ -39,7 +42,9 @@
 				<label><input type='checkbox' name='sotreClass' value='甜點類'>甜點類</label>
 				<label><input type='checkbox' name='sotreClass' value='下午茶'>下午茶</label>
 				<label><input type='checkbox' name='sotreClass' value='其他'>其他</label><br/>
-				<input type='button' value='新增店家'><input type='button' value='修改店家'>
+				<div id='nextBT'>
+					<input type='button' value='下一步'>
+				</div>
 			</form>
 		</div>
 		

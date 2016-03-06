@@ -128,7 +128,7 @@ public class userOrderAction extends ActionSupport{
 				if(picPath.split("\\.")[1].toLowerCase().equals(pictureSubs[j])){
 					isPic=true;
 					break;
-				}else if (i == pictureSubs.length - 1){
+				}else if (j == pictureSubs.length - 1){
 					System.out.println("不是圖片");
 				}
 			}

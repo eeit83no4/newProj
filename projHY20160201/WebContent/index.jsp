@@ -45,26 +45,28 @@
 	  function renderButton() {//設計登入按鈕的樣式
 	    gapi.signin2.render('my-signin2', {
 	      'scope': 'https://www.googleapis.com/auth/plus.login',
-	      'width': 80,
-	      'height': 20,
-	      'longtitle': false,
+	      'width': 250,
+	      'height': 50,
+	      'longtitle': true,
 	      'theme': 'dark',
 	      'onsuccess': onSuccess,
 	      'onfailure': onFailure
 	    });
 	  }
 </script>
-
-
+<style>
+</style>
 </head>
-<body>
- <div id="my-signin2"></div><br/>
- <a href="welcome.jsp">welcome</a><br/>
- <a href="page3.jsp">page3</a><br/>
- <a href="StorePage/SelectStoreName.jsp">store</a><br/>
- <a href="MyGroup/index.jsp">MyGroupIndex</a><br/>
+<body style='background-color:#555'>
 
-
+	<div style='text-align:center;width:420px;height:320px;margin:0 auto'>
+		<div style='width:320px;margin-top:150px;margin-left:50px'>
+			<img src='images/logo.png'/>	
+			<div style='width:250px;margin-left:35px'>
+				<div id="my-signin2"></div>
+			</div>
+		</div>
+	</div>
 
 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </body>

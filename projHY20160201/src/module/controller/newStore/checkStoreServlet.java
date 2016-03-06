@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import module.dao._07_StoreDAO;
 import module.model._07_StoreVO;
+import module.service.newStore.updateStoreService;
 
 /**
  * Servlet implementation class checkStoreServlet
@@ -18,7 +19,7 @@ import module.model._07_StoreVO;
 public class checkStoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;       
     private _07_StoreDAO _07dao=new _07_StoreDAO();
-	
+	private updateStoreService updateStoreService=new updateStoreService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String storeNo=request.getParameter("storeNo");
@@ -27,8 +28,10 @@ public class checkStoreServlet extends HttpServlet {
 			System.out.println("xxxxxxxxxxxxxx");
 			int store_no=Integer.parseInt(storeNo);
 			_07_StoreVO storeVO=_07dao.findById(store_no);
+			String storeClasses=updateStoreService.findStoreClass(store_no);
 			request.setAttribute("storeVO", storeVO);
-			request.getRequestDispatcher("").forward(request, response);
+			request.setAttribute("storeClasses", storeClasses);
+			request.getRequestDispatcher("/userOrder/createItems/createStore.jsp").forward(request, response);
 			return;
 		}else{
 			//----------新增店家

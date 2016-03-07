@@ -25,7 +25,7 @@ public class SelectItemServlet extends HttpServlet {
 		GetAttributes att=new GetAttributes();
 
 		 JSONObject json=JSONObject.fromObject(att.find3nds(itemNo));
-//		 System.out.println(json);
+		 System.out.println(json);
 	
 		 resp.getWriter().print(json);
 //		 resp.getWriter().println("aa");

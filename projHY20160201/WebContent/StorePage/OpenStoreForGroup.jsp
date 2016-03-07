@@ -89,7 +89,6 @@
 			</c:forEach>
 		})
 
-		
 		$('#BT').click(function(){
 			var xml = new XMLHttpRequest();
 			var itemno=[];
@@ -98,23 +97,9 @@
 				itemno.push($(this).val());
 				console.log(itemno);
 			})
-			
-			xml.onreadystatechange = function(){
-				if (xml.readyState == 4) {
-					if (xml.status == 200){
-						
-					}
-				}
-			}
-// 				var storeno=${store_no};
-				
 				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
 				xml.send();	
 		})
-	
-		
-		
-		
 </script>
 </body>
 </html>

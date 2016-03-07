@@ -9,6 +9,8 @@ import module.dao._12_ItemDAO;
 import module.dao._13_Item_Class_ThirdDAO;
 import module.dao._14_SizeDAO;
 import module.dao._15_Item_PriceDAO;
+import module.model._07_StoreVO;
+import module.model._09_Class_FirstVO;
 import module.model._10_Class_SecondVO;
 import module.model._11_Class_ThirdVO;
 import module.model._12_ItemVO;
@@ -79,7 +81,94 @@ public class newItemsService {
 		}
 		
 	}
+	//--------------------新增時沒有加料------------------------
+	public void insertItemwithouExtra(Integer itemNo,String c2c3){
+		String c3NoString=null;
+		for(String a:c2c3.split(";")){
+			String[] c2c3First=a.split(",");
+			String c2Name=c2c3First[0];//取得第二層屬性
+			//判斷第二層屬性是否重複
+			Integer c2No=newItemsClassService.findClass2ByName(c2Name,itemNo);
+			//判斷第三層屬性			
+			for(int i=1;i<c2c3First.length;i++){
+				String c3Name=c2c3First[i];
+				if(c3NoString==null){
+					c3NoString=String.valueOf(newItemsClassService.findClass3ByName(c3Name, c2No));
+				}else{
+					c3NoString=c3NoString+","+newItemsClassService.findClass3ByName(c3Name, c2No);
+				}				
+			}			
+		}
+		for(String a:c3NoString.split(",")){
+			_13_Item_Class_ThirdVO _13VO=new _13_Item_Class_ThirdVO();
+			_12_ItemVO _12VO=new _12_ItemVO();
+			_11_Class_ThirdVO _11VO=_11dao.findById(Integer.parseInt(a));
+			_12VO.setItem_no(itemNo);
+			_13VO.setItemVO(_12VO);
+			_13VO.setClass_ThirdVO(_11VO);
+			_13VO.setClass3_name(_11VO.getClass3_name());
+			_13dao.insert(_13VO);			
+		}		
+	}
+	//-----------------------------新增時沒有第二第層屬性------------------------
+	public void insertItemwithoutc2c3(Integer itemNo,String extraStuff){
+		String c3NoString=null;
+		for(String a:extraStuff.split(",")){
+			int start=a.indexOf("(");			
+			String c3extraName=a.substring(0, start);
+			System.out.println("create service c3extraName="+c3extraName);
+			//找出第二層加料的編號
+			int c2ExtraNo=0;
+			for(_10_Class_SecondVO b:_10dao.getAll()){
+				if(b.getClass2_name().equals("加料")){
+					c2ExtraNo=b.getClass2_no();
+				}
+			}
+			//判斷第三層是否重複
+			int c3ExtraNo=0;
+			for(_11_Class_ThirdVO c:_11dao.getAll()){
+				if(c3extraName.equals(c.getClass3_name())){
+					c3ExtraNo=c.getClass3_no();
+					if(c3NoString==null){
+						c3NoString=String.valueOf(c3ExtraNo);
+					}else{
+						c3NoString=c3NoString+","+c3ExtraNo;
+					}					
+				}
+			}
+			if(c3ExtraNo==0){
+				_11_Class_ThirdVO _11VO=new _11_Class_ThirdVO();
+				_10_Class_SecondVO _10VO=new _10_Class_SecondVO();
+				_10VO.setClass2_no(c2ExtraNo);
+				_11VO.setClass_SecondVO(_10VO);
+				_11VO.setClass3_name(c3extraName);
+				_11dao.insert(_11VO);
+				c3NoString=c3NoString+","+(int)getSession().getIdentifier(_11VO);
+			}			
+		}
+		
+		System.out.println(c3NoString);
+		for(String a:c3NoString.split(",")){
+			_13_Item_Class_ThirdVO _13VO=new _13_Item_Class_ThirdVO();
+			_12_ItemVO _12VO=new _12_ItemVO();
+			_11_Class_ThirdVO _11VO=_11dao.findById(Integer.parseInt(a));
+			_12VO.setItem_no(itemNo);
+			_13VO.setItemVO(_12VO);
+			_13VO.setClass_ThirdVO(_11VO);
+			_13VO.setClass3_name(_11VO.getClass3_name());			
+			for(String b:extraStuff.split(",")){
+				int start=b.indexOf("(");
+				int end=b.indexOf(")");				
+				if(_11VO.getClass3_name().equals(b.substring(0,start))){
+					_13VO.setExtra(Double.parseDouble(b.substring(start+1, end)));
+				}			
+			}			
+			_13dao.insert(_13VO);			
+		}
+	}
 	
+	
+	//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓一組↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 	//-------------------新增第二第三層屬性class2,class3(先新增商品)
 	//冷熱,正常全冰,少冰,去冰;
 	//甜度,正常全糖,少糖,半糖,無糖;
@@ -157,16 +246,26 @@ public class newItemsService {
 			_13dao.insert(_13VO);			
 		}		
 	}
-		
+	//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑一組↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑	
 	//------------------測試------------
 	public static void main(String args[]){
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			newItemsService newItem=new newItemsService();
 			//------
+			_12_ItemVO itemVO=new _12_ItemVO();
+			_09_Class_FirstVO _09VO=new _09_Class_FirstVO();
+			_07_StoreVO _07VO=new _07_StoreVO();
+			_07VO.setStore_no(1);
+			_09VO.setClass1_no(1);
+			itemVO.setItem_name("啦啦啦快點測試啦");
+			itemVO.setClass_firstVO(_09VO);
+			itemVO.setStoreVO(_07VO);
+			Integer itemNO=newItem.newItems(itemVO);
+			
 			String c2c3="冷熱,正常全冰,少冰,去冰;甜度,正常全糖,少糖,半糖,無糖";
 			String extraStuff="加珍珠(5),加椰果(10),加芋頭(20)";
-			System.out.println(newItem.findC2C3ByName(15,c2c3, extraStuff));
+			newItem.insertItemwithoutc2c3(itemNO,extraStuff);
 			
 			
 			

@@ -38,32 +38,36 @@
 		<div id='leftDiv'>
 			<h2>商品設定</h2>
 			<!-- 商品名稱 -->
-			<div>
-				<font><a href='#'>紅茶</a></font>&nbsp;&nbsp;
-				<font><a href='#'>奶茶</a></font>&nbsp;&nbsp;
-				<font><a href='#'>綠茶</a></font>&nbsp;&nbsp;
-				<font><a href='#'>青茶</a></font>&nbsp;&nbsp;
-			</div>
+			<c:if test="${!empty itemVOs}">				
+				<div>
+					<c:forEach var='itemVO' items='${itemVOs}'>
+						<font><a href='#'>${itemVO.item_name}</a></font>&nbsp;&nbsp;
+					</c:forEach>					
+				</div>				
+			</c:if>
 			<!--  -->
 			<form enctype="multipart/form-data" action='<c:url value="/newStore/createItemServlet.controller"/>' method='post'>
 				<input type='text' name='storeNo' value='${storeNo}' style='display:none'>
-				<span>商品名稱：</span><input type='text' name='itemName' size='20' required="required"/><span class='required'>${errorMsg.noItemName}(必填)</span><br/>
-				<span>商品類型：</span>
-				<label><input type='radio' name='itemClass1st' value='飲料' checked='checked'>飲料</label>
-				<label><input type='radio' name='itemClass1st' value='便當'>便當</label>
-				<label><input type='radio' name='itemClass1st' value='甜點'>甜點</label>				
-				<label><input type='radio' name='itemClass1st' value='其他'>其他</label><br/>
-				<!-- 商品大小價錢區 -->
-				<span>商品價錢：</span><input type='text' size='60' name='SizePrice' required="required"/><span class='required'>(必填)</span><br/>
-				<span class='required'>${errorMsg.noSizePrice}</span><br/>
-				<!-- 商品照片 -->
-				<span>商品照片：</span><input type="file" name='itemPic' accept="image/*" /><hr/>
-				<!-- 第二第三層屬性區 -->
-				<span>商品細項(單選)：</span><br/>
-				<textarea name='class2class3' rows="4" cols="50"></textarea><hr/>
-				<!-- 加料區 -->
-				<span>加料(複選)：</span><br/>
-				<textarea name='extraStuff' rows="4" cols="50"></textarea><br/>
+				<c:forEach var='itemVO' items='${itemVOs}' begin='1' end='1'>
+					<c:set var='itemNo' value='${itemVO.item_no}'/>
+					<span>商品名稱：</span><input type='text' name='itemName' size='20' required="required" value='${itemVO.item_name}'/><span class='required'>${errorMsg.noItemName}(必填)</span><br/>
+					<span>商品類型：</span>
+					<label><input type='radio' name='itemClass1st' value='飲料' checked='checked'>飲料</label>
+					<label><input type='radio' name='itemClass1st' value='便當'>便當</label>
+					<label><input type='radio' name='itemClass1st' value='甜點'>甜點</label>				
+					<label><input type='radio' name='itemClass1st' value='其他'>其他</label><br/>
+					<!-- 商品大小價錢區 -->
+					<span>商品價錢：</span><input type='text' size='60' name='SizePrice' required="required" value='${itemsSize[itemNo]}'/><span class='required'>(必填)</span><br/>
+					<span class='required'>${errorMsg.noSizePrice}</span><br/>
+					<!-- 商品照片 -->
+					<span>商品照片：</span><input type="file" name='itemPic' accept="image/*" /><hr/>
+					<!-- 第二第三層屬性區 -->
+					<span>商品細項(單選)：</span><br/>
+					<textarea name='class2class3' rows="4" cols="50">${itemsc2c3[itemNo]}</textarea><hr/>
+					<!-- 加料區 -->
+					<span>加料(複選)：</span><br/>
+					<textarea name='extraStuff' rows="4" cols="50">${itemsextra[itemNo]}</textarea><br/>
+				</c:forEach>
 				<!--  -->
 				<div id='newItemButton'>
 					<input type='submit' value='新增商品'>

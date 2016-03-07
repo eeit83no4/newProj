@@ -65,7 +65,7 @@ public class createStoreServlet extends HttpServlet {
 		if(storeNo>0){
 			//店家成功新增
 			request.setAttribute("storeNo", storeNo);
-			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
+			request.getRequestDispatcher("/newStore/showItemServlet").forward(request, response);
 			return;
 		}else{
 			//店家新增失敗

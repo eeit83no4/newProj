@@ -103,7 +103,7 @@ $(function(){
 		var cell4 = $("<td></td>").text(bean.店家);
 		var cell5 = $("<td></td>").text(bean.發起人);
 		var cell6 = $("<td></td>").text(bean.訂單狀態);
-		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.團購編號+')">');
+		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');
 		var cell8 = $("<td></td>").append($('<input/>')
 								  .attr('type','button')
 								  .attr('value','刪除')
@@ -120,8 +120,8 @@ $(function(){
 		var cell1 = $("<td></td>").text(bean.店家編號);
 		var cell2 = $("<td></td>").text(bean.建立者);
 		var cell3 = $("<td></td>").text(bean.店家名稱);
-		var cell4 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
-		var cell5 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="go('+bean.店家編號+')">');
+		var cell4 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editStore('+bean.店家編號+')">');
+		var cell5 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="deleteStore('+bean.店家編號+')">');
 		
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5]);
 		$('#tb_store').append(row);
@@ -161,23 +161,22 @@ $(function(){
 	$("#"+groupno).parent("tr").remove();
 	xml.open("get", "/projHY20160201/admin.controller?prodaction=刪除團購&groupno="+groupno, true);
 	xml.send();
-	}
-	//店家維護--店家團購
-
+	}	
 	
-	
-	
-	//
-	function go(groupno){
+	//團購維護--修改團購
+	function editGroup(groupno){
 		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
 	}
+	
+	//團購維護--刪除店家
+	function deleteStore(user_id){
+	
+	}
+	//團購維護--修改店家
+	function editStore(groupno){
 
-// function name(user_id){
-// 	location.href='<c:url value="/admin.controller?user_id='+user_id+'"/>';
-// }
-// function goStore(){
-// 	location.href='<c:url value="/admin.controller?prodaction=店家維護"/>';
-// }
+		location.href='<c:url value="/insertStoreAction?sub='+groupno+'"/>';
+	}
 
 
 </script>

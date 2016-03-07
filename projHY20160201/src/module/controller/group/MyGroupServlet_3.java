@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.dao._16_Group_RecordDAO;
 import module.model._04_EmployeeVO;
+import module.model._16_Group_RecordVO;
 import module.service.MyGroupService;
 import module.service.MyGroupService2db;
 import net.sf.json.JSONArray;
@@ -97,9 +99,13 @@ public class MyGroupServlet_3 extends HttpServlet {
 						
 			
 		}else if(prodaction.equals("訂購失敗")){
-			MyGroupService2db mgsService = new MyGroupService2db();
-			mgsService.updateForFail(group_no, failure);
 			
+			MyGroupService2db mgsService = new MyGroupService2db();
+			mgsService.updateForFail(group_no, failure);//存入資料庫
+			
+			req.setAttribute("failure", failure);//失敗原因傳回
+			System.out.println(failure);
+			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
 		}
 
 		

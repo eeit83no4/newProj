@@ -54,7 +54,6 @@ public class MyGroupService2db {
 		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
 		_16_Group_RecordVO vo = grdao.findById(group_no);
 		vo.setStatus("失敗");
-		System.out.println("failure"+failure);
 		vo.setFailure(failure);
 		grdao.update(vo);
 	}

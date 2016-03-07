@@ -163,7 +163,7 @@ public class attempGroupService {
 //			nn.put(3, cc);
 			
 			
-			System.out.println(att.getGroupUserNo(2,166));
+			System.out.println(att.find3nds(1));
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{

@@ -1,8 +1,8 @@
 package module.service.newStore;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -58,32 +58,60 @@ public class newStoreService {
 		return newStoreNo;
 	}
 	//-------------------------修改店家(回傳剛新增的店家流水號)-----------------------
-	public void updateStore(_07_StoreVO storeVO,String storeClass){		
+	public void updateStore(_07_StoreVO storeVO,String storeClass){
+		_07_StoreVO storeFromDB=_07dao.findById(storeVO.getStore_no());//資料庫店家資料
+		storeFromDB.setStore_name(storeVO.getStore_name());
+		storeFromDB.setAddress(storeVO.getAddress());
+		storeFromDB.setPhone(storeVO.getPhone());
+		
+		_07dao.update(storeFromDB);
 		
 		//比對店家類型
-		String[] newstoreClassArray=storeClass.split(",");//店家類型的字串陣列
-		Set<_21_Store_In_ClassVO> newStoreClass=new HashSet<>();		
-		for(String a:newstoreClassArray){
-			int storeClassNo=0;
-			for(_06_Store_ClassVO b:_06da0.getAll()){
-				if(a.equals(b.getClass_name())){
-					storeClassNo=b.getClass_no();//取得店家類型編號
-				}
-			}			
-			_21_Store_In_ClassVO _21VO=new _21_Store_In_ClassVO();
-			_06_Store_ClassVO _06VO=new _06_Store_ClassVO();
-			_06VO.setClass_no(storeClassNo);
-			_21VO.setStoreVO(storeVO);
-			_21VO.setStore_classVO(_06VO);
-			newStoreClass.add(_21VO);			
+		String[] newstoreClassArray=storeClass.split(",");//想更新的店家類型的字串陣列
+		String fromDB=updateStoreService.findStoreClass(storeVO.getStore_no());//資料庫店家類型
+		boolean isClassDifferent=false;	
+		
+		if(!fromDB.equals(storeClass)){
+			isClassDifferent=true;//店家類型不同			
 		}
-		//更新店家，更新完之後store_in_class裡的store_no會變null!!
-		storeVO.setStore_in_classs(newStoreClass);
-		_07dao.update(storeVO);
+		
+		
+		if(isClassDifferent){//類型不一樣，先刪除舊的，再輸入新的
+			System.out.println("true");
+			
+			//刪除有問題
+//			for(_21_Store_In_ClassVO a:storeVO.getStore_in_classs()){				
+//				_21dao.delete(a.getNo());
+//				System.out.println("delete");
+//			}
+			
+			for(String b:newstoreClassArray){
+				_21_Store_In_ClassVO _21VO=new _21_Store_In_ClassVO();
+				_06_Store_ClassVO _06VO=null;
+				for(_06_Store_ClassVO c:_06da0.getAll()){
+					if(b.equals(c.getClass_name())){
+						_06VO=c;
+					}
+				}
+				_21VO.setStoreVO(storeVO);
+				_21VO.setStore_classVO(_06VO);
+				_21dao.insert(_21VO);				
+			}
+		}else{
+			System.out.println("false");
+		}
 	
 		
 		
-	}	
+	}
+	
+	//------------------取得店家類型
+	public List<_21_Store_In_ClassVO> getStoreClassForUpdate(_07_StoreVO storeVO){
+		Query query=getSession().createQuery("from _21_Store_In_ClassVO where storeVO=?");
+		query.setParameter(0, storeVO);
+		return query.list();
+	}
+	
 	//---------------------測試------------------------------
 	public static void main(String args[]){
 		try {
@@ -91,8 +119,8 @@ public class newStoreService {
 			
 			newStoreService newStore=new newStoreService();
 			_07_StoreVO _07storeVO=new _07_StoreVO();
-			_07storeVO.setStore_no(14);
-			_07storeVO.setStore_name("kattka");
+			_07storeVO.setStore_no(34);
+			_07storeVO.setStore_name("reatka");
 			_07storeVO.setPhone("000210011111");
 			String storeClass="便當類,飲料類,下午茶";
 							  //便當類

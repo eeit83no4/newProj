@@ -45,13 +45,17 @@
 			<tr><th style="width:10%;">團購名稱:</th> <td style="width:30%;">${attr[0]}</td> <th style="width:12%;">公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
 			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
-			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td>${EndDay}(${attr[8]})
+			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td id="reasonid">${EndDay}(${attr[8]})
+			<c:if test='${attr[10] != null}'>(${attr[10]})</c:if>
 			<c:if test='${group_status >= 1 && EndSec > 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default-xs btn-xs" value="立即截止"  onclick="go3(${group_no})">
 			</c:if>
 			<c:if test='${group_status == 0 && EndSec > 0}'>
 					<input type="button" style="margin:3px" disabled class="btn btn-default btn-xs" value="立即截止"  onclick="go3(${group_no})">
 			</c:if> 
+<%-- 			<c:if test='${failure!=null}'> --%>
+<%-- 					${failure} --%>
+<%-- 			</c:if>  --%>
 			</td></tr>
 			
 		</c:forEach>
@@ -143,7 +147,6 @@
 	<tbody id="tb3"></tbody>
 	</table>
     </div>
-
 </div>
 </div>
 
@@ -185,49 +188,26 @@ function go1(groupno){
 
 
 
-
-
-
-
-
 // 把錯誤彈跳視窗的text值抓到後用帶參數的方式傳給go2，之後就交給你了 > <
 
 
 
 
-
-
 <!--------------------------------- 訂購失敗的方法(上) ------------------------------------->
-function go2(groupno2){
-			
-		
-		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno;
-		
-		
+function go2(groupno2){		
+		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
+				
 }
 
 <!--------------------------------- 訂購失敗的方法(下) ------------------------------------->
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 //----------------立即截止按鈕-------------------------------	
 function go3(groupno3){
-	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno;		
+	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
 }
 
 	   
@@ -306,12 +286,17 @@ function go3(groupno3){
 			});
          
 		//----------------訂購失敗按鈕-------------------------------
-		$('#failreasonbtn').on('click',function(){			
+		$('#failreasonbtn').on('click',function(){
 			var failreason=$('#failreason').val();
 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
 			xml.send();
 			$('#failBtn').prop("disabled",true);
-		});
+		});	
+		
+// 		if($("#failreason").val()!=null){
+// 			$("#reasonid").append($("#failreason").val());
+// 			console.log($("#failreason").val());
+// 		}
 
 	});
 

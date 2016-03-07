@@ -63,12 +63,12 @@ public class MyGroupService {
 //				 System.out.println("");
 //				 }
 			// ------------------抓出"明細列表"所需資料------------------
-			 for (String[] sb : mgs.orderDetail_detail_new(1)) {
-			 for (int i = 0; i < sb.length; i++) {
-			 System.out.print(sb[i]+" ,");
-			 }
-			 System.out.println("");
-			 }
+//			 for (String[] sb : mgs.orderDetail_detail_new(1)) {
+//			 for (int i = 0; i < sb.length; i++) {
+//			 System.out.print(sb[i]+" ,");
+//			 }
+//			 System.out.println("");
+//			 }
 			// ------------------查詢此人參加的所有進行中團購項目------------------
 //			 for (String[] sb : mgs.searchMyAllGroup_ing(1)) {
 //			 for (int i = 0; i < sb.length; i++) {
@@ -84,7 +84,7 @@ public class MyGroupService {
 //			 System.out.println("");
 //			 }
 			// ------------------查詢該團購訂單名細(上)------------------
-//			for(String[] a:mgs.orderDetail_byGroup_upper(1)){
+//			for(String[] a:mgs.orderDetail_byGroup_upper(2)){
 //				for (int i = 0; i < a.length; i++) {
 //					 System.out.println(a[i]+" ,");
 //					 }
@@ -433,7 +433,7 @@ public class MyGroupService {
 	// ------------------查詢該團購訂單名細(上)------------------
 	public List<String[]> orderDetail_byGroup_upper(Integer group_no){
 		List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
-		String[] starray = new String[10];
+		String[] starray = new String[11];
 		_16_Group_RecordVO grvo = gr.findById(group_no);
 		starray[0] = grvo.getGroup_name();
 		starray[1] = grvo.getStoreVO().getStore_name();
@@ -445,6 +445,7 @@ public class MyGroupService {
 		starray[7] = this.getTimeSec(gr.findById(group_no).getEnd_date()).toString();
 		starray[8] = grvo.getStatus();
 		starray[9] = grvo.getGroup_no().toString();
+		starray[10] = grvo.getFailure(); 
 		sbs.add(starray);
 		return sbs;
 	}

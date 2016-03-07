@@ -37,8 +37,10 @@ public class showGroupServlet extends HttpServlet {
 		SetGroupService setGroupService = new SetGroupService();
 //-----------------------------------------------------------------------------	
 
-		int store_no = 1; // 店家編號
+//		int store_no = 1; // 店家編號
 
+		Integer store_no = Integer.valueOf(request.getParameter("newstoreno")).intValue(); 
+		System.out.println("aaaaaaaaaaaa"+store_no);
 		// ----店家名稱
 		String sname = setGroupService.findStoreName(store_no);
 

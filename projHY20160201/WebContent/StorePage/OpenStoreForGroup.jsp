@@ -93,10 +93,18 @@
 				itemno.push($(this).val());
 				console.log(itemno);
 			})
-			console.log(${newstoreno});
+// 			console.log(${newstoreno});
+// 				location.href="/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+'${store_no}';
 				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
+// 				location.href="/projHY20160201/SetGroup/SetGroup.controller?newstoreno="+ ${newstoreno};
 				xml.send();	
+				xxx();
 		})
+		function xxx(){
+			var xml = new XMLHttpRequest();
+			xml.open("get", "/projHY20160201/SetGroup/SetGroup.controller?newstoreno="+ ${newstoreno}, true);
+		};
+		
 </script>
 </body>
 </html>

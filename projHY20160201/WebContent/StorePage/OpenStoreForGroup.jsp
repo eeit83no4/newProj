@@ -57,10 +57,6 @@
 	<div><input type="button" id='BT' value="發起團購"></div>
 
     </form>
-
-	<div class="col-md-1"></div><!-- 空格用 -->
-<!-- 	<div><form id="f2" class="col-md-3"></from></div> -->
-
 </div>
 	<jsp:include page="/footer.jsp"/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>

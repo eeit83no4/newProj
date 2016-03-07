@@ -54,7 +54,7 @@ public class updateStoreServlet extends HttpServlet {
 		
 		//店家更新成功
 		request.setAttribute("storeNo", Integer.parseInt(storeNoForUpdate.trim()));
-		request.getRequestDispatcher("/newStore/showItemServlet").forward(request, response);
+		request.getRequestDispatcher("/newStore/showItemServlet.controller").forward(request, response);
 	}
 
 	

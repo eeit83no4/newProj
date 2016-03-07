@@ -41,6 +41,7 @@ public class createItemServlet extends HttpServlet {
 	private final String[] pictureSubs = { "jpeg", "jpg", "gif", "png", "jpe" };
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("insert get values");
 		Integer storeNo=Integer.parseInt(request.getParameter("storeNo").trim());//店家編號
 		String itemName=request.getParameter("itemName");//商品名字
 		String itemClass1st=request.getParameter("itemClass1st");//第一層屬性
@@ -48,6 +49,15 @@ public class createItemServlet extends HttpServlet {
 		Part pic=request.getPart("itemPic");//圖片
 		String class2class3=request.getParameter("class2class3");//第二第三層屬性
 		String extraStuff=request.getParameter("extraStuff");//複選區
+		//--------修改商品用
+		String itemno=request.getParameter("itemNo");
+		if(itemno!=null&&itemno.trim().length()>0){
+			Integer itemNo=Integer.parseInt(itemno.trim());
+			request.setAttribute("itemNo", itemNo);
+			request.getRequestDispatcher("").forward(request, response);
+			return;
+		}
+		
 		//----------------------驗證--------------------------
 		Map<String,String> errorMsg=new HashMap<>();
 		if(itemName==null||itemName.trim().length()==0){
@@ -57,6 +67,7 @@ public class createItemServlet extends HttpServlet {
 			errorMsg.put("noSizePrice", "商品價錢不可為空白");
 		}		
 		//---------------------------處理圖片-------------------
+		System.out.println("insert handle pic");
 		String pictureName = GlobalService.getFileName(pic);		
 		boolean isPicture = false;
 		String newPath=null;//儲存的新路徑
@@ -95,6 +106,7 @@ public class createItemServlet extends HttpServlet {
 			}			
 		}				
 		//--------------------開始新增-----------------------
+		System.out.println("start insert");
 		//1.先新增第一層
 		Integer c1NO=newItemsClassService.findClassFirstIdByName(itemClass1st);
 		_09_Class_FirstVO _09VO=new _09_Class_FirstVO();
@@ -118,11 +130,11 @@ public class createItemServlet extends HttpServlet {
 		if(!errorMsg.isEmpty()){
 			request.setAttribute("errorMsg", errorMsg);
 			request.setAttribute("storeNo", storeNo);
-			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
+			request.getRequestDispatcher("/newStore/showItemServlet.controller").forward(request, response);
 			return;			
 		}else{
 			request.setAttribute("storeNo", storeNo);
-			request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
+			request.getRequestDispatcher("/newStore/showItemServlet.controller").forward(request, response);
 			return;
 		}
 		

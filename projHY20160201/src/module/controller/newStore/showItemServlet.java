@@ -20,7 +20,7 @@ import module.service.newStore.SelectItemsService;
 /**
  * Servlet implementation class showItemServlet
  */
-@WebServlet("/newStore/showItemServlet")
+@WebServlet("/newStore/showItemServlet.controller")
 public class showItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,7 +28,22 @@ public class showItemServlet extends HttpServlet {
     private SelectItemsService selectItemsService=new SelectItemsService();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer storeNo=Integer.parseInt(request.getParameter("storeNo"));//店家編號
+		String storeno=request.getParameter("storeNo");
+		Integer storeNo=0;
+		if(storeno!=null&&storeno.trim().length()>0){
+			System.out.println("舊的");
+			storeNo=Integer.parseInt(storeno);//店家編號
+		}else{
+			System.out.println("新增");
+			storeNo=(int)request.getAttribute("storeNo");
+		}
+		
+		String itemno=request.getParameter("itemNO");
+		if(itemno!=null&&itemno.trim().length()>0){
+			Integer itemNO=Integer.parseInt(itemno);
+			request.setAttribute("itemNO", itemNO);
+		}
+				
 		//---------------------
 		Set<_12_ItemVO> itemVOs=_07dao.findById(storeNo).getItems();
 		//----------------		
@@ -37,7 +52,14 @@ public class showItemServlet extends HttpServlet {
 			for(_12_ItemVO a:_07dao.findById(storeNo).getItems()){
 				itemNos.add(a.getItem_no());
 			}
-		}		
+		}
+		//-----------------------
+		Map<Integer,String> itemName=new HashMap<>();
+		if(itemVOs!=null&&itemVOs.size()>0){
+			for(_12_ItemVO a:itemVOs){			
+				itemName.put(a.getItem_no(),a.getItem_name());
+			}
+		}
 		//-------------
 		Map<Integer,String> itemsSize=new HashMap();
 		if(itemVOs!=null&&itemVOs.size()>0){
@@ -60,11 +82,14 @@ public class showItemServlet extends HttpServlet {
 			}
 		}		
 		//-------------------
+		request.setAttribute("storeNo", storeNo);
 		request.setAttribute("itemNos", itemNos);
 		request.setAttribute("itemVOs", itemVOs);
 		request.setAttribute("itemsSize", itemsSize);
 		request.setAttribute("itemsc2c3", itemsc2c3);
 		request.setAttribute("itemsextra", itemsextra);
+		request.setAttribute("itemName", itemName);
+		System.out.println("go to");
 		request.getRequestDispatcher("/userOrder/createItems/createItems.jsp").forward(request, response);
 		
 	}

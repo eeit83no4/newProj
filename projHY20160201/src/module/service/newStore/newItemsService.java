@@ -101,9 +101,11 @@ public class newItemsService {
 				}				
 			}			
 		}
+		System.out.println("create service extraStuff="+extraStuff);
 		for(String a:extraStuff.split(",")){
 			int start=a.indexOf("(");			
 			String c3extraName=a.substring(0, start);
+			System.out.println("create service c3extraName="+c3extraName);
 			//找出第二層加料的編號
 			int c2ExtraNo=0;
 			for(_10_Class_SecondVO b:_10dao.getAll()){
@@ -164,7 +166,7 @@ public class newItemsService {
 			//------
 			String c2c3="冷熱,正常全冰,少冰,去冰;甜度,正常全糖,少糖,半糖,無糖";
 			String extraStuff="加珍珠(5),加椰果(10),加芋頭(20)";
-			newItem.insertItemClassThird(15,c2c3, extraStuff);
+			System.out.println(newItem.findC2C3ByName(15,c2c3, extraStuff));
 			
 			
 			

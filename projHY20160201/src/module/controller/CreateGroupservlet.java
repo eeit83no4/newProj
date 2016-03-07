@@ -56,6 +56,7 @@ public class CreateGroupservlet extends HttpServlet{
 		int i=0;
 		CreateGroupService dao=new CreateGroupService();
 		dao.findStoreAndInsert(store_no, user_id);
+		
 		for(String a:item_no){
 			itemNo[i]=Integer.parseInt(a.trim());
 			dao.findItemAndInsert(itemNo[i]);
@@ -63,7 +64,8 @@ public class CreateGroupservlet extends HttpServlet{
 			dao.findItemPriceAndInsert(itemNo[i]);
 			i++;
 		}
-		
+	
+//		request.setAttribute("newstoreno", newstoreno);
 		
 		
 /*----------------------------------------------------------------------------------------------------------*/

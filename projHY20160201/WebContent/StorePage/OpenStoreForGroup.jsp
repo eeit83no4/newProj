@@ -93,6 +93,7 @@
 				itemno.push($(this).val());
 				console.log(itemno);
 			})
+			console.log(${newstoreno});
 				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
 				xml.send();	
 		})

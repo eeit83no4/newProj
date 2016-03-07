@@ -55,7 +55,7 @@ public class showGroupServlet extends HttpServlet {
 		request.setAttribute("emdep", emp);
 		request.setAttribute("sname", sname);
 		System.out.println("xxxx");
-		request.getRequestDispatcher("/StorePage/CreatGroupForStore.jsp").forward(request, response);
+		request.getRequestDispatcher("/setGroup/SetGroup3.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

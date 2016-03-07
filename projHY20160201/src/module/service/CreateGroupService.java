@@ -78,7 +78,6 @@ public class CreateGroupService {
 //			System.out.println(newstoreno);	
 //			System.out.println(itemno);	
 	}
-	
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
 	public void dlData(Integer dlstore_no){

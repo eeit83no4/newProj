@@ -1,54 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/hot-sneaks/jquery-ui.css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css" />
 <style>
-  #storename{
- margin-left:-120px;
- margin-top: 10px;
- }
- #f1 { 
- top:0px;
- width:350px;
- height:500px;
- margin-left:-120px;
- border: 3px green double; 
- overflow:scroll;
- }
- dt{
- margin-left: 40px;
- font-size: 24px;
- }
- dd{
- margin-left: 60px;
- font-size: 24px;
- }
- .text{
- width: 48px;
- font-size: 12px;
- }
- span{
- margin-right: 12px;
- font-size: 18px;
- }
-
-/* ------------------------------------------------------------------------------- */
 .btn {
 	display: inline-block;
 	padding: 6px 12px;
@@ -76,21 +36,26 @@
 	background-color: #337ab7;
 	border-color: #2e6da4;
 }
-
 .tt {
 	border-left: 0px;
 	border-bottom: 0px;
 }
 
 #LefttDiv {
-	border: 2px solid #F8F8FF;
 	width: auto;
+	height: 580px;
 }
 #Table1{
-width:500px;
-float: right;
-
+width:700px;
+position:absolute;
+top: 200px;
+right:400px;
+height: 550px;
+/* float: right; */
+/* margin: -500px; */
 }
+
+
 #Div1 {
 	font-family:monospace;
 	margin:auto;
@@ -100,16 +65,19 @@ float: right;
 	width: 600px;
 	
 }
+
 #Divin {
 	width: 300px;
 	float: right;
 }
+
 #Divna {
 	border: 2px solid #00AAAA;
 	width: 300px;
 	float: left;
 	margin: 0px;
 }
+
 #inem {
  	height:60px;
 	text-align: center;
@@ -120,10 +88,12 @@ float: right;
  height:100px;
  overflow:scroll;
 }
+
 #inem2 {
 	border: 2px solid #00AAAA;
 	width: auto;
 }
+
 #but {
 	margin-left: 350px;
 	margin-right: 400px;
@@ -131,52 +101,111 @@ float: right;
 	hight: 1px;
 }
 
-td, th {
+th {
 	font-size: 15px;
 	font-family: monospace;
 	font-weight: bold;
 	margin: 0px;
 	border: 3px solid #AAAAAA;
-	width: 1200px;
 }
+td{
+width:150px;
+font-size: 15px;
+font-family: monospace;
+font-weight: bold;
+border: 3px solid #AAAAAA;
+}
+
 #Tex1 {
-	width: 700px;
+	width: 150px;
 }
+
 #Td1 {
 	color: red;
 }
+#outputbtn{
+ float: left;
+}
+
+ #storename{
+ margin-left:-100px;
+ margin-top: 10px;
+ width: 300px;
+ }
+ #f1 { 
+ top:0px;
+ width:450px;
+ height:450px;
+ margin-left:-100px;
+ border: 3px green double; 
+ overflow:scroll;
+/*  float: left; */
+ }
+ #fstore{
+ position:absolute;
+ }
+ dt{
+ margin-left: 40px;
+ font-size: 24px;
+ }
+ dd{
+ margin-left: 70px;
+ font-size: 24px;
+ }
+ .text{
+ width: 48px;
+ font-size: 18px;
+ }
+ span{
+ margin-right: 12px;
+ font-size: 18px;
+ }
+
+</style>
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+
+</style>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+
+<link
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/hot-sneaks/jquery-ui.css"
+	rel="stylesheet">
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+
+<style>
 article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 	section {
 	display: block;
 }
-article, aside, figure, figcaption, footer, header, hgroup, menu, nav, 
- 	section { 
- 	display: block; 
- } 
 </style>
 
 </head>
-<body  class="home">
-<div id="wrap">
-	<!-- 	載入導覽列 -->
-	<jsp:include page="/header.jsp"/>
-	<div class="tt" id="Div1">設 定 揪 團</div>
-	<form action="/projHY20160201/CreateGroutservlet.controller" method="post">
+<body class="home">
+	<div id="wrap">
+		<!-- 	載入導覽列 -->
+		<jsp:include page="/header.jsp" />
+		<div class="tt" id="Div1">設 定 揪 團</div>
+	<form id="fstore" action="/projHY20160201/CreateGroutservlet.controller" method="post">
 	<div id="storename">
 		<span style="font-size: 24px" name="group_name">店名:${store.store_name}</span><br>
 		<span style="font-size: 24px" name="phone">電話:${store.phone}</span><br>
 		<span style="font-size: 24px" name="address">地址:${store.address}</span>
 	</div>
-	<div id="f1" class="col-md-5"></div>
-    </form>
-    
-<!-- --------------------------------------邀請團購-------------------------------------------------------------- -->
-<form action="<c:url value=''/>" method="post">
+	<div id="f1"></div>
+    </form>		
 			<div id="LefttDiv">
-
 				<table id="Table1">
 					<tr style="border-bottom: 0px">
-						<td id=Td1 style="border-bottom: 0px">團購名稱:</td>
+						<td id="Td1" style="border-bottom: 0px">團購名稱:</td>
 						<td class="tt"><input type="text" id="Tex1" ></td>
 					</tr>
 					<tr style="border-bottom: 0px">
@@ -192,13 +221,18 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						<td style="border-bottom: 0px;">邀請人員:</td>
 						<td class="tt">
 							<div id="Divna">
+
 								<div id="inem">
 									想邀請人: <span>依照部門</span> <select id="select1">
 									<option>所有部門</option>
+									
 									<c:forEach var="bean"
 											items="${dep}">
 											<option value="${bean}">${bean}</option>
+
 										</c:forEach>
+
+
 									</select>
 								</div>
 								<div id="inem1">
@@ -211,10 +245,14 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 									</c:forEach>
 								</div>
 							</div>
+
 							<div id="Divin">
 								<div id="inem">已邀請:</div>
 								<div id="inem2">
-								</div>						
+							    
+							
+								</div>
+															
 							</div>
 
 							<div id="but">
@@ -224,6 +262,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 							</div>
 						</td>
 					</tr>
+
 					<tr>
 						<td>公告:</td>
 						<td style="border-left: 0px" ><input type="text" id="Tex2"
@@ -231,10 +270,6 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					</tr>
 				</table>
 			</div>
-		</form>
-		<input type="button" class='btn btn-primary' id="save" value="送出">
-		<input type="button" class='btn btn-primary' value="新增共同管理員"
-				data-title="Edit" data-toggle="modal" data-target="#newadmin">
 
 		<!--   ------------------------ 我         是         彈         跳         視      窗  --------------------------      -->
 
@@ -249,6 +284,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						</button>
 						<h4 class="modal-title custom_align" id="Heading">選擇共同管理者</h4>
 					</div>
+
 					<form action="" method="post">
 						<div class="modal-body" id="inadmin"></div>
 						<div class="modal-footer ">
@@ -259,56 +295,21 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						</div>
 					</form>
 				</div>
+
 				<!-- /.modal-content -->
 			</div>
 
 			<!-- /.modal-dialog -->
 		</div>
+		<div id="outputbtn">
+			<input type="button" class='btn btn-primary' id="save" value="送出">
+			<input type="button" class='btn btn-primary' value="新增共同管理員"
+				data-title="Edit" data-toggle="modal" data-target="#newadmin">
+		</div>
 		<!-- 	-------------彈跳視窗結束----------------------------------------        -->
-	<!-- 	載入底部 -->
-	<jsp:include page="/footer.jsp"/>
-</div>
-
-<!-- ---------------------------------------以下為JavaScript jQuery function-------------------------------------------------------------- -->
-
-<script>
-		$(function(){		
-			var i=1;
-			var x=1;
-			<c:forEach var="itemno" items='${itemnos}'>
-				$("#f1").append('<dl><input type="checkbox" name="checkbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
-				$("#it"+i).append('<dt><span>SIZE<span/><dd id="size'+i+'">');
-				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
-					$("#size"+i).append('<span>${sizepriceList.key}<span/><span class="text">${sizepriceList.value}<span/><br>');
-				</c:forEach>
-				<c:forEach var="class2List" items='${class2Lists}'>
-					<c:forEach var="class2" items='${class2List[itemno]}'>
-						$('#it'+i).append('<dt><span>${class2}<span/><dd id="c2'+x+'">');
-						<c:forEach var="class3List" items='${class3Lists}'>
-							<c:forEach var="class3" items='${class3List[itemno][class2]}'>
-							$('#c2'+x).append('<span>${class3}<span/>');
-							</c:forEach>
-						</c:forEach>
-					x++;
-					</c:forEach>
-				</c:forEach>
-				i++;
-			</c:forEach>
-		})
-
-		$('#save').click(function(){
-			var xml = new XMLHttpRequest();
-			var itemno=[];
-			$(":input:checkbox:checked").each(function(){
-					console.log($(this).val());
-				itemno.push($(this).val());
-				console.log(itemno);
-			})
-				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
-				xml.send();	
-		})
-// 	-------------------------------------------------------------------------------------------------------------
-		var userIds = [];//已經存過去的，比對用
+		<script>
+		
+			var userIds = [];//已經存過去的，比對用
 			var realUser=null;//已經存過去的，傳值用
 			//-------------加入團員
 		  $("#inser").click(function() {
@@ -334,6 +335,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					console.log('empty')
 					$(this).prop('disabled',true);					
 				});
+			
 				console.log('=============');
 				$("#inem2").append(name)//已邀請區塊
 				$("#inadmin").append(name2)//共同管理員
@@ -354,6 +356,10 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 
 			});
 //-------------------------------------------------------------------------------------------------------	
+			
+//------------------------------------------------------------------------------------------------------------------
+	
+	
 
 //--------------------依部門分類------------------------------------------------------
 			$("#select1").change(function() {
@@ -404,9 +410,12 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						});
 					});					
 				}				
-			});	
+			});
+			
+ 							
 
 			//---------------部門分類結束-----------------------------------------------------
+			
 			
 			//---------------------共同管理員----------------------------------------
 			var adminIds = null;
@@ -421,9 +430,13 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					}
 				})
 				console.log("ad--"+adminIds);
-			});	
+			});
+			
+			
 			var arr=[];
 // 			var enddate = ;
+			
+		    
 			$('#save').click(function() {
 				var enddate = $("#enddate").val();;
 				var groupna=$("#Tex1").val();
@@ -444,7 +457,47 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				};
 			
 			});
+			
+			
+			$(function(){		
+				var i=1;
+				var x=1;
+				<c:forEach var="itemno" items='${itemnos}'>
+					$("#f1").append('<dl><input type="checkbox" name="checkbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
+					$("#it"+i).append('<dt><span>SIZE<span/><dd id="size'+i+'">');
+					<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
+						$("#size"+i).append('<span>${sizepriceList.key}<span/><span class="text">${sizepriceList.value}<span/><br>');
+					</c:forEach>
+					<c:forEach var="class2List" items='${class2Lists}'>
+						<c:forEach var="class2" items='${class2List[itemno]}'>
+							$('#it'+i).append('<dt><span>${class2}<span/><dd id="c2'+x+'">');
+							<c:forEach var="class3List" items='${class3Lists}'>
+								<c:forEach var="class3" items='${class3List[itemno][class2]}'>
+								$('#c2'+x).append('<span>${class3}<span/>');
+								</c:forEach>
+							</c:forEach>
+						x++;
+						</c:forEach>
+					</c:forEach>
+					i++;
+				</c:forEach>
+			})
 
-</script>
+			$('#save').click(function(){
+				var xml = new XMLHttpRequest();
+				var itemno=[];
+				$(":input:checkbox:checked").each(function(){
+						console.log($(this).val());
+					itemno.push($(this).val());
+					console.log(itemno);
+				})
+					xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
+					xml.send();	
+			})
+		
+		</script>
+		<!-- 	載入底部 -->
+		<jsp:include page="/footer.jsp" />
+	</div>
 </body>
 </html>

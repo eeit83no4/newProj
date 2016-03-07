@@ -125,7 +125,18 @@ public class createItemServlet extends HttpServlet {
 		//3.新增sizeprice
 		newItemsService.newSizePrice(itemNo, sizePrice);
 		//4.-新增第二第三層屬性class2,class3及新增item_class_third
-		newItemsService.insertItemClassThird(itemNo, class2class3, extraStuff);
+		if(class2class3==null||class2class3.trim().length()==0&&extraStuff!=null&&extraStuff.trim().length()>0){
+			//新增時沒有第二第三層屬性
+			newItemsService.insertItemwithoutc2c3(itemNo,extraStuff);
+		}
+		if(extraStuff==null||extraStuff.trim().length()==0&&class2class3!=null&&class2class3.trim().length()>0){
+			//新增時沒有加料屬性
+			newItemsService.insertItemwithouExtra(itemNo,class2class3);
+		}
+		if(class2class3!=null&&class2class3.trim().length()>0&&extraStuff!=null&&extraStuff.trim().length()>0){
+			//新增時有第二第三層屬性也有加料屬性
+			newItemsService.insertItemClassThird(itemNo, class2class3, extraStuff);
+		}				
 		//---------------開始跳轉----------------
 		if(!errorMsg.isEmpty()){
 			request.setAttribute("errorMsg", errorMsg);

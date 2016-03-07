@@ -110,7 +110,7 @@ public class newItemsService {
 			_13dao.insert(_13VO);			
 		}		
 	}
-	//-----------------------------新增時沒有第二第層屬性------------------------
+	//-----------------------------新增時沒有第二第三層屬性------------------------
 	public void insertItemwithoutc2c3(Integer itemNo,String extraStuff){
 		String c3NoString=null;
 		for(String a:extraStuff.split(",")){

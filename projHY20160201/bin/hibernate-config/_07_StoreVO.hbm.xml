@@ -25,7 +25,7 @@
             <column name="FINAL_UPDATE" />
         </property>
        
-        	<set name="store_in_classs" table="store_in_class" lazy="true" inverse="false" >
+        	<set name="store_in_classs" table="store_in_class" cascade="all" lazy="true" inverse="false" >
         	<key><column name="store_no"/></key>
         	<one-to-many class="module.model._21_Store_In_ClassVO"/>
        	</set>

@@ -28,39 +28,57 @@ public class InsertItemServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json; charset=utf-8");
 		//從頁面取得使用者所點選的店家no 並轉成Integer
-		
+		String itemName = null;
 		System.out.println(req.getParameter("jsonString").trim().replace("\"", ""));
 		System.out.println(req.getParameter("itemId").trim());
-		System.out.println(req.getParameter("itemName").trim());
+		if(req.getParameter("itemName")!=null&&req.getParameter("itemName").trim().length()>0){
+			itemName = req.getParameter("itemName").trim();
+			System.out.println(itemName);
+		}else{
+			itemName = req.getParameter("itemName22").trim();
+			System.out.println(itemName);
+		}		
 		System.out.println(req.getParameter("storeNo").trim());
 		System.out.println(req.getParameter("first55").trim());
 		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		InsertItemService insertItemService=new InsertItemService();
+		//取得資料
+		Integer itemId =null;
 		String jsonString=req.getParameter("jsonString").trim();
-		Integer itemId =0;
-		if(req.getParameter("itemId")!=null&&req.getParameter("itemId").length()>0){
-			itemId = Integer.parseInt(req.getParameter("itemId").trim());
-		}		
-		String itemName = req.getParameter("itemName").trim();
+//		String itemName = req.getParameter("itemName").trim();
 		Integer storeNo =Integer.parseInt(req.getParameter("storeNo").trim());
 		String first =req.getParameter("first55").trim();
+		if(req.getParameter("itemId")!=null&&req.getParameter("itemId").trim().length()>0){
+//			if(itemId == null || itemId.toString().trim().length() <= 0 || itemId.toString().trim().equals("")){
+//				System.out.println("lllllllllllllllllllllllllllllllllllllllllllllllllllll");
+//			}else{
+//				System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+//			}
+			itemId = Integer.parseInt(req.getParameter("itemId").trim());
+		}else{
+			itemId = insertItemService.inserOneItem(itemName , first , storeNo);
+			System.out.println(itemId);
+		}	
+		
 		UpdateItemService updateStoreService = new UpdateItemService();  
+			
+		
 		
 		//刪除關聯
 		_12_ItemVO bean12 = new _12_ItemVO();			
 		bean12.setItem_no(itemId);
 		updateStoreService.UpdateItem(bean12);
 		
-		//砍字串
-		InsertItemService insertItemService=new InsertItemService();
+		//砍字串		
 		ArrayList getAtr = insertItemService.cuttingHtmlString(jsonString);
 		
-		Integer itemNo = null;
+//		Integer itemNo = null;
 		String size  = null;
 		for(int i=0;i<getAtr.size();i=i+2){		
 //			System.out.println(getAtr.get(i));
 			if(getAtr.get(i).equals("Size")){
 				size =(String) getAtr.get(i+1);
-				i=i+2;				
+//				i=i+2;				
 			}	
 		if(size != null){
 			InserSizeService inserSizeService=new InserSizeService();
@@ -81,11 +99,14 @@ public class InsertItemServlet extends HttpServlet {
 				bean10.setClass2_name((String)getAtr.get(i));		
 				//bean13 第三層屬性
 				String thirdName=(String) getAtr.get(i+1);			
-				itemNo = insertItemService.insertSecond( bean9,bean12,bean10,thirdName);  //傳回新增物品的PK
+				itemId = insertItemService.insertSecond( bean9,bean12,bean10,thirdName);  //傳回新增物品的PK
+				System.out.println(itemId);
 			}	
 		}//for end
 		
-		String itemNoS = Integer.toHexString(itemNo);
+		String itemNoS = Integer.toString(itemId);
+		System.out.println(itemNoS);
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		Map<String,String> data=new HashMap<>(); 
 		data.put("itemNoS", itemNoS);
 		JSONObject json=JSONObject.fromObject(data);

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 </head>
 <body class="home">
 <div id="wrap">

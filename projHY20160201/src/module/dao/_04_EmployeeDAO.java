@@ -45,6 +45,7 @@ public class _04_EmployeeDAO implements _04_Employee_interfaceDAO  {
 	public _04_EmployeeVO findById(Integer user_id) {
 		return (_04_EmployeeVO) getSession().get(_04_EmployeeVO.class, user_id);
 	}
+	
 	@Override
 	public List<_04_EmployeeVO> getAll() {
 		return getSession().createQuery("from _04_EmployeeVO").list();

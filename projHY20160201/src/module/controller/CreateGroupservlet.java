@@ -18,7 +18,7 @@ public class CreateGroupservlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession servletSession=request.getSession();
 /*----------------------------------------------------------------------------------------------------------*/
-		
+		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxasasasasasasasas");
 		_04_EmployeeVO xx = (_04_EmployeeVO)servletSession.getAttribute("LoginOK");
 		//須抓取使用者登入的id 僅test用
 		Integer user_id=null;
@@ -55,7 +55,8 @@ public class CreateGroupservlet extends HttpServlet{
 		
 		int i=0;
 		CreateGroupService dao=new CreateGroupService();
-		dao.findStoreAndInsert(store_no, user_id);
+		Integer x = dao.findStoreAndInsert(store_no, user_id);
+		
 		for(String a:item_no){
 			itemNo[i]=Integer.parseInt(a.trim());
 			dao.findItemAndInsert(itemNo[i]);
@@ -63,7 +64,11 @@ public class CreateGroupservlet extends HttpServlet{
 			dao.findItemPriceAndInsert(itemNo[i]);
 			i++;
 		}
+		System.out.println("bbbbbb"+x);
+		request.setAttribute("newstoreno", x);
 		
+//		request.setAttribute("newstoreno", newstoreno);
+		request.getRequestDispatcher("/StorePage/OpenStoreForGroup.jsp").forward(request, response);
 		
 		
 /*----------------------------------------------------------------------------------------------------------*/

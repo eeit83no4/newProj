@@ -11,11 +11,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <style>
 #right{
 	background-color: red;
-	width:350px;
+	width:310px;
+}
+.form-group{
+/* 	background-color: lime; */
+/* 	width:350px; */
+  float: left;  
 }
 </style>
 </head>
@@ -32,13 +37,13 @@
 <%-- 	${i.item_name}	 --%>
 	
 <%-- </c:forEach> --%>
-	<form action="<c:url value='/insertStoreAction2.action' />" method="get">
+	<form action="<c:url value='/insertStoreAction2.action' />" method="get" role="form" data-toggle="validator">
 	<div class="container col-md-2">
   <ul class="nav nav-pills nav-stacked" id="item">
   </ul>
   <input type="button" value="+" id="but88" /><br />
 </div>			
-		<div style="float: left; border: 10px;margin: 125px" id="right">
+		<div style="float: left; border: 10px;margin: 100px" id="right">
 			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none"/><br />
 			<input type="button" id="bt0" value="+" style="display:none"/>
 			<div id="99"><input type="button" id="but99" value="+" style="display:none"/></div>
@@ -52,16 +57,24 @@
   		<input type="radio" name="first" value="其他" />其他
 </div>
 	<div>
-		店家名稱: <input type="text" value="草莓店" id="name" name="store" placeholder="店家名稱" /><br />
-		電話: <input type="text" value="093435737" id="phone" name="phone" placeholder="電話" /><br />		
-		地址: <input type="text" value="大安區" id="phone" name="address" placeholder="地址" /><br />			
- 		類型: <div id="showBlock" ></div> 					
+	<div class="form-group">
+		<br />	
+		<label for="inputName" class="control-label">店家名稱</label>
+		<input type="text" value="草莓店" id="inputName" name="store" placeholder="店家名稱"  class="form-control" />
+		<label for="inputName" class="control-label">電話</label>
+		<input type="text" value="093435737" id="phone" name="phone" placeholder="電話" class="form-control" />	
+		<label for="inputName" class="control-label">地址</label>
+		<input type="text" value="大安區" id="phone" name="address" placeholder="地址" class="form-control" />
+		<label for="inputName" class="control-label">類型</label>		
+ 		<div id="showBlock" ></div> 					
 		<input type="submit" name="submit" value="送出" id="id">		
+		</div>
 		</div>
 	</form>
 	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script>
+
 	var txtId = 1;
 	
 		$(function(){	
@@ -70,8 +83,13 @@
 			itemId = null;
 			first55 = null;		
 			storeNo = null;
+			
+			//點擊彈出視窗
+		    $( "#but88" ).click(function() {						
+		    	$( "#dialog" ).dialog( "open" );			      
+		    });
 			//長出店家類型 名稱
-			$('#name').val('${data.storeName}');	 
+			$('#inputName').val('${data.storeName}');	 
 			    var b="${data.storeClass}";
 			    var c=b.split(",");			    
 			    var d="${data.storeClassAll}";
@@ -99,49 +117,33 @@
 						 									  .text(value.item_name)))
 			})
 			
-			//偷偷把商品存進資料庫		
-// 				$('.item').click(function(){
- 				 $('.item').on('click',insertItem)	
+			
+			
+			
+				
  				 
  				 
- 				 function insertItem(){
+ 				 function insertItem(){				
 					var arr=[];
 					$('input[name="attributes"]').each(function(){
 						arr.push($(this).val());
 		 				console.log($(this).val());
 					})
 					var jsonString=JSON.stringify(arr);
-//	 				console.log(jsonString);
+//	 				//console.log(jsonString);
 					storeNo='${StoreNo}'
-					var itemName=$('#itemName').val();
+					var itemName=$('#itemName').val();					
 					$.ajax({
 						'type':'get',
 						'url':'/projHY20160201/SelectItemServlet.insert',
 // 						'datatype':'json',
 						'data':{jsonString,itemId,itemName,storeNo,first55},
 // 						'success':function(data3){
-// 							alert("1")
 // 							itemId = data3.itemNoS;
+// 							alert(itemId)
 // 						}
 					})
- 				 }
-// 				})	
-			
-			//SHOW  點擊使用ajax抓出資料
-			$('.item').click(function() {
-				$('#itemName').val($(this).text())
-				itemId = $(this).attr('name').substr(4,100);
-				$.ajax({
-					'type':'get',
-					'url':'/projHY20160201/SelectItemServlet.select',
-					'datatype':'json',
-					'data':{'item_no':itemId},
-					'success':function(data){						
-						jsonData = data;
-						item();						
-					}
-				})
-				//取得物品第一層
+					//取得物品第一層
 				$.ajax({
 					'type':'get',
 					'url':'/projHY20160201/SelectFirstServlet.select',
@@ -151,10 +153,28 @@
 // 						alert(data2.first)
 						first55 = data2.first;
 // 						alert(first55)
-						
-						
 					}
 				})
+ 				 }
+
+			
+			
+			//SHOW  點擊使用ajax抓出資料
+			$('.item').click(function() {
+				$('#itemName').val($(this).text())
+				var itemIdShow = $(this).attr('name').substr(4,100);
+				itemId = itemIdShow;
+				$.ajax({
+					'type':'get',
+					'url':'/projHY20160201/SelectItemServlet.select',
+					'datatype':'json',
+					'data':{'item_no':itemIdShow},
+					'success':function(data){						
+						jsonData = data;
+						item();						
+					}
+				})
+				
 				
 				$(this).show()	
 				$('input').show()
@@ -171,33 +191,31 @@
 			    	  確定: function() {
 			    		  $('li').attr('class','')
 			    		  if($('#AAB').val() != ''){			    		  
-			    		  $('#item').append($('<li>').attr('class','active')
-			    				                    .prepend($('<a>').attr('data-toggle','tab')
-								                    .attr('href','#')
-									  .attr('name','item')
-									  .attr('class','item')									  
-									  .text($('#AAB').val())))	
-						var first11=$('input[name=first]:checked').val()	
+			    		  
+						var first11=$('input[name=first]:checked').val()
+							first55=$('input[name=first]:checked').val()
 			              ii=0;			    		  
 			    		  firstFunction(first11);
 			              $(this).dialog( "close" )
-			              $('#itemName').val($('#AAB').val())
-			              first55 = $('#AAB').val()
-			              $('#AAB').val('')			              
+// 			              itemId = null;                         
 			              $('input').show()
 						  $('#itemP').show()
-			              item();
+// 			              item();
+			              var itemName22 = $('#AAB').val()
+// 			              alert($('#AAB').val())
+			           		clickInsertItem(itemName22);
+			              
+// 			              alert(itemId)
+			              
 			    		  }
 			    	  }		      	
 			      }
 			    });			 
-				//點擊彈出視窗
-			    $( "#but88" ).click(function() {						
-			    	$( "#dialog" ).dialog( "open" );			      
-			    });
+				
 				
 			  //長出第二層屬性 第三層
 			    function item(){
+// 			    	$('#right').empty();
 			    	$('div[id^="div"]').remove();
 			    	$.each(jsonData, function(x, val){			
 			    	    if (x=="defaultClass"){
@@ -405,7 +423,55 @@
 				jsonData = jsonData4;
 				break;			  	  
 			    	}
-			    }			
+			    }	
+		
+		function clickInsertItem(itemName22){			
+			var arr=[];
+			$('input[name="attributes"]').each(function(){
+				arr.push($(this).val());
+					console.log($(this).val());
+			})
+			var jsonString=JSON.stringify(arr);
+//				//console.log(jsonString);
+			storeNo='${StoreNo}'
+			var itemName=$('#itemName').val();	
+			itemId = null;  
+// 			alert(jsonString);
+// 			alert(itemId);
+// 			alert(itemName22);
+// 			alert(storeNo);
+// 			alert(first55);
+			$.ajax({
+				'type':'get',
+				'url':'/projHY20160201/SelectItemServlet.insert',
+				'datatype':'json',
+				'data':{jsonString,itemId,itemName22,storeNo,first55},
+				'success':function(data4){		
+					oop(data4.itemNoS);
+// 						alert(data4.itemNoS)
+// 						return itemName22;
+				}
+			})
+		}
+		function oop(no){
+			alert(no)
+			itemId = no;
+			
+			$('#item').append($('<li>').attr('class','active')
+                    .prepend($('<a>').attr('data-toggle','tab')
+                    .attr('href','#')									  				
+	  				.attr('name','item'+itemId)
+	 				.attr('class','item')									  
+				    .text($('#AAB').val())))
+			$('#itemName').val($('#AAB').val())
+			$('#AAB').val('')	
+		}
+		
+		//偷偷把商品存進資料庫		
+		 $('.item').on('click',insertItem)
+		 $('a').click(function(){
+				alert($(this).attr('name'))
+			})
 	</script>
 	<jsp:include page="/footer.jsp"/>
 </div>

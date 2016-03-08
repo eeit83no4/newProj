@@ -66,59 +66,61 @@ public class attempGroupService {
 			//找出該物品的第二第三層屬性
 //			System.out.println(att.find3nds(1));
 //			使用者下訂
-//			List<_18_Order_DetailVO> listDetail=new ArrayList<_18_Order_DetailVO>();
-//			_18_Order_DetailVO d1=new _18_Order_DetailVO();
-//			_18_Order_DetailVO d2=new _18_Order_DetailVO();
-//			_18_Order_DetailVO d3=new _18_Order_DetailVO();
-//			_18_Order_DetailVO d4=new _18_Order_DetailVO();
-//			
+			List<_18_Order_DetailVO> listDetail=new ArrayList<_18_Order_DetailVO>();
+			_18_Order_DetailVO d1=new _18_Order_DetailVO();
+			_18_Order_DetailVO d2=new _18_Order_DetailVO();
+			_18_Order_DetailVO d3=new _18_Order_DetailVO();
+			_18_Order_DetailVO d4=new _18_Order_DetailVO();
+			
 //			_17_Group_UserVO user=new _17_Group_UserVO();
 //			user.setGroup_user_no(1);
-//			d1.setGroup_userVO(user);
-//			d1.setOstore_name("紅茶店");
-//			d1.setOprice_no(528);
-//			d1.setOitem_name("紅茶");
-//			d1.setOriginal_oprice(25.0);
-//			d1.setOprice(30.0);
-//			d1.setOprice_after(30.0);
-//			d1.setOclass("中,正常(全糖),少冰,加珍珠(5)");
-//			d1.setQuantity(2);
-//			
-//			d2.setGroup_userVO(user);
-//			d2.setOstore_name("紅茶店");
-//			d2.setOprice_no(527);
-//			d2.setOitem_name("紅茶");
-//			d2.setOriginal_oprice(20.0);
-//			d2.setOprice(25.0);
-//			d2.setOprice_after(25.0);
-//			d2.setOclass("小,正常(全糖),少冰,加珍珠(5)");
-//			d2.setQuantity(2);
-//			
-//			d3.setGroup_userVO(user);
-//			d3.setOstore_name("紅茶店");
-//			d3.setOprice_no(534);
-//			d3.setOitem_name("綠茶");
-//			d3.setOriginal_oprice(25.0);
-//			d3.setOprice(30.0);
-//			d3.setOprice_after(30.0);
-//			d3.setOclass("中,正常(全糖),少冰,加珍珠(5)");
-//			d3.setQuantity(2);
-//			
-//			d4.setGroup_userVO(user);
-//			d4.setOstore_name("紅茶店");
-//			d4.setOprice_no(531);
-//			d4.setOitem_name("奶茶");
-//			d4.setOriginal_oprice(25.0);
-//			d4.setOprice(25.0);
-//			d4.setOprice_after(25.0);
-//			d4.setOclass("中,正常(全糖),少冰");
-//			d4.setQuantity(2);
-//			
-//			listDetail.add(d1);
-//			listDetail.add(d2);
-//			listDetail.add(d3);
-//			listDetail.add(d4);
-//			att.ordering(listDetail);
+			_17_Group_UserVO user=_17guDAO.findById(1);
+//			System.out.println("user="+user);
+			d1.setGroup_userVO(user);
+			d1.setOstore_name("紅茶店");
+			d1.setOprice_no(528);
+			d1.setOitem_name("紅茶");
+			d1.setOriginal_oprice(25.0);
+			d1.setOprice(30.0);
+			d1.setOprice_after(30.0);
+			d1.setOclass("中,正常(全糖),少冰,加珍珠(5)");
+			d1.setQuantity(2);
+			
+			d2.setGroup_userVO(user);
+			d2.setOstore_name("紅茶店");
+			d2.setOprice_no(527);
+			d2.setOitem_name("紅茶");
+			d2.setOriginal_oprice(20.0);
+			d2.setOprice(25.0);
+			d2.setOprice_after(25.0);
+			d2.setOclass("小,正常(全糖),少冰,加珍珠(5)");
+			d2.setQuantity(2);
+			
+			d3.setGroup_userVO(user);
+			d3.setOstore_name("紅茶店");
+			d3.setOprice_no(534);
+			d3.setOitem_name("綠茶");
+			d3.setOriginal_oprice(25.0);
+			d3.setOprice(30.0);
+			d3.setOprice_after(30.0);
+			d3.setOclass("中,正常(全糖),少冰,加珍珠(5)");
+			d3.setQuantity(2);
+			
+			d4.setGroup_userVO(user);
+			d4.setOstore_name("紅茶店");
+			d4.setOprice_no(531);
+			d4.setOitem_name("奶茶");
+			d4.setOriginal_oprice(25.0);
+			d4.setOprice(25.0);
+			d4.setOprice_after(25.0);
+			d4.setOclass("中,正常(全糖),少冰");
+			d4.setQuantity(2);
+			
+			listDetail.add(d1);
+			listDetail.add(d2);
+			listDetail.add(d3);
+			listDetail.add(d4);
+			att.ordering(listDetail);
 			//------------------找出該團購的商品------------------
 //			System.out.println(att.findGroupItem(1));
 //			int groupno=3;
@@ -163,7 +165,7 @@ public class attempGroupService {
 //			nn.put(3, cc);
 			
 			
-			System.out.println(att.find3nds(1));
+//			System.out.println(att.find3nds(1));
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
@@ -188,9 +190,11 @@ public class attempGroupService {
 			originAmout=originAmout+(a.getQuantity()*a.getOriginal_oprice());
 			amount=amount+(a.getQuantity()*a.getOprice());
 			amountAfter=amountAfter+(a.getQuantity()*a.getOprice_after());
-		}		
+		}
+		System.out.println("groupUserNo="+groupUserNo);
 		//--------------更新GroupUser金額-----------------		
 		_17_Group_UserVO user=_17guDAO.findById(groupUserNo);
+		System.out.println("user="+user);
 		Double alOriginal_user_amount=user.getOriginal_user_amount();
 		Double alUser_amount=user.getUser_amount();
 		Double alUser_amount_after=user.getUser_amount_after();
@@ -200,8 +204,10 @@ public class attempGroupService {
 		user.setOrder_time(new java.util.Date());
 		_17guDAO.update(user);
 		//----------------更新GroupRecord金額-------------
-		_16_Group_RecordDAO groupDao=new _16_Group_RecordDAO();				
+		_16_Group_RecordDAO groupDao=new _16_Group_RecordDAO();
+		
 		Integer groupno=user.getGroup_RecordVO().getGroup_no();//團購編號
+		
 		_16_Group_RecordVO groupVO=groupDao.findById(groupno);	
 		Double user_amount=0.0;
 		Double user_amount_after=0.0;

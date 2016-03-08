@@ -388,7 +388,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
 				realUser=realUser+','+holdUser;
-				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}'});
+				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser});
 				if(!$.isEmptyObject(arr)){
 					var jsonString=JSON.stringify(arr);
 					console.log(jsonString);
@@ -397,7 +397,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						"url":'<c:url value="/insertGroupServlet.controller"/>',
 						"data":{jsonString},											
 						"success":function(){
-							alert("55555555");
+							alert("success");
 						}
 					});	
 				

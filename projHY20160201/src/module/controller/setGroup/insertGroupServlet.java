@@ -32,20 +32,6 @@ public class insertGroupServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		/*----取得使用者id頭---*/
-		HttpSession servletSession=req.getSession();
-		_04_EmployeeVO xx = (_04_EmployeeVO)servletSession.getAttribute("LoginOK");
-		//須抓取使用者登入的id 僅test用
-		Integer user_id=null;
-		String user_name=null;
-		try {
-			user_id = xx.getUser_id();
-//			user_name = String.valueOf(xx.getC_name());
-		} catch (Exception e) {				
-			System.out.println("沒抓到id:"+e.toString());
-		}	
-		/*----取得使用者id尾巴---*/
-		
 		_04_EmployeeDAO _04DAO=new _04_EmployeeDAO();
 		String jsonString = req.getParameter("jsonString"); 
 		SetGroupService setGroupService = new SetGroupService();
@@ -103,14 +89,21 @@ public class insertGroupServlet extends HttpServlet {
 			_07_StoreVO cc=new _07_StoreVO();
 			//for _16_Group_RecordVO
 			//建立者
-			int creater=user_id;
+			
+			int creater=1;
 			_04bb.setUser_id(creater);
 			bean.setEmployeeVO(_04bb);
 			//團購名字
 			bean.setGroup_name(groupna);
 			//參考店家
-			Integer store_no =(Integer) req.getAttribute("store_no");
+			String store_nos =String.valueOf(gup.get("store_no"));
+			Integer store_no = Integer.parseInt(store_nos);
+			
+			
+			System.out.println(store_no);
+			
 			cc.setStore_no(store_no);/*-------------------------------------------------------*/
+		
 			bean.setStoreVO(cc);
 			//開始時間
 			bean.setStart_date(new java.util.Date());

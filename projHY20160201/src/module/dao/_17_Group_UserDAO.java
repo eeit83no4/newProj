@@ -50,7 +50,7 @@ public class _17_Group_UserDAO implements _17_Group_User_InterfaceDAO {
 			// -------------------
 			// System.out.println(dao.getAll());
 			// -----------------------------
-			// System.out.println(dao.findById(1));
+			 System.out.println(dao.findById(1));
 			// ----------------------------
 			// _18_Order_DetailDAO detail=new _18_Order_DetailDAO();
 			// detail.delete(25);

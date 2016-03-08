@@ -18,11 +18,11 @@ public class _18_Order_DetailVO implements java.io.Serializable{
 	private Integer oprice_no;	
 	private String oitem_name;	
 	private byte[] oimage;
-	private Double original_oprice;
+	private Double original_oprice=0.0;
 	
 
-	private Double oprice;	
-	private Double oprice_after;	
+	private Double oprice=0.0;	
+	private Double oprice_after=0.0;	
 	private String oclass;
 	private String ps;
 	private Integer quantity;

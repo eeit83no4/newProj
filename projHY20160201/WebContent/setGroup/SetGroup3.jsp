@@ -175,8 +175,10 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 									</select>
 								</div>
 								<div id="inem1">
-									<c:forEach var="bean" items="${emdep}">										
-										<c:if test='${bean[0]!=1}'>
+									<c:forEach var="bean" items="${emdep}">
+										<!-- 排除主揪  -->
+										<c:set var='userID' value='${LoginOK.user_id}'/>										
+										<c:if test='${bean[0]!=userID}'>
 											<label><input type="checkbox" name="inp"
 											value="${bean[0]}*${bean[1]} " />${bean[1]}</label>
 											<br/>										
@@ -246,37 +248,49 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 		</div>
 		<!-- 	-------------彈跳視窗結束----------------------------------------        -->
 		<script>
-		
-			var userIds = [];//已經存過去的，比對用
-			var realUser=null;//已經存過去的，傳值用
+			holdUser='${LoginOK.user_id}';//主揪
+			var userIds = [];//已經邀請的，比對用
+			var realUser=null;//已經邀請的，傳值用
 			//-------------加入團員
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊
 				var name2 = null;//共同管理員
-
+				
+				var newUser=false;
 				$(':checkbox[name="inp"]:checked').each(function() {
 					var userid = parseInt(($(this).val()).split('*')[0]);//員工編號
-				    var username = ($(this).val()).split('*')[1];//員工姓名						
-					userIds.push(userid);//儲存員工編號
-					if(realUser==null){
-						realUser=userid;
-					}else{
-						realUser=realUser+','+userid;
+				    var username = ($(this).val()).split('*')[1];//員工姓名
+				    var isUserAlreadyInvited=false;
+				    //判斷是否已經被邀請
+					$.each(userIds,function(index,value){
+						if(userid==value){
+							isUserAlreadyInvited=true;
+						}
+					})
+					if(isUserAlreadyInvited==false){//員工還沒有被邀請
+						userIds.push(userid);//儲存員工編號
+						if(realUser==null){
+							realUser=userid;
+						}else{
+							realUser=realUser+','+userid;
+						}
+						if (name == null) {
+							name = "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";       
+							name2 ="<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+ "<br></label>";
+						}else {	
+							name = name + "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";
+						    name2 = name2+ "<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+"</label><br>";
+						}
+						console.log('empty')
+						$(this).prop('disabled',true);
+						newUser=true;
 					}
-					if (name == null) {
-						name = "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";       
-						name2 ="<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+ "<br></label>";
-					}else {	
-						name = name + "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";
-					    name2 = name2+ "<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+"</label><br>";
-					}
-					console.log('empty')
-					$(this).prop('disabled',true);					
-				});
-			
+				});			
 				console.log('=============');
-				$("#inem2").append(name)//已邀請區塊
-				$("#inadmin").append(name2)//共同管理員
+				if(newUser){
+					$("#inem2").append(name)//已邀請區塊
+					$("#inadmin").append(name2)//共同管理員
+				}				
 			});
 
 			//-------------取消
@@ -287,9 +301,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				$("#inem1").empty();
 				$("#inadmin").empty();
 				realUser=null;
-				<c:forEach var="bean" items="${emdep}">					
-					$("#inem1").append('<label><input type="checkbox" name="inp" value='+'${bean[0]}'+'*'+'${bean[1]}'+'>'+'${bean[1]}'+'</label><br>')
-								
+				<c:forEach var="bean" items="${emdep}">
+					<c:set var='userID' value='${LoginOK.user_id}'/>
+					<c:if test='${bean[0]!=userID}'>
+						$("#inem1").append('<label><input type="checkbox" name="inp" value='+'${bean[0]}'+'*'+'${bean[1]}'+'>'+'${bean[1]}'+'</label><br>')
+					</c:if>			
 				</c:forEach>
 
 			});
@@ -301,7 +317,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 
 //--------------------依部門分類------------------------------------------------------
 			$("#select1").change(function() {
-				var holdUser='1';//主揪				
+								
 				if($(this).val()=='所有部門'){
 					$("#inem1").empty();					
 					<c:forEach var="bean" items="${emdep}">
@@ -371,15 +387,15 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			});
 			
 			
-			var arr=[];
-// 			var enddate = ;
+			var arr=[];//要傳送過去的JSON
 			
-		    
+		    //-----------------------發起團購
 			$('#save').click(function() {
 				var enddate = $("#enddate").val();;
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
-				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate});
+				realUser=realUser+','+holdUser;
+				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser});
 				if(!$.isEmptyObject(arr)){
 					var jsonString=JSON.stringify(arr);
 					console.log(jsonString);
@@ -388,7 +404,8 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						"url":'<c:url value="/insertGroupServlet.controller"/>',
 						"data":{jsonString},											
 						"success":function(){
-							alert("55555555");
+							alert("success");
+							loaction.href='/projHY20160201/index/indexServlet.controller';
 						}
 					});	
 				

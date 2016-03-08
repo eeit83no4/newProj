@@ -55,6 +55,7 @@ public class showGroupServlet extends HttpServlet {
 		request.setAttribute("dep", dep);
 		request.setAttribute("emdep", emp);
 		request.setAttribute("sname", sname);
+		request.setAttribute("store_no",store_no);
 		System.out.println("xxxxxxxxxx");
 		request.getRequestDispatcher("/setGroup/SetGroup3.jsp").forward(request, response);
 	}

@@ -367,7 +367,7 @@ public class MyGroupService {
 				starray[5] = b.getGroup_amount_after().toString();
 				starray[6] = String.valueOf(a.getGroup_RecordVO().getGroup_no());
 			} catch (NullPointerException e) {
-				System.out.println("錯誤啦="+e.toString());
+				System.out.println("MyGroupService-searchMyAllGroup_ing錯誤啦="+e.toString());
 			}			
 				sbs.add(starray);
 			}			

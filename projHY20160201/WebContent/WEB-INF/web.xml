@@ -17,6 +17,25 @@
     <filter-name>OpenSessionInViewFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>module.misc.LoginFilter</filter-class>
+    <init-param>
+    	<param-name>excludedPages</param-name>
+    	<param-value>/login/checkEmailAction.action,/login/loginAction.action,/index.jsp</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>  
+  
+  
+  
+  
+  
   <filter>
     <display-name>StrutsPrepareAndExecuteFilter</display-name>
     <filter-name>StrutsPrepareAndExecuteFilter</filter-name>

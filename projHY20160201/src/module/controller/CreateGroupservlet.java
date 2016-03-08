@@ -60,11 +60,6 @@ public class CreateGroupservlet extends HttpServlet{
 		Integer newstoreno = dao.findStoreAndInsert(store_no, user_id);
 		System.out.println("newstoreno="+newstoreno);
 		
-		JSONObject jo= new JSONObject();
-		jo.put("newstoreno", newstoreno);			
-		PrintWriter out = response.getWriter();
-		out.print(jo);
-		
 		
 		for(String a:item_no){
 			itemNo[i]=Integer.parseInt(a.trim());
@@ -76,6 +71,10 @@ public class CreateGroupservlet extends HttpServlet{
 //		System.out.println("bbbbbb"+x);
 //		request.setAttribute("newstoreno", x);
 		
+		JSONObject jo= new JSONObject();
+		jo.put("newstoreno", newstoreno);			
+		PrintWriter out = response.getWriter();
+		out.print(jo);
 		
 		request.setAttribute("newstoreno", newstoreno);
 		request.getRequestDispatcher("/StorePage/jump.jsp?newstoreno="+newstoreno).forward(request, response);

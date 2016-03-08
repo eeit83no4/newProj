@@ -31,8 +31,9 @@ public class MyGroupServlet_3 extends HttpServlet {
 		String prodaction = req.getParameter("prodaction");
 		_04_EmployeeVO emp = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
 		String failure = req.getParameter("failure");
+		
 		//轉換資料
-		Integer group_no = Integer.parseInt(temp_group_no); 
+		Integer group_no = Integer.parseInt(temp_group_no);
 		//驗證資料
 		//呼叫model		
 		//根據model執行結果顯示view
@@ -104,7 +105,7 @@ public class MyGroupServlet_3 extends HttpServlet {
 			mgsService.updateForFail(group_no, failure);//存入資料庫
 			
 			req.setAttribute("failure", failure);//失敗原因傳回
-			System.out.println(failure);
+//			System.out.println(failure);
 			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
 		}
 

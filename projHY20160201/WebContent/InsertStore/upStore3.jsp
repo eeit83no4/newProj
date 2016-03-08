@@ -10,43 +10,25 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/InsertStore/js/table.css" />
+
 <title>鴻揚科技有限公司-團購系統</title>
-<style>
-#right{
-	background-color: red;
-	width:310px;
-}
-.form-group{
-/* 	background-color: lime; */
-/* 	width:350px; */
-  float: left;  
-}
-</style>
+
+
 </head>
 <body class="home">
 <div id="wrap">
 	<jsp:include page="/header.jsp"/>
-<%-- 	${getItemAll.綠茶} --%>
-<%-- <c:set var="length" value="${fn:length(getItemAll)}"/> --%>
-<%-- +++++${length} --%>
-<%-- ${fn:length(getItemAll)} --%>
-
-<%-- ${StoreNo} --%>
-<%-- <c:forEach var="i" items="${getItemAll}"> --%>
-<%-- 	${i.item_name}	 --%>
-	
-<%-- </c:forEach> --%>
 	<form action="<c:url value='/insertStoreAction2.action' />" method="get" role="form" data-toggle="validator">
-	<div class="container col-md-2">
+	<div class="container col-md-2"><br />
   <ul class="nav nav-pills nav-stacked" id="item">
   </ul>
-  <input type="button" value="+" id="but88" /><br />
+  <input type="button" value="+" class='btn btn-default' id="but88" /><br />
 </div>			
-		<div style="float: left; border: 10px;margin: 100px" id="right">
-			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none"/><br />
-			<input type="button" id="bt0" value="+" style="display:none"/>
-			<div id="99"><input type="button" id="but99" value="+" style="display:none"/></div>
+		<div style="float: left; border: 10px;margin: 100px" id="right" class="form-group">
+			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none" /><br /><br />
+			<input type="button" id="bt0" value="+" style="display:none" />
+			<div id="second"><input type="button" id="but99" value="+" style="display:none" class='btn2 btn-danger'/></div>
 		</div>
 		
 		<div id="dialog" title="Basic dialog">
@@ -82,8 +64,7 @@
 			jsonData = null;
 			itemId = null;
 			first55 = null;		
-			storeNo = null;
-			
+			storeNo = null;		
 			//點擊彈出視窗
 		    $( "#but88" ).click(function() {						
 		    	$( "#dialog" ).dialog( "open" );			      
@@ -106,24 +87,44 @@
 							}					
 						}
 					}
-			
 				
-			//長出商品總量
+// 				$.each(${getItemAll},function(key,value){
+// 						value
+// 				})
+				
+			flag = true;
+			//長出商品總量 (左邊)
 			$.each(${getItemAll},function(key,value){
 				 $('#item').prepend($('<li>').prepend($('<a>').attr('data-toggle','tab')
 															  .attr('href','#')
 						 									  .attr('name','item'+value.getItem_no)
 						 									  .attr('class','item')
 						 									  .text(value.item_name)))
+					//載入執行
+					if(flag == true){
+						itemId = value.getItem_no;
+						$('#itemName').val(value.item_name)
+						$.ajax({
+							'type':'get',
+							'url':'/projHY20160201/SelectItemServlet.select',
+							'datatype':'json',
+							'data':{'item_no':itemId},
+							'success':function(data){						
+								jsonData = data;
+								item();						
+							}
+						})
+						$('.item').attr('aria-expanded',true)
+						$('li').attr('class','active')
+						$('input').show()
+						$('#itemP').show()
+						flag = false;
+						}
 			})
-			
-			
-			
-			
+			//偷偷把商品存進資料庫	
+			$('.item').on('click',insertItem)
 				
- 				 
- 				 
- 				 function insertItem(){				
+ 				 function insertItem(){						
 					var arr=[];
 					$('input[name="attributes"]').each(function(){
 						arr.push($(this).val());
@@ -156,8 +157,6 @@
 					}
 				})
  				 }
-
-			
 			
 			//SHOW  點擊使用ajax抓出資料
 			$('.item').click(function() {
@@ -181,8 +180,7 @@
 				$('#itemP').show()
 				}
 			)	
-			
-	
+				
 			//彈跳視窗內容
 			 $( "#dialog" ).dialog({				 
 				 modal: true,		 
@@ -194,19 +192,15 @@
 			    		  
 						var first11=$('input[name=first]:checked').val()
 							first55=$('input[name=first]:checked').val()
-			              ii=0;			    		  
+			              ii=0;		
+// 							alert(jsonData.defaultClass[0].Size)
 			    		  firstFunction(first11);
-			              $(this).dialog( "close" )
-// 			              itemId = null;                         
+// 							alert(jsonData.defaultClass[0].Size)
+			              $(this).dialog( "close" )                      
 			              $('input').show()
 						  $('#itemP').show()
-// 			              item();
 			              var itemName22 = $('#AAB').val()
-// 			              alert($('#AAB').val())
 			           		clickInsertItem(itemName22);
-			              
-// 			              alert(itemId)
-			              
 			    		  }
 			    	  }		      	
 			      }
@@ -225,7 +219,7 @@
 									//index2第二層
 // 									console.log('index2='+index2+', target='+target)
 // 									console.log(ii)
-									$("#99").before($('<div>').attr('id','div'+ii)
+									$("#second").before($('<div>').attr('id','div'+ii)
 											 .append($('<input>').attr('type','text')
 						                      			         .attr('name','attributes')
 						                      			         .attr('value',index2)
@@ -237,10 +231,11 @@
 											           	$("#div"+ii).append($('<input>').attr('type','text')
 											           									.attr('name','attributes')
 											           								   .attr('value',target[y])
-											           								   .attr('class','class'+ii)
+											           								   .attr('class','classCCC'+ii)
 											           								   .attr('style','width: 50px'))
 											           								   		.append($('<input>').attr('type','button')
 											           								   							.attr('id','bt'+ii)
+											           								   							.attr('class','btn3 btn-success')
 											           								   							.attr('value','+').attr('onclick','killer(this)'))
 											           								if(y == target.length-1){$("#right").append($('<br>'));}
 														 }
@@ -254,24 +249,10 @@
 			    	});
 			    		
 	    		}
-	    		
-	    		
-			    	
-// 	    		$('input').click(function(){
-// 					alert("aa")
-// 					var getId=$(this).attr('id');
-// 					var no=getId.substring(2);
-// 				    $('input[id^=bt'+no+']').before($('<input>').attr('type','text')
-// 				    								.attr('name','attributes')
-// 		           								   .attr('placeholder','加布丁(10)')
-// 		           								   .attr('class','class'+ii)
-// 		           								   .attr('style','width: 65px')
-// 		           								   .attr('onblur','bbb(this)'))
-
-// 				})
-			//++屬性根細項  (新增)
+	
+			//++屬性連同細項  (往下)
 			$('input[id^="but99"]').click(function(){
-				$("#99").before($('<div>').attr('id','div'+ii)
+				$("#second").before($('<div>').attr('id','div'+ii)
 						 .append($('<input>').attr('type','text')
 								     		 .attr('name','attributes')
 	                      			         .attr('placeholder','屬性')	                      			         
@@ -279,16 +260,17 @@
 				$("div[id$="+ii+"]").append($('<input>').attr('type','text')
 							.attr('name','attributes')
 						   .attr('placeholder','加布丁(10)')
-						   .attr('class','class'+ii)
+						   .attr('class','classCCC'+ii)
 						   .attr('style','width: 65px').attr('onblur','bbb(this)'))
 						   		.append($('<input>').attr('type','button')
 						   							.attr('id','bt'+ii)
+						   							.attr('class','btn3 btn-success')
 						   							.attr('value','+').attr('onclick','abc(this)'))
 						$(this).attr('onclick','focus1()');
 	                       ii++;
 			})
 			//刪除細項
-				$('input[class^="class"]').blur(function(){
+				$('input[class^="classC"]').blur(function(){
 					var val=$(this).val()					
 					if(val==''){
 						$(this).remove();
@@ -328,18 +310,17 @@
 				
 				$('#id').click(function(){
 					 insertItem();
-					alert('aa')
+// 					alert('aa')
 				})
 				
 		})//load end
 		function killer(aa){
-// 			alert($(aa).attr('id'));
 				var getId=$(aa).attr('id');
 				var no=getId.substring(2);
 			    $('input[id^="bt'+no+'"]').before($('<input>').attr('type','text')
 			    								.attr('name','attributes')
 	           								   .attr('placeholder','加布丁(10)')
-	           								   .attr('class','class'+ii)
+	           								   .attr('class','classCCC'+ii)
 	           								   .attr('style','width: 65px')
 	           								   .attr('onblur','bbb(this)'))
 		}
@@ -351,7 +332,7 @@
 		    								.attr('name','attributes')
 //            								   .attr('value','細項(0)')
            								   .attr('placeholder','加布丁(10)')
-           								   .attr('class','class'+ii)
+           								   .attr('class','classCCC'+ii)
            								   .attr('style','width: 65px')
            								   .attr('onblur','bbb(this)'))			   
 		}		
@@ -381,17 +362,11 @@
 		
 		function focus1() {
 		    $('input[class^=classDDD'+(ii-1)+']').focus();
-//  			alert('aa')
 		}
 		
 		function firstFunction(first11){
 			    	switch (first11){
 					case "飲料":			    
-// 				var jsonData1 = {defaultClass :[
-// 							 {SIZE : ['特大(30)', '大(25)' , '中(20)', '小(15)']},
-// 					        {冷熱 : ['正常冰(0)','少冰(0)', '去冰(0)' ,'溫(0)']},
-// 					        {甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)']}
-// 							]}
 				var jsonData1 = {defaultClass :[
 							 {Size : ['特大(30)', '大(25)' , '中(20)', '小(15)'],
 					       		冷熱 : ['正常冰(0)','少冰(0)', '去冰(0)' ,'溫(0)'],
@@ -402,7 +377,7 @@
 				case "便當":
 				var jsonData2 = {defaultClass :[
 				  							 {Size : ['基本(50)', '加大(60)']},
-				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']},				  					       
+				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']}				  					       
 				  				]}
 				jsonData = jsonData2;
 					break;
@@ -425,22 +400,41 @@
 			    	}
 			    }	
 		
-		function clickInsertItem(itemName22){			
+		function clickInsertItem(itemName22){	
 			var arr=[];
-			$('input[name="attributes"]').each(function(){
-				arr.push($(this).val());
-					console.log($(this).val());
-			})
+			alert(jsonData.defaultClass[0].Size)
+		$.each(jsonData, function(x5, val5){
+			if (x5=="defaultClass"){
+				$.each(val5 , function(applier5, a_val5){
+					$.each(a_val5,function(index5,target5){
+							arr.push(index5);
+// 						console.log('index5='+index5+', target5='+target5)
+						for(var i=0 ;i<target5.length;i++){
+							arr.push(target5[i]);						
+// 						console.log('target5='+target5[i])							
+						}
+					})
+				})	
+			}
+		})
+		
+// 			var arr=[];
+// 			$('input[name="attributes"]').each(function(){
+// 				arr.push($(this).val());
+// 					console.log($(this).val());
+// 			})
+// 			alert(arr)
 			var jsonString=JSON.stringify(arr);
-//				//console.log(jsonString);
 			storeNo='${StoreNo}'
 			var itemName=$('#itemName').val();	
+			
 			itemId = null;  
-// 			alert(jsonString);
-// 			alert(itemId);
-// 			alert(itemName22);
-// 			alert(storeNo);
-// 			alert(first55);
+			
+// 			alert(jsonString)
+// 			alert(itemId)
+// 			alert(itemName22)
+// 			alert(storeNo)
+// 			alert(first55)
 			$.ajax({
 				'type':'get',
 				'url':'/projHY20160201/SelectItemServlet.insert',
@@ -448,15 +442,13 @@
 				'data':{jsonString,itemId,itemName22,storeNo,first55},
 				'success':function(data4){		
 					oop(data4.itemNoS);
-// 						alert(data4.itemNoS)
-// 						return itemName22;
 				}
 			})
 		}
 		function oop(no){
 			alert(no)
 			itemId = no;
-			
+// 			alert(itemId)
 			$('#item').append($('<li>').attr('class','active')
                     .prepend($('<a>').attr('data-toggle','tab')
                     .attr('href','#')									  				
@@ -465,13 +457,17 @@
 				    .text($('#AAB').val())))
 			$('#itemName').val($('#AAB').val())
 			$('#AAB').val('')	
-		}
-		
-		//偷偷把商品存進資料庫		
-		 $('.item').on('click',insertItem)
-		 $('a').click(function(){
-				alert($(this).attr('name'))
-			})
+			
+// 			$.ajax({
+// 							"type":"post",
+// 							"url":'/projHY20160201/insertStoreAction.action?store='+storeNo+'&item='+itemId,
+// // 							"data":{jsonString},											
+// // 							"success":function(){
+// // 								alert("55555555");
+// // 									}
+// 								})
+		   location.reload();
+		}			
 	</script>
 	<jsp:include page="/footer.jsp"/>
 </div>

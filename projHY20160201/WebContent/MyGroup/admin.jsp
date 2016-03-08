@@ -41,7 +41,7 @@
 				<th>店家</th>
 				<th>發起人</th>
 				<th>訂單狀態</th>
-				<th>修改團購</th>
+<!-- 				<th>修改團購</th> -->
 				<th>刪除團購</th>
 			</tr>	
 		</thead>
@@ -95,7 +95,7 @@
 <script language="JavaScript">
 var xml = new XMLHttpRequest();
 $(function(){	
-	//動態生成團購維護表格
+	//動態生成團購維護表格----------------------------------------------------------------
 	$.each(${all_order}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.團購編號);
 		var cell2 = $("<td></td>").text(bean.截止時間);
@@ -103,31 +103,37 @@ $(function(){
 		var cell4 = $("<td></td>").text(bean.店家);
 		var cell5 = $("<td></td>").text(bean.發起人);
 		var cell6 = $("<td></td>").text(bean.訂單狀態);
-		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');
+// 		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');
 		var cell8 = $("<td></td>").append($('<input/>')
 								  .attr('type','button')
 								  .attr('value','刪除')
 								  .attr('class','btn btn-default btn-xs')
 								  .attr('onclick','if(confirm("確定要刪除 :'+bean.團購編號+'號  '+bean.團購名稱+' 嗎??"))deletGroup('+bean.團購編號+')'))
 								  .attr('id',bean.團購編號);
-		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]);
+		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell8]);
 		$('#tb_group').append(row);			
 
 	});
 	
-	//動態生成店家維護表格
+	//動態生成店家維護表格-----------------------------------------------------------------
 	$.each(${all_store}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.店家編號);
 		var cell2 = $("<td></td>").text(bean.建立者);
 		var cell3 = $("<td></td>").text(bean.店家名稱);
 		var cell4 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editStore('+bean.店家編號+')">');
-		var cell5 = $("<td></td>").append('<input type="button" value="刪除" class="btn btn-default btn-xs" onclick="deleteStore('+bean.店家編號+')">');
+		var cell5 = $("<td></td>").append($('<input/>')
+				  				  .attr('type','button')
+				  				  .attr('value','刪除')
+				    			  .attr('class','btn btn-default btn-xs')
+				  				  .attr('onclick','if(confirm("確定要刪除 :'+bean.店家編號+'號  '+bean.店家名稱+' 嗎??"))deleteStore('+bean.店家編號+')'))
+				  				  .attr('id',bean.店家編號);
+		                      
 		
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5]);
 		$('#tb_store').append(row);
 	});
 	
-	//動態生成管理員維護表格
+	//動態生成管理員維護表格------------------------------------------------------------
 	$.each(${all_admin}, function(index, bean){
 		var cell1 = $("<td></td>").text(bean.員工編號);
 		var cell2 = $("<td></td>").text(bean.員工部門);
@@ -163,18 +169,19 @@ $(function(){
 	xml.send();
 	}	
 	
-	//團購維護--修改團購
-	function editGroup(groupno){
-		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
-	}
+	//團購維護--修改團購(deprecated)
+// 	function editGroup(groupno){
+// 		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
+// 	}
 	
 	//團購維護--刪除店家
-	function deleteStore(user_id){
-	
+	function deleteStore(storeno){
+		$("#"+storeno).parent("tr").remove();
+		xml.open("get", "/projHY20160201/UpstoreDeletestore.controller?dlstore_no="+storeno, true);//傳值給StoreServlet
+		xml.send();
 	}
 	//團購維護--修改店家
 	function editStore(groupno){
-
 		location.href='<c:url value="/insertStoreAction?sub='+groupno+'"/>';
 	}
 

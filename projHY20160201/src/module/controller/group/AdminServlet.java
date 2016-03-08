@@ -42,8 +42,7 @@ public class AdminServlet extends HttpServlet {
 				req.setAttribute("all_store", jSONObject2);
 				req.setAttribute("all_admin", jSONObject3);
 				req.getRequestDispatcher("/MyGroup/admin.jsp").forward(req, resp);	
-			}
-			else if(prodaction.equals("刪除團購")){
+			}else if(prodaction.equals("刪除團購")){
 				Integer group_no=Integer.valueOf(group_noString).intValue();
 				adminservice.delete(group_no);
 			}else if(prodaction.equals("管理員維護")){

@@ -40,6 +40,7 @@ public class MyGroupService {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			MyGroupService mgs = new MyGroupService();
+//			System.out.println(mgs.getUserPayStatus(1, "1"));
 			// ------------------抓出此團購剩餘的時間------------------
 //			 System.out.println(mgs.getTimeSec(gr1.findById(1).getEnd_date()));
 			// ------------------找出此團購的商品數量------------------
@@ -294,6 +295,25 @@ public class MyGroupService {
 		}
 //		System.out.println(finalResult);
 		return finalResult;
+	}
+	// ------------------給"按人統計"中付款狀態用，輸入團購編號、員工ID會回傳此人是否付款------------------
+	public String getUserPayStatus(Integer group_no, String Suser_id){
+		Integer user_id = Integer.parseInt(Suser_id);
+		_17_Group_UserDAO gudao = new _17_Group_UserDAO();
+		_18_Order_DetailDAO oddao = new _18_Order_DetailDAO();
+		String result="y";
+		//先從group_user表抓出group_user_no
+		Integer group_user_no = gudao.getGroupUserNo(group_no, user_id).get(0).getGroup_user_no(); 																		
+		//再從order_detail表抓出detail_no	
+		List<_18_Order_DetailVO> vos= oddao.getDetailNo(group_user_no);
+		for(_18_Order_DetailVO vo:vos){
+			String pay_status = vo.getPay_status();
+			System.out.println("A="+pay_status);
+			if(pay_status.equals("n")){
+				result="n";
+			}
+		}
+		return result;
 	}
 	
 	// ----回傳: (員工ID、員工姓名)+(商品名稱、數量、原價、折價後價錢、付款狀態、商品屬性)+(訂購時間)------原始版本

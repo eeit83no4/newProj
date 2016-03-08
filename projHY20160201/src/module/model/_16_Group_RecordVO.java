@@ -18,9 +18,9 @@ public class _16_Group_RecordVO {
 	private java.util.Date start_date;
 	private java.util.Date end_date;
 	private String ann;
-	private Double group_amount;
-	private Double group_amount_after;	
-	private String status;	
+	private Double group_amount=0.0;
+	private Double group_amount_after=0.0;	
+	private String status="進行中";	
 	private String failure;
 	private String discount;
 	private String shipment;

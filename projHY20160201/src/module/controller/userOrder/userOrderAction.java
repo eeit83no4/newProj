@@ -65,7 +65,7 @@ public class userOrderAction extends ActionSupport{
 			try {
 				oprice_no=((Number)net.get("oprice_no")).intValue();
 			} catch (Exception e2) {
-				System.out.println("oprice_no轉型失敗="+e2.toString());				
+				System.out.println("userOrderAction-oprice_no轉型失敗="+e2.toString());				
 			}
 			//item_name			
 			String oitem_namestring=String.valueOf(net.get("oitem_name"));
@@ -74,21 +74,21 @@ public class userOrderAction extends ActionSupport{
 			try {
 				originitempricedouble=((Number)net.get("originitemprice")).doubleValue();
 			} catch (Exception e1) {
-				System.out.println("originitempricedouble轉型失敗="+e1.toString());				
+				System.out.println("userOrderAction-originitempricedouble轉型失敗="+e1.toString());				
 			}
 			//解析oprice					
 			double opricedouble=0.0;
 			try {
 				opricedouble = ((Number)net.get("oprice")).doubleValue();
 			} catch (Exception e) {	
-				System.out.println("opricedouble轉型失敗="+e.toString());				
+				System.out.println("userOrderAction-opricedouble轉型失敗="+e.toString());				
 			}
 			//解析oprice_after						
 			double oprice_afterdouble=0.0;
 			try {
 				oprice_afterdouble = ((Number)net.get("oprice_after")).doubleValue();
 			} catch (Exception e) {
-				System.out.println("oprice_afterdouble轉型失敗="+e.toString());				
+				System.out.println("userOrderAction-oprice_afterdouble轉型失敗="+e.toString());				
 			}
 			//oclass			
 			String oclassstring=String.valueOf(net.get("oclass"));
@@ -105,89 +105,79 @@ public class userOrderAction extends ActionSupport{
 			try {
 				quantityinteger = ((Number)net.get("quantity")).intValue();
 			} catch (Exception e) {
-				System.out.println("quantityinteger轉型失敗="+e.toString());				
+				System.out.println("userOrderAction-quantityinteger轉型失敗="+e.toString());				
 			}
 			//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓解析pic↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 			Object pic=net.get("pic");
+			String newpicPath=null;//目的地，本機儲存路徑	
+			
 			int picno=0;//圖片編號
 			try {
 				picno=((Number)pic).intValue();
 			} catch (Exception e) {
-				System.out.println("picno轉型失敗="+e.toString());
-				
-			}
-			_12_ItemDAO itemDao=new _12_ItemDAO();
-			String picPath=new String(itemDao.findById(picno).getPic());//圖片來源路徑
-			String newpicPath=null;//目的地，本機儲存路徑	
-			//判斷圖片格式
-			boolean isPic=false;
-		
-			for(int j=0;j<pictureSubs.length;j++){
-//				System.out.println("xxxxxxxxxxx"+pictureSubs[0]);
-				
-				if(picPath.split("\\.")[1].toLowerCase().equals(pictureSubs[j])){
-					isPic=true;
-					break;
-				}else if (j == pictureSubs.length - 1){
-					System.out.println("不是圖片");
-				}
-			}
-			if(isPic){
-				String picfilename="."+picPath.split("\\.")[1].toLowerCase();//圖片副檔名
-				File file=new File(picPath);
-				byte[] bFile=new byte[(int)file.length()];		
-						
-				FileOutputStream fileOutputStream;
+				System.out.println("userOrderAction-picno轉型失敗="+e.toString());				
+			}				
+			
+			if(picno>0){
+				_12_ItemDAO itemDao=new _12_ItemDAO();					
+				String picPath=null;//圖片來源路徑
 				try {
-					int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱
-					
-					newpicPath="e:/proj/detailPic/detail"+picname+"test"+picfilename;//設定目的地
-					FileInputStream fileInputStream=new FileInputStream(file);
-					fileOutputStream = new FileOutputStream(newpicPath);
-					//使用緩衝區
-					BufferedInputStream bufferedInputStream=new BufferedInputStream(fileInputStream);
-					BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(fileOutputStream);			
-					
-					while(bufferedInputStream.read(bFile)!=-1){
-						bufferedOutputStream.write(bFile);
-					}
-					// 將緩衝區中的資料全部寫出
-					bufferedOutputStream.flush();
-					// 關閉串流
-					bufferedInputStream.close();
-					bufferedOutputStream.close();
-				} catch (FileNotFoundException e1) {
-					System.out.println("圖片 FileNotFoundException:"+e1.toString());
-				} catch (IOException e1) {
-					System.out.println("JAVA IO錯誤："+e1.toString());				
+					picPath = new String(itemDao.findById(picno).getPic());
+				} catch (Exception e) {
+					System.out.println("userOrderAction-資料庫沒有圖片="+e.toString());					
 				}
-				
-				
+				if(picPath!=null&&picPath.trim().length()>0){
+					//判斷圖片格式
+					boolean isPic=false;			
+					for(int j=0;j<pictureSubs.length;j++){
+						if(picPath.split("\\.")[1].toLowerCase().equals(pictureSubs[j])){
+							isPic=true;
+							break;
+						}else if (j == pictureSubs.length - 1){
+							System.out.println("不是圖片");
+						}
+					}
+					if(isPic){
+						String picfilename="."+picPath.split("\\.")[1].toLowerCase();//圖片副檔名
+						File file=new File(picPath);
+						byte[] bFile=new byte[(int)file.length()];
+						FileOutputStream fileOutputStream;
+						try {
+							int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱					
+							newpicPath="e:/proj/detailPic/detail"+picname+"test"+picfilename;//設定目的地
+							FileInputStream fileInputStream=new FileInputStream(file);
+							fileOutputStream = new FileOutputStream(newpicPath);
+							//使用緩衝區
+							BufferedInputStream bufferedInputStream=new BufferedInputStream(fileInputStream);
+							BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(fileOutputStream);			
+							
+							while(bufferedInputStream.read(bFile)!=-1){
+								bufferedOutputStream.write(bFile);
+							}
+							// 將緩衝區中的資料全部寫出
+							bufferedOutputStream.flush();
+							// 關閉串流
+							bufferedInputStream.close();
+							bufferedOutputStream.close();
+						} catch (FileNotFoundException e1) {
+							System.out.println("userOrderAction-圖片 FileNotFoundException:"+e1.toString());
+						} catch (IOException e1) {
+							System.out.println("userOrderAction-JAVA IO錯誤："+e1.toString());				
+						}								
+					}
+				}
 			}
+				
 			//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑圖片處理完畢↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-						
-//			System.out.println("新的路徑="+newpicPath);
-			
-			
-//			System.out.println("group_user_nostring="+group_user_nostring+","+
-//			"ostore_name="+ostore_name+","+
-//				"oprice_no="+oprice_no+","+	
-//			"oitem_namestring="+oitem_namestring+","+
-//			"originitempricedouble="+originitempricedouble+","+
-//					"opricedouble="+opricedouble+","+
-//			"oprice_afterdouble="+oprice_afterdouble+","+
-//					"oclassstring="+oclassstring+","+
-//			"psstring="+psstring+","+
-//					"quantityinteger="+quantityinteger+","+
-//			"picno="+picno);
-			
 			
 			_18_Order_DetailVO beanvo=new _18_Order_DetailVO();
 			beanvo.setGroup_userVO(uservo);
 			beanvo.setOstore_name(ostore_name);
 			beanvo.setOprice_no(oprice_no);
 			beanvo.setOitem_name(oitem_namestring);
-			beanvo.setOimage(newpicPath.getBytes());
+			if(newpicPath!=null&&newpicPath.trim().length()>0){
+				beanvo.setOimage(newpicPath.getBytes());
+			}			
 			beanvo.setOriginal_oprice(originitempricedouble);
 			beanvo.setOprice(opricedouble);
 			beanvo.setOprice_after(oprice_afterdouble);

@@ -89,8 +89,8 @@ public class insertGroupServlet extends HttpServlet {
 			_07_StoreVO cc=new _07_StoreVO();
 			//for _16_Group_RecordVO
 			//建立者
-			
-			int creater=1;
+			_04_EmployeeVO user=(_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
+			int creater=user.getUser_id();
 			_04bb.setUser_id(creater);
 			bean.setEmployeeVO(_04bb);
 			//團購名字

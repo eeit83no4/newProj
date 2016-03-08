@@ -50,9 +50,11 @@
 		店名:<span style="font-size: 24px" name="group_name">${store.store_name}</span><br>
 		電話:<span style="font-size: 24px" name="phone">${store.phone}</span><br>
 		地址:<span style="font-size: 24px" name="address">${store.address}</span>
+		
 	</div>
-	
-	<div id="f1" class="col-md-5"></div>
+	<label style="font-size: 16px" for="getall"><input type=checkbox id=getall>所有商品</label>
+	<div id="f1" class="col-md-5">
+	</div>
 	
 	<div><input type="button" id='BT' value="發起團購"></div>
 
@@ -65,7 +67,7 @@
 			var i=1;
 			var x=1;
 			<c:forEach var="itemno" items='${itemnos}'>
-				$("#f1").append('<dl><input type="checkbox" name="checkbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
+				$("#f1").append('<dl><input type="checkbox" name="ckbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
 				$("#it"+i).append('<dt><span>SIZE<span/><dd id="size'+i+'">');
 				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
 					$("#size"+i).append('<span>${sizepriceList.key}<span/><span class="text">${sizepriceList.value}<span/><br>');
@@ -84,16 +86,28 @@
 				i++;
 			</c:forEach>
 		});
+		
+		$('#getall').click(function(){
+			$('#getall').change(function(){			
+				var b = $(this).prop('checked');
+				$(':checkbox').prop('checked',b);
+			});
+		});
+		
 		$('#BT').click(function(){
 // 			var xml = new XMLHttpRequest();
 			var itemno=[];
-			$(":input:checkbox:checked").each(function(){
+			$(":input[name='ckbox']:checked").each(function(){
 					console.log($(this).val());
 				itemno.push($(this).val());
 				console.log(itemno);
 			})
 // 			console.log(${newstoreno});
-				location.href="/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+'${store_no}';
+			if(itemno !=0){
+				location.href="/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+'${store_no}';	
+			}else{
+				alert("請至少選一樣商品")
+			}
 // 				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
 // 				location.href="/projHY20160201/SetGroup/SetGroup.controller?newstoreno="+ ${newstoreno};
 // 				xml.send();	
@@ -104,6 +118,8 @@
 // 			xml.open("get", "/projHY20160201/SetGroup.controller?newstoreno="+${newstoreno}, true);
 // 			xml.send();	
 // 		};
+
+		
 		
 </script>
 </body>

@@ -1,7 +1,6 @@
 package module.controller.setGroup;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.dao._04_EmployeeDAO;
+import module.dao._17_Group_UserDAO;
 import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
 import module.model._16_Group_RecordVO;
@@ -25,7 +25,7 @@ import net.sf.json.JSONSerializer;
 @WebServlet("/insertGroupServlet.controller")
 public class insertGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private _17_Group_UserDAO _17dao=new _17_Group_UserDAO();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,10 +47,12 @@ public class insertGroupServlet extends HttpServlet {
 			JSONObject gup=(JSONObject)jSONArray.get(i);
 			//小幫手
 			String adminid =String.valueOf(gup.get("admin_id"));
+			System.out.println("adminid="+adminid);
 			String[] adminidArray=adminid.split(",");
 			Integer[] adminidIntegerArray=new Integer[adminidArray.length];
 			int k=0;
 			for(String a:adminidArray){
+				System.out.println("a="+a);
 				adminidIntegerArray[k]=Integer.parseInt(a);
 				k++;
 			}
@@ -93,7 +95,8 @@ public class insertGroupServlet extends HttpServlet {
 			_07_StoreVO cc=new _07_StoreVO();
 			//for _16_Group_RecordVO
 			//建立者
-			int creater=1;
+			_04_EmployeeVO userID=(_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
+			int creater=userID.getUser_id();
 			_04bb.setUser_id(creater);
 			bean.setEmployeeVO(_04bb);
 			//團購名字
@@ -113,12 +116,13 @@ public class insertGroupServlet extends HttpServlet {
 			newbean.setGroup_no(pp);
 			System.out.println(pp);
 			//for 主揪_17_Group_RecordVO
-			_17_Group_UserVO _17gg = new _17_Group_UserVO();
-			_17gg.setGroup_RecordVO(newbean);
-			_17gg.setEmployeeVO(_04bb);
-			_17gg.setCo_holder("A");
-			_17gg.setGroup_user_name(_04DAO.findById(1).getName());
-			setGroupService.insertGroup_user(_17gg);
+//			_17_Group_UserVO _17gg = new _17_Group_UserVO();
+//			_17gg.setGroup_RecordVO(newbean);
+//			_17gg.setEmployeeVO(_04bb);
+//			_17gg.setCo_holder("A");
+//			_17gg.setGroup_user_name(_04DAO.findById(1).getName());
+//			setGroupService.insertGroup_user(_17gg);
+			
 			//for _17_Group_RecordVO
 			for(Integer a:useridIntegerArray){
 				int h=0;
@@ -141,6 +145,7 @@ public class insertGroupServlet extends HttpServlet {
 					 _17aa.setCo_holder("B");					 
 				 }							
 				setGroupService.insertGroup_user(_17aa);
+			
 			 }
 			
 			

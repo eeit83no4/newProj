@@ -15,7 +15,7 @@ public class _16_Group_RecordVO {
 	private _04_EmployeeVO employeeVO;		//�h��@	 holder
 	private String group_name;	
 	private _07_StoreVO storeVO;	//�h��@  group_store
-	private java.util.Date start_date;
+	private java.util.Date start_date=new java.util.Date();
 	private java.util.Date end_date;
 	private String ann;
 	private Double group_amount=0.0;

@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+#upper_left{
+ 	float:left; 
+	margin-right:5px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+/* 	margin: 45px; */
+	width: 400px;
+	text-align: center;
+	border-collapse: collapse;
+/* 	position: relative; */
+/* 	left: 50px;  */
+}
+
+#upper_right{
+	margin-left:5px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+/* 	margin: 45px; */
+	width: 400px;
+	text-align: center;
+	border-collapse: collapse;
+/* 	position: relative; */
+/* 	left: 50px;  */
+}
+
+#table_ByItem {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+/* 	margin: 45px; */
+	width: 400px;
+	text-align: center;
+	border-collapse: collapse;
+/* 	position: relative; */
+/* 	left: 50px;  */
+}
+
+#table_ByUser {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+/* 	margin: 45px; */
+	width: 400px;
+	text-align: center;
+	border-collapse: collapse;
+/* 	position: relative; */
+/* 	left: 50px;  */
+}
+
+#table_Detail {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+/* 	margin: 45px; */
+	width: 400px;
+	text-align: center;
+	border-collapse: collapse;
+/* 	position: relative; */
+/* 	left: 50px;  */
+}
+
+th {
+	text-align: center;
+	width: 120px;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 8px;
+	background: #b9c9fe;
+	border-top: 4px solid #aabcfe;
+	border-bottom: 1px solid #fff;
+	color: #039;
+}
+
+td {
+	padding: 8px;
+	background: #e8edff; 
+	border-bottom: 1px solid #fff;
+	color: #669;
+	border-top: 1px solid transparent;
+}
+
+tr:hover td {
+	background: #d0dafd;
+	color: #339;
+}

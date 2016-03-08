@@ -83,10 +83,9 @@
 				</c:forEach>
 				i++;
 			</c:forEach>
-		})
-
+		});
 		$('#BT').click(function(){
-			var xml = new XMLHttpRequest();
+// 			var xml = new XMLHttpRequest();
 			var itemno=[];
 			$(":input:checkbox:checked").each(function(){
 					console.log($(this).val());
@@ -94,16 +93,17 @@
 				console.log(itemno);
 			})
 // 			console.log(${newstoreno});
-// 				location.href="/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+'${store_no}';
-				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
+				location.href="/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+'${store_no}';
+// 				xml.open("get", "/projHY20160201/CreateGroupservlet.controller?itemno="+ itemno + "&store_no="+${store_no}, true);//傳值給StoreServlet
 // 				location.href="/projHY20160201/SetGroup/SetGroup.controller?newstoreno="+ ${newstoreno};
-				xml.send();	
-				xxx();
+// 				xml.send();	
+// 				xxx();
 		})
-		function xxx(){
-			var xml = new XMLHttpRequest();
-			xml.open("get", "/projHY20160201/SetGroup/SetGroup.controller?newstoreno="+ ${newstoreno}, true);
-		};
+// 		function xxx(){
+// 			var xml = new XMLHttpRequest();
+// 			xml.open("get", "/projHY20160201/SetGroup.controller?newstoreno="+${newstoreno}, true);
+// 			xml.send();	
+// 		};
 		
 </script>
 </body>

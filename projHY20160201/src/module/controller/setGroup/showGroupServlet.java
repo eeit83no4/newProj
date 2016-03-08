@@ -38,9 +38,8 @@ public class showGroupServlet extends HttpServlet {
 //-----------------------------------------------------------------------------	
 
 //		int store_no = 1; // 店家編號
-
 		Integer store_no = Integer.valueOf(request.getParameter("newstoreno")).intValue(); 
-		System.out.println("aaaaaaaaaaaa"+store_no);
+		System.out.println("aaaaaaaaaaaabbbbbb"+store_no);
 		// ----店家名稱
 		String sname = setGroupService.findStoreName(store_no);
 
@@ -56,7 +55,7 @@ public class showGroupServlet extends HttpServlet {
 		request.setAttribute("dep", dep);
 		request.setAttribute("emdep", emp);
 		request.setAttribute("sname", sname);
-		System.out.println("xxxx");
+		System.out.println("xxxxxxxxxx");
 		request.getRequestDispatcher("/setGroup/SetGroup3.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

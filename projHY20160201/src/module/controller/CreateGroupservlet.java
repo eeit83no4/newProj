@@ -1,6 +1,7 @@
 package module.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import module.model._04_EmployeeVO;
 import module.service.CreateGroupService;
+import net.sf.json.JSONObject;
 
 @WebServlet("/CreateGroupservlet.controller")
 public class CreateGroupservlet extends HttpServlet{
@@ -55,7 +57,14 @@ public class CreateGroupservlet extends HttpServlet{
 		
 		int i=0;
 		CreateGroupService dao=new CreateGroupService();
-		Integer x = dao.findStoreAndInsert(store_no, user_id);
+		Integer newstoreno = dao.findStoreAndInsert(store_no, user_id);
+		System.out.println("newstoreno="+newstoreno);
+		
+		JSONObject jo= new JSONObject();
+		jo.put("newstoreno", newstoreno);			
+		PrintWriter out = response.getWriter();
+		out.print(jo);
+		
 		
 		for(String a:item_no){
 			itemNo[i]=Integer.parseInt(a.trim());
@@ -64,11 +73,12 @@ public class CreateGroupservlet extends HttpServlet{
 			dao.findItemPriceAndInsert(itemNo[i]);
 			i++;
 		}
-		System.out.println("bbbbbb"+x);
-		request.setAttribute("newstoreno", x);
+//		System.out.println("bbbbbb"+x);
+//		request.setAttribute("newstoreno", x);
 		
-//		request.setAttribute("newstoreno", newstoreno);
-		request.getRequestDispatcher("/StorePage/OpenStoreForGroup.jsp").forward(request, response);
+		
+		request.setAttribute("newstoreno", newstoreno);
+		request.getRequestDispatcher("/StorePage/jump.jsp?newstoreno="+newstoreno).forward(request, response);
 		
 		
 /*----------------------------------------------------------------------------------------------------------*/

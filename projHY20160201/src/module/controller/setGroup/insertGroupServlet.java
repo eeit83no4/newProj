@@ -68,7 +68,8 @@ public class insertGroupServlet extends HttpServlet {
 			}	
 					
 			
-			
+//			Integer store_no = Integer.valueOf(req.getParameter("newstoreno")).intValue(); 
+//			System.out.println("aaaaaaaaaaaabbbbbb"+store_no);
 			//團購名字
 			String groupna =String.valueOf(gup.get("groupna"));
 			//公告

@@ -175,8 +175,10 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 									</select>
 								</div>
 								<div id="inem1">
-									<c:forEach var="bean" items="${emdep}">										
-										<c:if test='${bean[0]!=1}'>
+									<c:forEach var="bean" items="${emdep}">
+										<!-- 排除主揪  -->
+										<c:set var='userID' value='${LoginOK.user_id}'/>										
+										<c:if test='${bean[0]!=userID}'>
 											<label><input type="checkbox" name="inp"
 											value="${bean[0]}*${bean[1]} " />${bean[1]}</label>
 											<br/>										
@@ -246,14 +248,18 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 		</div>
 		<!-- 	-------------彈跳視窗結束----------------------------------------        -->
 		<script>
-		
+			holdUser='${LoginOK.user_id}';//主揪
 			var userIds = [];//已經存過去的，比對用
 			var realUser=null;//已經存過去的，傳值用
 			//-------------加入團員
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊
 				var name2 = null;//共同管理員
-
+				
+				$("#inem2").empty();
+				userIds = [];			
+				$("#inadmin").empty();
+				
 				$(':checkbox[name="inp"]:checked').each(function() {
 					var userid = parseInt(($(this).val()).split('*')[0]);//員工編號
 				    var username = ($(this).val()).split('*')[1];//員工姓名						
@@ -287,9 +293,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				$("#inem1").empty();
 				$("#inadmin").empty();
 				realUser=null;
-				<c:forEach var="bean" items="${emdep}">					
-					$("#inem1").append('<label><input type="checkbox" name="inp" value='+'${bean[0]}'+'*'+'${bean[1]}'+'>'+'${bean[1]}'+'</label><br>')
-								
+				<c:forEach var="bean" items="${emdep}">
+					<c:set var='userID' value='${LoginOK.user_id}'/>
+					<c:if test='${bean[0]!=userID}'>
+						$("#inem1").append('<label><input type="checkbox" name="inp" value='+'${bean[0]}'+'*'+'${bean[1]}'+'>'+'${bean[1]}'+'</label><br>')
+					</c:if>			
 				</c:forEach>
 
 			});
@@ -301,7 +309,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 
 //--------------------依部門分類------------------------------------------------------
 			$("#select1").change(function() {
-				var holdUser='1';//主揪				
+								
 				if($(this).val()=='所有部門'){
 					$("#inem1").empty();					
 					<c:forEach var="bean" items="${emdep}">
@@ -379,7 +387,8 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				var enddate = $("#enddate").val();;
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
-				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate});
+				realUser=realUser+','+holdUser;
+				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}'});
 				if(!$.isEmptyObject(arr)){
 					var jsonString=JSON.stringify(arr);
 					console.log(jsonString);

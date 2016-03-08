@@ -249,40 +249,48 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 		<!-- 	-------------彈跳視窗結束----------------------------------------        -->
 		<script>
 			holdUser='${LoginOK.user_id}';//主揪
-			var userIds = [];//已經存過去的，比對用
-			var realUser=null;//已經存過去的，傳值用
+			var userIds = [];//已經邀請的，比對用
+			var realUser=null;//已經邀請的，傳值用
 			//-------------加入團員
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊
 				var name2 = null;//共同管理員
 				
-				$("#inem2").empty();
-				userIds = [];			
-				$("#inadmin").empty();
-				
+				var newUser=false;
 				$(':checkbox[name="inp"]:checked').each(function() {
 					var userid = parseInt(($(this).val()).split('*')[0]);//員工編號
-				    var username = ($(this).val()).split('*')[1];//員工姓名						
-					userIds.push(userid);//儲存員工編號
-					if(realUser==null){
-						realUser=userid;
-					}else{
-						realUser=realUser+','+userid;
+				    var username = ($(this).val()).split('*')[1];//員工姓名
+				    var isUserAlreadyInvited=false;
+				    //判斷是否已經被邀請
+					$.each(userIds,function(index,value){
+						if(userid==value){
+							isUserAlreadyInvited=true;
+						}
+					})
+					if(isUserAlreadyInvited==false){//員工還沒有被邀請
+						userIds.push(userid);//儲存員工編號
+						if(realUser==null){
+							realUser=userid;
+						}else{
+							realUser=realUser+','+userid;
+						}
+						if (name == null) {
+							name = "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";       
+							name2 ="<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+ "<br></label>";
+						}else {	
+							name = name + "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";
+						    name2 = name2+ "<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+"</label><br>";
+						}
+						console.log('empty')
+						$(this).prop('disabled',true);
+						newUser=true;
 					}
-					if (name == null) {
-						name = "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";       
-						name2 ="<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+ "<br></label>";
-					}else {	
-						name = name + "<div><input type='checkbox' name='userKKK' disabled='disabled' checked='checked' value='"+userid+'*'+username+"'/>"+ username+ "</div>";
-					    name2 = name2+ "<label><input type='checkbox' name='adminDiv' value='"+userid+'*'+username+"'>"+ username+"</label><br>";
-					}
-					console.log('empty')
-					$(this).prop('disabled',true);					
-				});
-			
+				});			
 				console.log('=============');
-				$("#inem2").append(name)//已邀請區塊
-				$("#inadmin").append(name2)//共同管理員
+				if(newUser){
+					$("#inem2").append(name)//已邀請區塊
+					$("#inadmin").append(name2)//共同管理員
+				}				
 			});
 
 			//-------------取消
@@ -379,10 +387,9 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			});
 			
 			
-			var arr=[];
-// 			var enddate = ;
+			var arr=[];//要傳送過去的JSON
 			
-		    
+		    //-----------------------發起團購
 			$('#save').click(function() {
 				var enddate = $("#enddate").val();;
 				var groupna=$("#Tex1").val();
@@ -398,6 +405,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 						"data":{jsonString},											
 						"success":function(){
 							alert("success");
+							loaction.href='/projHY20160201/index/indexServlet.controller';
 						}
 					});	
 				

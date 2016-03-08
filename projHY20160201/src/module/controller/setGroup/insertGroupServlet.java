@@ -11,9 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import module.dao._04_EmployeeDAO;
+import module.dao._07_StoreDAO;
 import module.dao._16_Group_RecordDAO;
 import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
@@ -29,7 +29,7 @@ import net.sf.json.JSONSerializer;
 public class insertGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static _16_Group_RecordDAO _16grDAO = new _16_Group_RecordDAO();
-	
+	private static _07_StoreDAO _07dao=new _07_StoreDAO();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		_04_EmployeeDAO _04DAO=new _04_EmployeeDAO();
@@ -71,7 +71,10 @@ public class insertGroupServlet extends HttpServlet {
 			//團購名字
 			String groupna =String.valueOf(gup.get("groupna"));
 			//公告
-			String ann =String.valueOf(gup.get("ann"));
+			String ann =null;
+			if(gup.get("ann")!=null){
+				ann =String.valueOf(gup.get("ann"));
+			}			
 			//截止時間
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 			String enddate =String.valueOf(gup.get("enddate"));
@@ -86,7 +89,7 @@ public class insertGroupServlet extends HttpServlet {
 			
 			_04_EmployeeVO _04bb=new _04_EmployeeVO();
 			
-			_07_StoreVO cc=new _07_StoreVO();
+//			_07_StoreVO cc=new _07_StoreVO();
 			//for _16_Group_RecordVO
 			//建立者
 			_04_EmployeeVO user=(_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
@@ -99,10 +102,10 @@ public class insertGroupServlet extends HttpServlet {
 			String store_nos =String.valueOf(gup.get("store_no"));
 			Integer store_no = Integer.parseInt(store_nos);
 			
-			
+			_07_StoreVO cc=_07dao.findById(store_no);
 			System.out.println(store_no);
 			
-			cc.setStore_no(store_no);/*-------------------------------------------------------*/
+//			cc.setStore_no(store_no);/*-------------------------------------------------------*/
 		
 			bean.setStoreVO(cc);
 			//開始時間
@@ -110,7 +113,9 @@ public class insertGroupServlet extends HttpServlet {
 			//截止時間
 			bean.setEnd_date(endTime);
 			//公告
-			bean.setAnn(ann);
+			if(ann!=null&&ann.trim().length()>0){
+				bean.setAnn(ann);
+			}			
 			//---------------------
 			//for _17_Group_RecordVO
 			Set<_17_Group_UserVO> _17VOset=new HashSet<>();

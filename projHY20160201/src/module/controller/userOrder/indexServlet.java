@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
 import module.service.attempGroupService;
 import module.service.indexService;
@@ -24,7 +25,8 @@ public class indexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		Integer userId=166;
+		_04_EmployeeVO user=(_04_EmployeeVO)request.getSession().getAttribute("LoginOK");
+		Integer userId=user.getUser_id();
 		//進行中的團購(排除自己)
 		List<Map<String, String>> ingGroups=indexservice.sendIngGroup(userId);
 		//我發起的團購(只有自己)

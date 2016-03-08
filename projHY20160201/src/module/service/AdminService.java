@@ -68,11 +68,14 @@ public class AdminService {
 	public List<Map> storeMaintain(){
 		List<Map> finalresult = new ArrayList();
 		for(_07_StoreVO svo : s.getAll()){
+			if(svo.getPublic_state().equals("1") || svo.getPublic_state().equals("2")){
+				System.out.println("aaaa"+svo.getPublic_state().equals("1"));
 			Map m = new HashMap();
 			m.put("店家編號", svo.getStore_no());
 			m.put("建立者", svo.getEmployeeVO().getName());
 			m.put("店家名稱", svo.getStore_name());
 			finalresult.add(m);
+			}
 		}		
 		return finalresult;
 	}

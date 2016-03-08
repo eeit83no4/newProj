@@ -1,6 +1,7 @@
 package module.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import module.model._04_EmployeeVO;
 import module.service.CreateGroupService;
+import net.sf.json.JSONObject;
 
 @WebServlet("/CreateGroupservlet.controller")
 public class CreateGroupservlet extends HttpServlet{
@@ -18,7 +20,7 @@ public class CreateGroupservlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession servletSession=request.getSession();
 /*----------------------------------------------------------------------------------------------------------*/
-		
+		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxasasasasasasasas");
 		_04_EmployeeVO xx = (_04_EmployeeVO)servletSession.getAttribute("LoginOK");
 		//須抓取使用者登入的id 僅test用
 		Integer user_id=null;
@@ -55,7 +57,10 @@ public class CreateGroupservlet extends HttpServlet{
 		
 		int i=0;
 		CreateGroupService dao=new CreateGroupService();
-		dao.findStoreAndInsert(store_no, user_id);
+		Integer newstoreno = dao.findStoreAndInsert(store_no, user_id);
+		System.out.println("newstoreno="+newstoreno);
+		
+		
 		for(String a:item_no){
 			itemNo[i]=Integer.parseInt(a.trim());
 			dao.findItemAndInsert(itemNo[i]);
@@ -63,7 +68,16 @@ public class CreateGroupservlet extends HttpServlet{
 			dao.findItemPriceAndInsert(itemNo[i]);
 			i++;
 		}
+//		System.out.println("bbbbbb"+x);
+//		request.setAttribute("newstoreno", x);
 		
+		JSONObject jo= new JSONObject();
+		jo.put("newstoreno", newstoreno);			
+		PrintWriter out = response.getWriter();
+		out.print(jo);
+		
+		request.setAttribute("newstoreno", newstoreno);
+		request.getRequestDispatcher("/StorePage/jump.jsp?newstoreno="+newstoreno).forward(request, response);
 		
 		
 /*----------------------------------------------------------------------------------------------------------*/

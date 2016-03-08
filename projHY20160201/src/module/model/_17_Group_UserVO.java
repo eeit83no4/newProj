@@ -19,9 +19,9 @@ public class _17_Group_UserVO {
 //	private Integer group_user_id;
 	private String group_user_name;
 	private String co_holder="C";
-	private Double original_user_amount;
-	private Double user_amount;
-	private Double user_amount_after;
+	private Double original_user_amount=0.0;
+	private Double user_amount=0.0;
+	private Double user_amount_after=0.0;
 	private java.util.Date order_time;
 	private Set<_18_Order_DetailVO> order_Details = new HashSet<_18_Order_DetailVO>();	//�@��h
 	

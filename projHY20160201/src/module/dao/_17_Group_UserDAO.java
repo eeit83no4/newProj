@@ -40,9 +40,9 @@ public class _17_Group_UserDAO implements _17_Group_User_InterfaceDAO {
 			// _17_Group_UserVO bean = new _17_Group_UserVO();
 
 //			 System.out.println(dao.findByGroupUserId(1));
-			 for(_17_Group_UserVO a:dao.findByGroupUserId2(1,1)){
-				 System.out.println(a.getCo_holder());				 
-			 }
+//			 for(_17_Group_UserVO a:dao.findByGroupUserId2(1,1)){
+//				 System.out.println(a.getCo_holder());				 
+//			 }
 			// System.out.println(dao.countamount(1)[0]);
 
 			// System.out.println(dao.countAmountOfProduct(1));
@@ -50,7 +50,7 @@ public class _17_Group_UserDAO implements _17_Group_User_InterfaceDAO {
 			// -------------------
 			// System.out.println(dao.getAll());
 			// -----------------------------
-			// System.out.println(dao.findById(1));
+			 System.out.println(dao.findById(1));
 			// ----------------------------
 			// _18_Order_DetailDAO detail=new _18_Order_DetailDAO();
 			// detail.delete(25);

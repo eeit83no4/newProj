@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style type="text/css">
 #allstore{
 width:400px;
@@ -106,12 +107,14 @@ overflow:scroll;
 							var upBtn = document.createElement("input");
 							upBtn.setAttribute("type","button");
 							upBtn.setAttribute("value","修改");
-							upBtn.setAttribute("onclick","updata("+datas.list[i][0]+")");
+							upBtn.setAttribute("onclick","updata("+datas.mylists[i][0]+")");
 							var dlBtn = document.createElement("input");
 							dlBtn.setAttribute("type","button");
-							dlBtn.setAttribute("id",datas.list[i][0]);
+							dlBtn.setAttribute("id",datas.mylists[i][0]);
 							dlBtn.setAttribute("value","刪除");
-							dlBtn.setAttribute("onclick","dldata("+datas.list[i][0]+")");
+							dlBtn.setAttribute("class","btn btn-default btn-xs");
+							dlBtn.setAttribute("onclick","if(confirm('確定要刪除 :"+datas.mylists[i][1]+" 嗎?'))dldata("+datas.mylists[i][0]+")");
+// 							dlBtn.setAttribute("onclick","dldata("+datas.mylists[i][0]+")");
 							p.appendChild(eleBtn);
 							p.appendChild(upBtn);
 							p.appendChild(dlBtn);

@@ -115,8 +115,7 @@ public class OpenStoreForGroupServlet extends HttpServlet {
 		req.setAttribute("store_no", store_no);
 		
 //		req.setAttribute("c2", c2);
-		
-		req.getRequestDispatcher("/SetGroup/SetGroup.controller").forward(req, resp);
+		req.getRequestDispatcher("/StorePage/OpenStoreForGroup.jsp").forward(req, resp);
 		
 //		System.out.println(bean12);
 //		System.out.println(bean12.size());

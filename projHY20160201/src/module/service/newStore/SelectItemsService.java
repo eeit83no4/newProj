@@ -45,7 +45,6 @@ public class SelectItemsService {
 		//冷熱,正常全冰,少冰,去冰;甜度,正常全糖,少糖,半糖,無糖
 		_12_ItemVO itemVO=_12dao.findById(itemNo);
 		String c2c3=null;
-		int i=0;
 		for(_10_Class_SecondVO a:itemVO.getClass_firstVO().getClass_Seconds()){
 			if(!a.getClass2_name().equals("加料")){
 				String c2name=a.getClass2_name();
@@ -64,6 +63,29 @@ public class SelectItemsService {
 		}
 		return c2c3;
 	}
+	//--------秀出加料區
+		public String showExtra(Integer itemNo){
+			//冷熱,正常全冰,少冰,去冰;甜度,正常全糖,少糖,半糖,無糖
+			_12_ItemVO itemVO=_12dao.findById(itemNo);
+			String c2c3=null;
+			for(_10_Class_SecondVO a:itemVO.getClass_firstVO().getClass_Seconds()){
+				if(a.getClass2_name().equals("加料")){
+					String c2name=a.getClass2_name();			
+					for(_13_Item_Class_ThirdVO b:itemVO.getItem_class_thirds()){
+						if(c2name==b.getClass_ThirdVO().getClass_SecondVO().getClass2_name()){
+							String c3name=b.getClass3_name();
+							String price=String.valueOf(b.getExtra()).split("\\.")[0];
+							if(c2c3==null){
+								c2c3=c3name+"("+price+")";
+							}else{
+								c2c3=c2c3+","+c3name+"("+price+")";
+							}							
+						}
+					}				
+				}			
+			}
+			return c2c3;
+		}
 	
 	//------------------測試------------
 	public static void main(String args[]){

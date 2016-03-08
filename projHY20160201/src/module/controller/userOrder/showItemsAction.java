@@ -7,14 +7,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import module.dao._16_Group_RecordDAO;
+import module.model._04_EmployeeVO;
 import module.service.attempGroupService;
 
-public class showItemsAction extends ActionSupport implements RequestAware {
+public class showItemsAction extends ActionSupport implements RequestAware,SessionAware {
 	
 	private static final long serialVersionUID = 1L;
 	private attempGroupService att=new attempGroupService();
@@ -32,14 +34,19 @@ public class showItemsAction extends ActionSupport implements RequestAware {
 		this.request=request;
 		
 	}
-
+	private Map<String, Object> session;
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;		
+	}
 
 	@Override
 	public String execute() throws Exception {
 	
 		
 		
-		int group_user_id=1;
+		_04_EmployeeVO user=(_04_EmployeeVO)session.get("LoginOK");
+		int group_user_id=user.getUser_id();
 		int group_no=Integer.parseInt(groupno.trim());//團購編號
 		
 		Map<String,String> notice=new HashMap<>();
@@ -103,6 +110,7 @@ public class showItemsAction extends ActionSupport implements RequestAware {
 		
 		return Action.SUCCESS;
 	}
+	
 	
 	
 	

@@ -53,7 +53,7 @@ public class CreateGroupService {
 /*-------------------------------------------------------------------------------------------------------------------------------*/	
 	//發起團購新增店家
 	int newstoreno = 0 ;
-	public void findStoreAndInsert(Integer store_no,Integer user_id){				
+	public Integer findStoreAndInsert(Integer store_no,Integer user_id){				
 		_07_StoreVO store=Dao07.findById(store_no);
 			_07_StoreVO bean07=new _07_StoreVO();
 			bean07.setStore_name(store.getStore_name());
@@ -75,10 +75,10 @@ public class CreateGroupService {
 			Dao07.insert(bean07);
 			//取得新的storeno
 			newstoreno =(int) Dao07.getSession().getIdentifier(bean07);
+			return newstoreno;
 //			System.out.println(newstoreno);	
 //			System.out.println(itemno);	
 	}
-	
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
 	public void dlData(Integer dlstore_no){

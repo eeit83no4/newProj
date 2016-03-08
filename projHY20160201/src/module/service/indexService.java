@@ -16,6 +16,7 @@ import module.dao._16_Group_RecordDAO;
 import module.dao._17_Group_UserDAO;
 import module.dao._18_Order_DetailDAO;
 import module.model._16_Group_RecordVO;
+import module.model._17_Group_UserVO;
 import module.util.HibernateUtil;
 
 public class indexService {
@@ -70,9 +71,14 @@ public class indexService {
 				try {
 					d1=format.parse(endDate);
 					d2=format.parse(nowDate);
-					
+					//比對之後正在進行的團購(排除掉過期的)
 					if((d1.getTime()-d2.getTime())>0){
-						grAfter.add(a);
+						//接下來找到自己被邀請的
+						for(_17_Group_UserVO b:a.getGroup_Users()){							
+							if(b.getEmployeeVO().getUser_id()==userId){
+								grAfter.add(a);
+							}														
+						}						
 					}										
 				} catch (ParseException e) {					
 					e.printStackTrace();

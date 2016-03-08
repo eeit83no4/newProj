@@ -13,4 +13,5 @@ public interface _18_Order_Detail_InterfaceDAO {
 	public _18_Order_DetailVO findById(Integer detail_no);
 	public List<_18_Order_DetailVO> getAll();
 	JSONObject getOdNo(int group_user_no);
+	public List<_18_Order_DetailVO> getDetailNo(Integer group_user_no);
 }

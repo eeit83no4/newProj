@@ -330,7 +330,7 @@ public class MyGroupService {
 			for (_17_Group_UserVO a : users) {
 				Set<_18_Order_DetailVO> details = a.getOrder_Details();
 				for (_18_Order_DetailVO b : details) {
-					String[] starray = new String[8]; // 小袋子
+					String[] starray = new String[10]; // 小袋子
 						starray[0] = a.getEmployeeVO().getUser_id().toString(); // 員工ID
 						starray[1] = a.getEmployeeVO().getName(); // 員工姓名
 						starray[2] = b.getOitem_name();
@@ -339,6 +339,8 @@ public class MyGroupService {
 						starray[5] = b.getOprice_after().toString();
 						starray[6] = b.getOclass();
 						starray[7] = format.format(a.getOrder_time()).toString(); // 訂購時間
+						starray[8] = b.getDetail_no().toString(); //團購編號
+						starray[9] = b.getPay_status();//付款狀態
 					sbs.add(starray);				
 				}
 			}

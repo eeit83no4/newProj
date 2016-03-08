@@ -15,7 +15,7 @@ import module.service.GetStoreClass;
 import module.service.GetStoreDataService;
 import module.service._07_StoreService;
 
-public class InsertStoreAction extends ActionSupport implements RequestAware {
+public class InsertStoreAction3 extends ActionSupport implements RequestAware {
 	
 	private String store;
 	private String storeClass;
@@ -112,12 +112,15 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 		System.out.println(sub);
 		_07_StoreVO bean7 = new _07_StoreVO();
 		boolean flag = true;
-		System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+		System.out.println("ssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+		System.out.println(request.get("StoreNo"));
+		System.out.println(request.get("StoreNo"));
+		System.out.println(request.get("StoreNo"));
 		if(request.get("StoreNo")!=null){
 			sub = request.get("StoreNo") + "";
 		}
 //		System.out.println(request.get("StoreNo"));
-		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		System.out.println("ssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 		if(sub==null){
 			flag = false;
 		_07_StoreService storeService=new _07_StoreService();
@@ -125,10 +128,7 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 //		System.out.println(StoreNo);
 		request.put("StoreNo", StoreNo);		
 		bean7.setStore_no(StoreNo);
-				data = getStoreDataService.getStoreData(StoreNo);
-				System.out.println(request.get("StoreNo"));
-				System.out.println(request.get("StoreNo"));
-				System.out.println(request.get("StoreNo"));
+				data = getStoreDataService.getStoreData(StoreNo);				
 			}else{
 			request.put("StoreNo", sub);			
 			bean7.setStore_no(Integer.parseInt(sub.trim()));

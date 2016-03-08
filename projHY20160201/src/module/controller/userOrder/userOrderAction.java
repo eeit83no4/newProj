@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import module.dao._12_ItemDAO;
+import module.dao._17_Group_UserDAO;
 import module.model._17_Group_UserVO;
 import module.model._18_Order_DetailVO;
 import module.service.attempGroupService;
@@ -22,7 +23,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 public class userOrderAction extends ActionSupport{
-	
+	private static _17_Group_UserDAO _17guDAO=new _17_Group_UserDAO();
 	private static final long serialVersionUID = 1L;
 	private final String[] pictureSubs = { "jpeg", "jpg", "gif", "png", "jpe" };
 	private String jsonString;	
@@ -56,8 +57,9 @@ public class userOrderAction extends ActionSupport{
 			Object group_user_noobject=net.get("group_user_no");
 			String group_user_nostring=String.valueOf(group_user_noobject);
 			Integer group_user_noInt=Integer.parseInt(group_user_nostring);
-			_17_Group_UserVO uservo=new _17_Group_UserVO();
-			uservo.setGroup_user_no(group_user_noInt);
+//			_17_Group_UserVO uservo=new _17_Group_UserVO();
+			_17_Group_UserVO uservo=_17guDAO.findById(group_user_noInt);
+//			uservo.setGroup_user_no(group_user_noInt);
 			//ostore_name
 			String ostore_name=String.valueOf(net.get("ostore_name"));
 			//oprice_no

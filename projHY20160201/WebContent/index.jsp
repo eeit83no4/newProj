@@ -27,7 +27,7 @@
 						"url":'<c:url value="/login/loginAction.action"/>',
 						"data":{email},											
 						"success":function(){
-							location.href='/projHY20160201/realindex2.jsp'
+							location.href='/projHY20160201/index/indexServlet.controller'
 						}
 					});	
 // 				 location.href='/projHY20160201/login/loginAction.action?email='+user ;

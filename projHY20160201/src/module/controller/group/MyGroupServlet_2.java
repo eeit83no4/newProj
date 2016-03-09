@@ -51,7 +51,7 @@ public class MyGroupServlet_2 extends HttpServlet {
 		req.setAttribute("EndDay", longDay);
 		req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
 		req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));		
-						
+
 		req.setAttribute("detail_Detail", jSONObject);
 		req.setAttribute("detail_ByUser", jSONObject2);
 		req.setAttribute("detail_ByItem", jSONObject3);

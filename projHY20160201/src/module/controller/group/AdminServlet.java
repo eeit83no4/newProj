@@ -35,7 +35,6 @@ public class AdminServlet extends HttpServlet {
 		
 //		System.out.println("Auth  =  " + wewe);
 		if(wewe.equals("A")){
-			System.out.println("AAA");
 			if(prodaction.equals("主畫面")){
 				List<Map> all_order = adminservice.orderMaintain();
 				JSONArray jSONObject1=JSONArray.fromObject(all_order);
@@ -54,11 +53,9 @@ public class AdminServlet extends HttpServlet {
 				adminservice.updateAuthByUserId(user_id, auth);
 			}
 		}else{
-			System.out.println("BBB");
 			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 			
 		}
-	
 			
 			
 	}

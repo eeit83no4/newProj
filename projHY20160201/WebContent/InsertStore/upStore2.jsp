@@ -42,7 +42,7 @@
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div><br />				
 		<input type="submit" value="新增店家" name="submit" id="id">
-  		<input type="submit" name="sub" value="60"><br />
+  		<input type="submit" name="sub" value="59"><br />
 		</div>
 	</form>
 	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>

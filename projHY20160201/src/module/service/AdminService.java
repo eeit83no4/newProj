@@ -37,7 +37,7 @@ public class AdminService {
 //			System.out.println(as.adminMaintain());		
 			// ------------------修改auth---------------------------------
 //			as.updateAuthByUserId("3", "A");
-		
+		as.Authhh(166);
 			
 		
 		
@@ -109,5 +109,13 @@ public class AdminService {
 	public void delete(Integer group_no){
 		gr.delete(group_no);
 	}
+	
+	// ------------------查詢此人權限---------------------------------
+		public String Authhh(Integer user_id){
+			
+			String aaa = a.findAuthByUserId2(user_id);
+//			System.out.println(aaa);
+			return aaa;
+		}
 
 }

@@ -15,15 +15,17 @@ import module.model._07_StoreVO;
 import module.model._09_Class_FirstVO;
 import module.model._10_Class_SecondVO;
 import module.model._12_ItemVO;
-import module.service.GetAttributes;
 import module.service.InserSizeService;
 import module.service.InsertItemService;
 import module.service.UpdateItemService;
+import module.service.insertPicByBase64;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 @WebServlet("/SelectItemServlet.insert")
 public class InsertItemServlet extends HttpServlet {
-
+	private insertPicByBase64 insertPic=new insertPicByBase64();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json; charset=utf-8");
@@ -48,12 +50,27 @@ public class InsertItemServlet extends HttpServlet {
 //		String itemName = req.getParameter("itemName").trim();
 		Integer storeNo =Integer.parseInt(req.getParameter("storeNo").trim());
 		String first =req.getParameter("first55").trim();
+		//----------------------處理圖片------------------
+		String jsonImg =req.getParameter("jsonImg");
+		String picPath=null;
+		if(jsonImg!=null){
+			JSONSerializer jSONSerializer=new JSONSerializer();
+			Object b=null;
+			//將imgsString轉換Object
+			try {
+				b=jSONSerializer.toJSON(jsonImg);
+			} catch (Exception e) {			
+				System.out.println("jSONSerializer error="+e.toString());
+			}				
+//			將Object轉換成JsonArray格式			
+			JSONArray jSONArray=JSONArray.fromObject(b);
+			for(int i=0;i<jSONArray.size();i++){
+				String picbase64=(String)jSONArray.get(i);
+				picPath=insertPic.picInsert(picbase64);				
+			}						
+		}
+		//----------圖片處理完畢
 		if(req.getParameter("itemId")!=null&&req.getParameter("itemId").trim().length()>0){
-//			if(itemId == null || itemId.toString().trim().length() <= 0 || itemId.toString().trim().equals("")){
-//				System.out.println("lllllllllllllllllllllllllllllllllllllllllllllllllllll");
-//			}else{
-//				System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-//			}
 			itemId = Integer.parseInt(req.getParameter("itemId").trim());
 		}else{
 			itemId = insertItemService.inserOneItem(itemName , first , storeNo);
@@ -68,10 +85,8 @@ public class InsertItemServlet extends HttpServlet {
 		_12_ItemVO bean12 = new _12_ItemVO();			
 		bean12.setItem_no(itemId);
 		updateStoreService.UpdateItem(bean12);
-		
 		//砍字串		
 		ArrayList getAtr = insertItemService.cuttingHtmlString(jsonString);
-		
 //		Integer itemNo = null;
 		String size  = null;
 		for(int i=0;i<getAtr.size();i=i+2){		
@@ -92,8 +107,9 @@ public class InsertItemServlet extends HttpServlet {
 				storeVO.setStore_no(storeNo);	//參考店家
 				bean12.setStoreVO(storeVO);
 				bean12.setItem_name(itemName);
-//				bean12.setPic(null); //照片		
-				
+				if(picPath!=null&&picPath.trim().length()>0){
+					bean12.setPic(picPath.getBytes()); //照片---------------------------------------------------
+				}
 				//10第二層屬性
 				_10_Class_SecondVO bean10 = new _10_Class_SecondVO();
 				bean10.setClass2_name((String)getAtr.get(i));		
@@ -104,16 +120,23 @@ public class InsertItemServlet extends HttpServlet {
 			}	
 		}//for end
 		
-		String itemNoS = Integer.toString(itemId);
-		System.out.println(itemNoS);
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		//傳ID
+//		String itemNoS = Integer.toString(itemId);
+//		System.out.println(itemNoS);
+//		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//		Map<String,String> data=new HashMap<>(); 
+//		data.put("itemNoS", itemNoS);
+//		JSONObject json=JSONObject.fromObject(data);
+//		 resp.getWriter().print(json);
+		//傳ID
+				
+		
 		Map<String,String> data=new HashMap<>(); 
-		data.put("itemNoS", itemNoS);
+		data.put("itemName", itemName);
 		JSONObject json=JSONObject.fromObject(data);
-	
 		 resp.getWriter().print(json);
 	}
-			
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doGet(req, resp);

@@ -106,6 +106,14 @@ public class InsertItemService {
 			_12DAO.insert(bean12);
 			pk12 =(int) _12DAO.getSession().getIdentifier(bean12);	
 		}else{
+			String itemName = bean12.getItem_name();
+			byte[] itemPic = bean12.getPic();
+			System.out.println(itemName);
+			System.out.println(itemPic);
+			bean12=_12DAO.findById(bean12.getItem_no());
+			bean12.setItem_name(itemName);
+			bean12.setPic(itemPic);
+			getSession().update(bean12);
 			pk12 = bean12.getItem_no();
 		}
 //第二層屬性
@@ -146,7 +154,6 @@ public class InsertItemService {
 			for(_11_Class_ThirdVO list22:beanss){			 //比對  超熱,有點溫....
 			 if(bean11.getClass3_name().equals(list22.getClass3_name())){
 				 System.out.println(list22.getClass3_name());
-//				 System.out.println("sssssssssssssssssssssssssssssssssssssssssssssss");
 				 pk11 = list22.getClass3_no();
 				 bean11.setClass3_no(pk11);  //如果比對到了  就帶著PK值出來
 				 break;
@@ -163,18 +170,15 @@ public class InsertItemService {
 				bean11.setClass3_no(pk11);
 			}
 //			System.out.println(bean11.getClass3_no());
-//			System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 			_13_Item_Class_ThirdVO bean13=new _13_Item_Class_ThirdVO();
 			bean13.setItemVO(bean12);           //複合PK
 			bean13.setClass_ThirdVO(bean11);	//複合PK
 			bean13.setClass3_name(bean11.getClass3_name());  //名子抄一遍  超熱,有點溫...
 			bean13.setExtra(dExtra);		//價格 0.0 ,0.0 ,0.0 ,5.0 ,10.0
 //			System.out.println(bean12.getItem_no()+","+bean12.getItem_no());
-//			System.out.println("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 //			getSession().merge(bean13);
 //			getSession().refresh(bean13);
 			_13DAO.insert(bean13);		
-//			System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
 //			System.out.println(bean11.getClass3_no()+","+bean11.getClass3_no());
 		}//for end	
 			return pk12;

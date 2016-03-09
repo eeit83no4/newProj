@@ -27,6 +27,7 @@
 </div>			
 		<div style="float: left; border: 10px;margin: 100px" id="right" class="form-group">
 			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none" /><br /><br />
+			<span id="itemI" style="display:none">圖片: </span> <input id="img" type="file" value="上傳圖片" accept="image/*" onchange="show(this)"/>
 			<input type="button" id="bt0" value="+" style="display:none" />
 			<div id="second"><input type="button" id="but99" value="+" style="display:none" class='btn2 btn-danger'/></div>
 		</div>
@@ -46,7 +47,7 @@
 		<label for="inputName" class="control-label">電話</label>
 		<input type="text" value="093435737" id="phone" name="phone" placeholder="電話" class="form-control" />	
 		<label for="inputName" class="control-label">地址</label>
-		<input type="text" value="大安區" id="phone" name="address" placeholder="地址" class="form-control" />
+		<input type="text" value="大安區" id="address" name="address" placeholder="地址" class="form-control" />
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div> 					
 		<input type="submit" name="submit" value="送出" id="id">		
@@ -58,6 +59,26 @@
 	<script>
 
 	var txtId = 1;
+		//img	
+		imgarr=[];
+		function show(obj){							
+			var thefiles=obj.files;
+			for(var i=0;thefiles.length;i++){
+				var reader=new FileReader();
+				reader.readAsDataURL(thefiles[i]);
+				reader.onload=function(c){
+					var fileContent=c.target.result;
+					imgarr.push(fileContent);
+					console.log(fileContent);	
+				}
+			}				
+									
+		}
+		//img end	
+	
+	
+	
+	
 	
 		$(function(){	
 			ii=0;
@@ -70,7 +91,9 @@
 		    	$( "#dialog" ).dialog( "open" );			      
 		    });
 			//長出店家類型 名稱
-			$('#inputName').val('${data.storeName}');	 
+			$('#inputName').val('${data.storeName}');
+			$('#phone').val('${data.storePhone}');
+			$('#address').val('${data.storeAddress}');
 			    var b="${data.storeClass}";
 			    var c=b.split(",");			    
 			    var d="${data.storeClassAll}";
@@ -87,15 +110,17 @@
 							}					
 						}
 					}
-				
-// 				$.each(${getItemAll},function(key,value){
-// 						value
-// 				})
+				var k=0;
+				$.each(${getItemAll},function(key,value){
+						k++;
+				})
+// 				alert(k);
 				
 			flag = true;
-			//長出商品總量 (左邊)
-			$.each(${getItemAll},function(key,value){
-				 $('#item').prepend($('<li>').prepend($('<a>').attr('data-toggle','tab')
+			if(k!=0){
+				//長出商品總量 (左邊)
+				$.each(${getItemAll},function(key,value){
+					 $('#item').prepend($('<li>').prepend($('<a>').attr('data-toggle','tab')
 															  .attr('href','#')
 						 									  .attr('name','item'+value.getItem_no)
 						 									  .attr('class','item')
@@ -120,11 +145,23 @@
 						$('#itemP').show()
 						flag = false;
 						}
+				})
+			}//if end
+			
+			
+			//改變書籤的名子 (左邊)
+			$('.item').click(function(){
+// 				alert($('#itemName').val())
+// 				alert($('.item[aria-expanded="true"]').text())
+				$('.item[aria-expanded="true"]').text($('#itemName').val())
 			})
+			
+			
 			//偷偷把商品存進資料庫	
 			$('.item').on('click',insertItem)
-				
- 				 function insertItem(){						
+			
+ 				 function insertItem(){
+					var jsonImg=JSON.stringify(imgarr);//圖片
 					var arr=[];
 					$('input[name="attributes"]').each(function(){
 						arr.push($(this).val());
@@ -135,15 +172,17 @@
 					storeNo='${StoreNo}'
 					var itemName=$('#itemName').val();					
 					$.ajax({
-						'type':'get',
+						'type':'post',
 						'url':'/projHY20160201/SelectItemServlet.insert',
 // 						'datatype':'json',
-						'data':{jsonString,itemId,itemName,storeNo,first55},
-// 						'success':function(data3){
-// 							itemId = data3.itemNoS;
-// 							alert(itemId)
+						'data':{jsonString,itemId,itemName,storeNo,first55,jsonImg},
+// 						'success':function(itemName33){
+// 							alert(itemName33.itemName)
+							
+// 							alert(itemName33)
 // 						}
 					})
+					imgarr=[];
 					//取得物品第一層
 				$.ajax({
 					'type':'get',
@@ -155,8 +194,8 @@
 						first55 = data2.first;
 // 						alert(first55)
 					}
-				})
- 				 }
+				})				
+ 			}
 			
 			//SHOW  點擊使用ajax抓出資料
 			$('.item').click(function() {
@@ -200,7 +239,7 @@
 			              $('input').show()
 						  $('#itemP').show()
 			              var itemName22 = $('#AAB').val()
-			           		clickInsertItem(itemName22);
+			           		alert(itemName22.itemName);
 			    		  }
 			    	  }		      	
 			      }
@@ -377,7 +416,8 @@
 				case "便當":
 				var jsonData2 = {defaultClass :[
 				  							 {Size : ['基本(50)', '加大(60)']},
-				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']}				  					       
+				  							{添加 : ['辣蘿蔔(0)','多飯(0)', '少飯(0)']},
+				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']},				  					        
 				  				]}
 				jsonData = jsonData2;
 					break;
@@ -402,7 +442,7 @@
 		
 		function clickInsertItem(itemName22){	
 			var arr=[];
-			alert(jsonData.defaultClass[0].Size)
+// 			alert(jsonData.defaultClass[0].Size)
 		$.each(jsonData, function(x5, val5){
 			if (x5=="defaultClass"){
 				$.each(val5 , function(applier5, a_val5){
@@ -446,7 +486,7 @@
 			})
 		}
 		function oop(no){
-			alert(no)
+// 			alert(no)
 			itemId = no;
 // 			alert(itemId)
 			$('#item').append($('<li>').attr('class','active')

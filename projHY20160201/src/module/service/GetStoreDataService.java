@@ -18,14 +18,19 @@ public class GetStoreDataService {
 		Map<String,String> data=new HashMap<>(); 
 		_07_StoreVO bean = _07DAO.findById(storeId);	
 		String storeName = bean.getStore_name();   //取得店家名稱  storeName=雞排店
-		data.put("storeName",storeName);   
+		data.put("storeName",storeName); 
+		
+		String storePhone = bean.getPhone();
+		data.put("storePhone", storePhone);
+		String storeAddress = bean.getAddress();
+		data.put("storeAddress", storeAddress);
 		
 		GetStoreClass getClass=new GetStoreClass();
 		String storeClass = getClass.getStoreString(bean);  //取得店家類型  storeClass=豆花類,下午茶,粉圓類
 		data.put("storeClass",storeClass);
 		
 		
-		String storeClassAll = storeClassAll();
+		String storeClassAll = storeClassAll();  //所有類型
 		data.put("storeClassAll",storeClassAll);
 		return data;
 	}

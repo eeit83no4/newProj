@@ -9,54 +9,59 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style type="text/css">
-#allstore{
+#form1{
 width:500px;
+line-height:50px;
+padding:20px;
+border:2px orange solid;
+margin-right:50px;
+float:left;
+margin-top: 5%;
+}
+#form2{
+width:500px;
+line-height:50px;
+padding:20px;
+border:2px orange solid;
+float:left;
+margin-top: 5%;
+}
+#allstore{
+width:450px;
 height:500px;
 border: 3px green double; 
 /* overflow:scroll; */
-float:left;
-margin-top: 40px;
 }
 #mystore{
-border: 3px green double; 
-margin-left:600px;
-width:500px;
+width:450px;
 height:500px;
-margin-top: 40px;
-/* overflow:scroll; */
+border: 3px green double; 
 }
 #div1{
-width:490px;
-height:465px;
+width:440px;
+height:445px;
 overflow:scroll;
 font-size: 32px;
-padding:12px 5px 0px 12px;
 }
 #div2{
-width:490px;
-height:465px;
+width:440px;
+height:445px;
 overflow:scroll;
 font-size: 32px;
-padding:12px 5px 0px 12px;
 }
 .txtSearch{
 margin-left: 20%;
 margin-top: 12px;
 }
-.btndiv{
-padding-top: 6px;
-margin-left: 75%;
-}
 .span1{
-font-size: 60px;
-margin-left: 13%;
+font-size: 28px;
 }
 .span2{
-font-size: 60px;
-margin-left: 33%;
+font-size: 28px;
 }
-#span{
-margin-top: 1%;
+.btndiv{
+padding-top:2%;
+float: right;
 }
 </style>
 </head>
@@ -64,20 +69,26 @@ margin-top: 1%;
 <div id="wrap">
 	<!-- 	載入導覽列 -->
 	<jsp:include page="/header.jsp"/>
-	<div id="span"><span class="span1">全部店家</span><span class="span2">我的店家</span></div>
-	<div id="allstore">	
-		<div class="txtSearch">
-			<input type="text" style="width: 240px; height: 36px;" id="txtSearch" name="keyword" autocomplete="off">
+	
+	<form id="form1">
+	<div id="span"><span class="span1">AllStore</span></div>
+		<div id="allstore">	
+			<div class="txtSearch">
+				<input type="text" style="width: 240px; height: 36px;" id="txtSearch" name="keyword" autocomplete="off">
+			</div>
+			<div id="div1"></div>
 		</div>
-		<div id="div1"></div>
-	</div>
+	</form>
 	<!-- ------------------- -->
-	<div id="mystore">	
-		<div class="txtSearch">
-			<input type="text" style="width: 240px; height: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
+	<form id="form2">
+	<div id="span"><span class="span2">${LoginOK.name}'s Store</span></div>
+		<div id="mystore">	
+			<div class="txtSearch">
+				<input type="text" style="width: 240px; height: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
+			</div>
+			<div id="div2"></div>
 		</div>
-		<div id="div2"></div>
-	</div>	
+	</form>	
 	<!-- 判斷使用者是否有登入 -->
 <c:if test="${empty LoginOK}">
 	<c:redirect url="index.jsp"/>

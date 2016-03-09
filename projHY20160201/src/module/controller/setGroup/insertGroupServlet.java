@@ -141,7 +141,7 @@ public class insertGroupServlet extends HttpServlet {
 					 _17aa.setCo_holder("B");					 
 				 }
 				 //如果是主揪
-				 if(a==1){
+				 if(a==creater){
 					 _17aa.setCo_holder("A");
 				 }
 				 _17VOset.add(_17aa);

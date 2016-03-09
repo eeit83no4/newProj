@@ -154,7 +154,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				<table id="Table1">
 					<tr style="border-bottom: 0px">
 						<td id=Td1 style="border-bottom: 0px">團購名稱:</td>
-						<td class="tt"><input type="text" id="Tex1" ></td>
+						<td class="tt"><input type="text" id="Tex1" required="required"></td>
 					</tr>
 					<tr style="border-bottom: 0px">
 						<td style="border-bottom: 0px">訂購店家:</td>
@@ -243,19 +243,20 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-						<h4 class="modal-title custom_align" id="Heading">選擇共同管理者</h4>
+										
+					<h4 class="modal-title custom_align" id="Heading">選擇共同管理者</h4>
 					</div>
 
 					<form action="" method="post">
 						<div class="modal-body" id="inadmin"></div>
 						<div class="modal-footer ">
-							<button type="button" class="btn btn-warning btn-lg" 
-							 style="width: 100%;"  id="setadmin">
-								<span class="glyphicon glyphicon-ok-sign"></span>確認
+							<button type="button" class="btn btn-warning btn-lg" class="close" 
+							aria-hidden="true" style="width: 100%;" data-dismiss="modal" id="setadmin">
+								<span class="glyphicon glyphicon-ok-sign" ></span>確認
+								
+								
+<!-- 								<button type="button" class="close"  style="width: 100%;class="btn btn-warning btn-lg" data-dismiss="modal" -->
+<!-- 							aria-hidden="true"><span class="glyphicon glyphicon-ok-sign" >關閉</span> -->
 							</button>
 						</div>
 					</form>
@@ -275,7 +276,6 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊
 				var name2 = null;//共同管理員
-				
 				var newUser=false;
 				$(':checkbox[name="inp"]:checked').each(function() {
 					var userid = parseInt(($(this).val()).split('*')[0]);//員工編號
@@ -312,6 +312,47 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					$("#inadmin").append(name2)//共同管理員
 				}				
 			});
+		//---------------------共同管理員----------------------------------------
+			var adminIds = null;
+			var adminnas = [];//已經邀請的，比對用
+			$('#setadmin').click(function() {
+				var anames =null;			
+				var newAdmin=false;
+				var adminnames=null;
+				$(':checkbox[name="adminDiv"]:checked').each(function() {
+					var adminid = parseInt(($(this).val()).split('*')[0]);//員工編號
+					var anames = ($(this).val()).split('*')[1];//員工姓名
+					var isAdminAlreadyInvited=false;
+					if(adminIds==null){
+						adminIds=adminid;
+					}else{
+						adminIds=adminIds+','+adminid;
+					}
+				$.each(adminnas,function(index,value){
+					if(anames==value){
+						isAdminAlreadyInvited=true;
+						}
+					})
+				if(isAdminAlreadyInvited==false){ //員工還沒有被邀請
+					adminnas.push(anames);	
+					if(adminnames==null){
+						adminnames=anames;
+					}else{
+						adminnames=adminnames+anames;
+					}
+					$(this).prop('disabled',true);
+				  newAdmin=true;
+					  }
+				})
+				console.log("ad--"+adminIds);
+				if(newAdmin){
+				$("#admin2").append(adminnames)//共同管理員
+				}
+				
+				
+			});
+			
+			
 
 			//-------------取消
 			$("#clear").click(function() {
@@ -392,80 +433,48 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			//---------------部門分類結束-----------------------------------------------------
 			
 			
-			//---------------------共同管理員----------------------------------------
-			var adminIds = null;
-			var adminnas = [];//已經邀請的，比對用
-			var adminnames =null;
-			$('#setadmin').click(function() {
-				
-				 
-				var newAdmin=false;
-					
-					
-				$(':checkbox[name="adminDiv"]:checked').each(function() {
-					var adminid = parseInt(($(this).val()).split('*')[0]);//員工編號
-					var adminname = ($(this).val()).split('*')[1];//員工姓名
-					if(adminIds==null){
-						adminIds=adminid;
-					}else{
-						adminIds=adminIds+','+adminid;
-					}
-					var isAdminAlreadyInvited=false;
-					  $.each(adminnas,function(index,value){
-							if(adminname==value){
-								isAdminAlreadyInvited=true;
-							}
-						})
-						if(isAdminAlreadyInvited==false){ //員工還沒有被邀請
-						　adminnas.push(adminname);//儲存員工編號
-					if(adminnames==null){
-						//adminIds=adminid;
-						adminnames=adminname;
-					}else{
-						//adminIds=adminIds+','+adminid;
-						adminnames=adminnames+adminname
-					}
-				  newAdmin=true;
-					  }
-				})
-				console.log("ad--"+adminIds);
-				if(newAdmin){
-				$("#admin2").append(adminnames)//共同管理員
-				}
 			
-				
-			});
 			
 			
 			var arr=[];//要傳送過去的JSON
 			
 		    //-----------------------發起團購
 			$('#save').click(function() {
-				var enddate = $("#enddate").val();;
+				var enddate = $("#enddate").val();
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
-				realUser=realUser+','+holdUser;
+			
 				if(adminIds==null){
 					adminIds="0";
 			   }
+								
+			
+			if(groupna==0 || enddate==0){
+				alert("請輸入團購名稱及截止日");
+			}else if(groupna!=0 || enddate!=0){ 
+				realUser=realUser+','+holdUser;
 				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser});
 				if(!$.isEmptyObject(arr)){
-					var jsonString=JSON.stringify(arr);
-					console.log(jsonString);
-					$.ajax({
+				var jsonString=JSON.stringify(arr);
+			    console.log(jsonString);
+			    $.ajax({
 						"type":"post",
 						"url":'<c:url value="/insertGroupServlet.controller"/>',
 						"data":{jsonString},											
 						"success":function(){
 							alert("success");
-							loaction.href='/projHY20160201/index/indexServlet.controller';
+							location.href='/projHY20160201/index/indexServlet.controller';
 						}
 					});	
 				
-				};
+				};}
+			
+			
+			 
+				
 			
 			});
-			
+		
 			
 			
 		

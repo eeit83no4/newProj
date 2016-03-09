@@ -98,9 +98,9 @@
 
 <div class="col-md-12">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#table_ByItem">按件統計</a></li>
-    <li><a data-toggle="tab" href="#table_ByUser">按人統計</a></li>
-    <li><a data-toggle="tab" href="#table_Detail">明細列表</a></li>
+    <li class="active"><a data-toggle="tab" href="#table_ByItem" id="table1btn">按件統計</a></li>
+    <li><a data-toggle="tab" href="#table_ByUser" id="table2btn">按人統計</a></li>
+    <li><a data-toggle="tab" href="#table_Detail" id="table3btn">明細列表</a></li>
   </ul>
 
 <div class="tab-content">
@@ -232,17 +232,22 @@ function go3(groupno3){
 			   var aa = new Array();
 			   var bb = new Array();
 			   var killer=0;
-			   for(var j = 0; j<ByUser.length; j++){
+			   for(var j = 0; j<ByUser.length-1; j++){
 				   　if(j<5){
-					   if(j==0){ 
-						   aa[0] =  $("<td><input type='checkbox' value='"+ByUser[0]+"'></td>");
+					   if(j==0){
+// 						   console.log(ByUser[ByUser.length-1]);
+						   if(ByUser[ByUser.length-1]=='y'){
+						   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+					   	   }else{
+					   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+					   	   }
 					   }
 					   aa[j+1] = $("<td></td>").text(ByUser[j]);
 				    }else{
 				    	if(ByUser[j+2]==null){
 				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
 				    	}else{
-				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'    '+ByUser[j+2]+'<br/>');
+				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'		'+ByUser[j+2]+'<br/>');
 				    	}
 				    	j=j+2;
 				    	killer++;
@@ -312,16 +317,31 @@ function go3(groupno3){
 			$('#failBtn').prop("disabled",true);
 		});	
 		
+
+		
+		
+		
 // 		if($("#failreason").val()!=null){
 // 			$("#reasonid").append($("#failreason").val());
 // 			console.log($("#failreason").val());
 // 		}
 
-
-
-
-
 	});
+	   
+	   
+		//----------------按件、按人、明細button按下就刷新-------------------------------
+		$("#table1btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
+		$("#table2btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
+		$("#table3btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
 
 </script>
 </body>

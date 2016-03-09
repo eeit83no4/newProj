@@ -39,12 +39,12 @@
 <!-------------------------------------內容寫在下面 --------------------------------------------->
 <br>
 <div class="row">
-	<div class="col-md-1"></div>
-	<div class="col-md-9">
+<!-- 	<div class="col-md-1"></div> -->
+	<div class="col-md-10">
 		<table id="uppertable" class="table borderless">
 		<c:forEach var="attr" items="${detailUpper}">
-			<tr><th style="width:10%;"><span class="glyphicon glyphicon-heart"></span>&nbsp團購名稱:</th> <td style="width:15%;">${attr[0]}</td> 
-				<th style="width:15%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp公告事項:</th> <td style="width:15%;">${attr[2]}</td></tr>
+			<tr><th style="width:5%;"><span class="glyphicon glyphicon-heart"></span>&nbsp團購名稱:</th> <td style="width:5%;">${attr[0]}</td> 
+				<th style="width:5%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp公告事項:</th> <td style="width:5%;">${attr[2]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-home"></span>&nbsp店家名稱:</th> <td>${attr[1]}</td> 
 				<th><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp當前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-user"></span>&nbsp發起人:</th> <td>${attr[6]}</td>  

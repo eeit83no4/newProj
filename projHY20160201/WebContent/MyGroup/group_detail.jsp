@@ -39,11 +39,12 @@
 <!-------------------------------------內容寫在下面 --------------------------------------------->
 <br>
 <div class="row">
+<!-- 	<div class="col-md-1"></div> -->
 	<div class="col-md-10">
 		<table id="uppertable" class="table borderless">
 		<c:forEach var="attr" items="${detailUpper}">
-			<tr><th style="width:10%;"><span class="glyphicon glyphicon-heart"></span>&nbsp團購名稱:</th> <td style="width:30%;">${attr[0]}</td> 
-				<th style="width:12%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
+			<tr><th style="width:5%;"><span class="glyphicon glyphicon-heart"></span>&nbsp團購名稱:</th> <td style="width:5%;">${attr[0]}</td> 
+				<th style="width:5%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp公告事項:</th> <td style="width:5%;">${attr[2]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-home"></span>&nbsp店家名稱:</th> <td>${attr[1]}</td> 
 				<th><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp當前累積數量:</th> <td>${attr[4]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-user"></span>&nbsp發起人:</th> <td>${attr[6]}</td>  
@@ -70,7 +71,7 @@
 		<c:if test='${status == "進行中"}'>
 <!-- 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="editBtn"><br>		 -->
 			<c:if test='${group_status >= 1}'>
-				 <c:if test='${EndSec < 0}'>
+				 <c:if test='${EndSec <= 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
 					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 				</c:if>
@@ -108,10 +109,10 @@
       <table class="table table-hover table-bordered">
 		<thead>
 			<tr class="info">
-				<th>商品名稱</th>
-				<th>數量</th>
-				<th>單價</th>
-				<th>訂購者細項</th>		
+				<th><strong>商品名稱</th>
+				<th><strong>數量</th>
+				<th><strong>單價</th>
+				<th><strong>訂購者細項</th>		
 			</tr>
 		</thead>
 	<tbody id="tb1"></tbody>		
@@ -122,13 +123,13 @@
       <table class="table table-hover table-bordered">
 		<thead>
 		<tr class="info">
-			<th>付款狀態</th>
-			<th>員工編號</th>
-			<th>訂購人</th>
-			<th>數量</th>
-			<th>總價</th>
-			<th>計算後總價</th>
-			<th>商品細項</th>			
+			<th><strong>付款狀態</th>
+			<th><strong>員工編號</th>
+			<th><strong>訂購人</th>
+			<th><strong>數量</th>
+			<th><strong>總價</th>
+			<th><strong>計算後總價</th>
+			<th><strong>商品細項</th>			
 		</tr>
 		</thead>	
 	<tbody id="tb2"></tbody>		
@@ -139,15 +140,15 @@
 	<table class="table table-hover table-bordered">
 		<thead>
 		<tr class="info">
-			<th>付款狀態</th>
-			<th>員工編號</th>
-			<th>訂購人</th>
-			<th>商品名稱</th>
-			<th>數量</th>
-			<th>單價</th>
-			<th>計算後</th>
-			<th>備註</th>
-			<th>訂購時間</th>
+			<th><strong>付款狀態</th>
+			<th><strong>員工編號</th>
+			<th><strong>訂購人</th>
+			<th><strong>商品名稱</th>
+			<th><strong>數量</th>
+			<th><strong>單價</th>
+			<th><strong>計算後</th>
+			<th><strong>備註</th>
+			<th><strong>訂購時間</th>
 		</tr>
 		</thead>
 	<tbody id="tb3"></tbody>
@@ -191,9 +192,9 @@ function go1(groupno){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;	
 }
 
-function go2(groupno2){		
-		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;				
-}
+// function go2(groupno2){		
+// 		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;				
+// }
 
 function go3(groupno3){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
@@ -331,15 +332,62 @@ function go3(groupno3){
 	   
 		//----------------按件、按人、明細button按下就刷新-------------------------------
 		$("#table1btn").on('click',function(){
-// 			$('#tb3').epmty();//先清空
+			$('#tb1').epmty();//先清空
+// 			location.href='<c:url value="/MyGroup/group_detail.controller?xxx="/>'+groupno;
 		})
 		
 		$("#table2btn").on('click',function(){
-// 			$('#tb3').epmty();//先清空
+			$('#tb2').epmty();//先清空
+// 			location.href='<c:url value="/MyGroup/group_detail.controller?xxx="/>'+groupno;
+// 			$.each(${detail_ByUser}, function(index, ByUser){
+// 				   var aa = new Array();
+// 				   var bb = new Array();
+// 				   var killer=0;
+// 				   for(var j = 0; j<ByUser.length-1; j++){
+// 					   　if(j<5){
+// 						   if(j==0){
+// //	 						   console.log(ByUser[ByUser.length-1]);
+// 							   if(ByUser[ByUser.length-1]=='y'){
+// 							   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+// 						   	   }else{
+// 						   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+// 						   	   }
+// 						   }
+// 						   aa[j+1] = $("<td></td>").text(ByUser[j]);
+// 					    }else{
+// 					    	if(ByUser[j+2]==null){
+// 					    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
+// 					    	}else{
+// 					    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'		'+ByUser[j+2]+'<br/>');
+// 					    	}
+// 					    	j=j+2;
+// 					    	killer++;
+// 					    }
+// 				   }
+// 				   aa[6]=$("<td></td>").append(bb);
+				   
+// 				   var row = $("<tr></tr>").append(aa);
+// 				   $('#tb2').append(row);								
+// 				});
+			
 		})
 		
 		$("#table3btn").on('click',function(){
-// 			$('#tb3').epmty();//先清空
+			$('#tb3').epmty();//先清空
+// 			location.href='<c:url value="/MyGroup/group_detail.controller?xxx="/>'+groupno;
+// 			 $.each(${detail_Detail}, function(index, Detail){
+// 				   var aa = new Array(Detail.length);
+// 				   if(Detail[9]=='y'){
+// 					   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'checked />");
+// 				   }else{
+// 					   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
+// 				   }
+// 				   for(var j = 0; j<Detail.length-2; j++){
+// 					    aa[j+1] = $("<td></td>").text(Detail[j]);
+// 				   }
+// 				   var row = $("<tr></tr>").append(aa);			   
+// 				   $('#tb3').append(row);								
+// 				});
 		})
 		
 

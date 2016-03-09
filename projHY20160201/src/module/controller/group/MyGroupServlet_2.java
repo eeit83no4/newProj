@@ -39,8 +39,7 @@ public class MyGroupServlet_2 extends HttpServlet {
 		List<String[]> detailDetail = myGroupService.orderDetail_detail_new(group_no);
 		JSONArray jSONObject=JSONArray.fromObject(detailDetail);//轉換json
 		List<List<String>> detailByUser = myGroupService.orderDetail_ByUser(group_no);
-		JSONArray jSONObject2=JSONArray.fromObject(detailByUser);//轉換json
-		
+		JSONArray jSONObject2=JSONArray.fromObject(detailByUser);//轉換json		
 		List<List<String>> detailByItem = myGroupService.orderDetail_ByItem(group_no);
 		JSONArray jSONObject3=JSONArray.fromObject(detailByItem);//轉換json
 		

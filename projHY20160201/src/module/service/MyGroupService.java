@@ -258,6 +258,7 @@ public class MyGroupService {
 		for (int i = 0; i < empNos.size(); i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
 			String user_id=null;
+			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
 			for (String[] sb : mgs.orderDetail_detail(group_no)) { //和orderDetail_detail()抓到的資料比對
 				List<String> result = new ArrayList<>();
 				
@@ -293,8 +294,9 @@ public class MyGroupService {
 					}
 				}				
 			}
-			finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
-			
+			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0){
+				finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
+			}	
 		}
 		return finalResult;
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,7 +16,7 @@ import module.service.GetStoreClass;
 import module.service.GetStoreDataService;
 import module.service._07_StoreService;
 
-public class InsertStoreAction extends ActionSupport implements RequestAware {
+public class InsertStoreAction extends ActionSupport implements RequestAware,SessionAware {
 	
 	private String store;
 	private String storeClass;
@@ -91,7 +92,12 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 	public void setRequest(Map<String, Object> request) {
 		this.request=request;		
 	}
-	
+	private Map<String, Object> session;
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+		
+	}
 	
 	public void validate() {
 		System.out.println(attributes);
@@ -106,8 +112,9 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 		bean.setAddress(address);
 		bean.setFinal_update(new java.util.Date());	
 		//參考員工
-		_04_EmployeeVO bean4=new _04_EmployeeVO();
-		bean4.setUser_id(166);
+		_04_EmployeeVO bean4=(_04_EmployeeVO)session.get("LoginOK");
+//		_04_EmployeeVO bean4=new _04_EmployeeVO();
+//		bean4.setUser_id(166);
 		bean.setEmployeeVO(bean4);
 		System.out.println(sub);
 		_07_StoreVO bean7 = new _07_StoreVO();
@@ -156,5 +163,6 @@ public class InsertStoreAction extends ActionSupport implements RequestAware {
 			 return "replace";	
 		 }
 	}
+	
 	
 }

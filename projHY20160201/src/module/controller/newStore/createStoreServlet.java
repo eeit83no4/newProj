@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
 import module.service.newStore.newStoreService;
 
@@ -24,7 +25,7 @@ public class createStoreServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		_07_StoreVO storeVO=new _07_StoreVO();
-		
+		_04_EmployeeVO user=(_04_EmployeeVO)request.getSession().getAttribute("LoginOK");
 		String storeNoForUpdate=request.getParameter("storeNo");		
 		String storeName=request.getParameter("storeName");
 		String storePhone=request.getParameter("storePhone");
@@ -48,6 +49,7 @@ public class createStoreServlet extends HttpServlet {
 			return;
 		}
 		//---------------
+		storeVO.setEmployeeVO(user);
 		storeVO.setStore_name(storeName);
 		storeVO.setPhone(storePhone);
 		storeVO.setAddress(storeAdd);
@@ -70,6 +72,7 @@ public class createStoreServlet extends HttpServlet {
 			return;
 		}else{
 			//店家新增失敗
+			System.out.println("createStoreServlet 店家新增失敗");
 			request.setAttribute("createError", "新增店家時發生錯誤啦!");
 			request.getRequestDispatcher("").forward(request, response);
 			return;

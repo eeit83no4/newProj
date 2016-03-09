@@ -9,18 +9,59 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style type="text/css">
+#form1{
+width:500px;
+line-height:50px;
+padding:20px;
+border:2px orange solid;
+margin-right:50px;
+float:left;
+margin-top: 5%;
+}
+#form2{
+width:500px;
+line-height:50px;
+padding:20px;
+border:2px orange solid;
+float:left;
+margin-top: 5%;
+}
 #allstore{
-width:400px;
-height:300px;
+width:450px;
+height:500px;
 border: 3px green double; 
-overflow:scroll;
-float:left
+/* overflow:scroll; */
 }
 #mystore{
+width:450px;
+height:500px;
 border: 3px green double; 
-margin-left:420px;
-width:400px;
+}
+#div1{
+width:440px;
+height:445px;
 overflow:scroll;
+font-size: 32px;
+}
+#div2{
+width:440px;
+height:445px;
+overflow:scroll;
+font-size: 32px;
+}
+.txtSearch{
+margin-left: 20%;
+margin-top: 12px;
+}
+.span1{
+font-size: 28px;
+}
+.span2{
+font-size: 28px;
+}
+.btndiv{
+padding-top:2%;
+float: right;
 }
 </style>
 </head>
@@ -28,19 +69,26 @@ overflow:scroll;
 <div id="wrap">
 	<!-- 	載入導覽列 -->
 	<jsp:include page="/header.jsp"/>
-	<div id="allstore">	
-		<div>
-			<input type="text" id="txtSearch" name="keyword" autocomplete="off">
+	
+	<form id="form1">
+	<div id="span"><span class="span1">AllStore</span></div>
+		<div id="allstore">	
+			<div class="txtSearch">
+				<input type="text" style="width: 240px; height: 36px;" id="txtSearch" name="keyword" autocomplete="off">
+			</div>
+			<div id="div1"></div>
 		</div>
-		<div id="div1"></div>
-	</div>
+	</form>
 	<!-- ------------------- -->
-	<div id="mystore">	
-		<div>
-			<input type="text" id="sotretext" name="mystoreneme" autocomplete="off">
+	<form id="form2">
+	<div id="span"><span class="span2">${LoginOK.name}'s Store</span></div>
+		<div id="mystore">	
+			<div class="txtSearch">
+				<input type="text" style="width: 240px; height: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
+			</div>
+			<div id="div2"></div>
 		</div>
-		<div id="div2"></div>
-	</div>	
+	</form>	
 	<!-- 判斷使用者是否有登入 -->
 <c:if test="${empty LoginOK}">
 	<c:redirect url="index.jsp"/>
@@ -99,26 +147,31 @@ overflow:scroll;
 						var eleDivX = document.createElement("div");
 						for (var i = 0; i < (datas.mylists.length); i++) { //陣列 取出我新增的 店家名稱
 							var txtBtn1 = document.createTextNode(datas.mylists[i][1]);
-							var p=document.createElement("p");
+							var p=document.createElement("span");
+							p.setAttribute("style","float:left");
 							var eleBtn = document.createElement("a");
 							eleBtn.setAttribute("style","text-decoration:none");
 							eleBtn.setAttribute("href","/projHY20160201/OpenStoreForGroupServlet.select?store_no="+datas.mylists[i][0]);
 							eleBtn.appendChild(txtBtn1);
+							var btndiv = document.createElement("div");
+							btndiv.setAttribute("class","btndiv");
 							var upBtn = document.createElement("input");
 							upBtn.setAttribute("type","button");
 							upBtn.setAttribute("value","修改");
+							upBtn.setAttribute("class","btn btn-default");
 							upBtn.setAttribute("onclick","updata("+datas.mylists[i][0]+")");
 							var dlBtn = document.createElement("input");
 							dlBtn.setAttribute("type","button");
 							dlBtn.setAttribute("id",datas.mylists[i][0]);
 							dlBtn.setAttribute("value","刪除");
-							dlBtn.setAttribute("class","btn btn-default btn-xs");
+							dlBtn.setAttribute("class","btn btn-default");
 							dlBtn.setAttribute("onclick","if(confirm('確定要刪除 :"+datas.mylists[i][1]+" 嗎?'))dldata("+datas.mylists[i][0]+")");
 // 							dlBtn.setAttribute("onclick","dldata("+datas.mylists[i][0]+")");
 							p.appendChild(eleBtn);
-							p.appendChild(upBtn);
-							p.appendChild(dlBtn);
-							eleDivX.appendChild(p);							
+							btndiv.appendChild(upBtn);
+							btndiv.appendChild(dlBtn);
+							eleDivX.appendChild(p);
+							eleDivX.appendChild(btndiv);	
 						}
 						showmystore.appendChild(eleDivX);
 					}

@@ -42,10 +42,14 @@
 	<div class="col-md-10">
 		<table id="uppertable" class="table borderless">
 		<c:forEach var="attr" items="${detailUpper}">
-			<tr><th style="width:10%;">團購名稱:</th> <td style="width:30%;">${attr[0]}</td> <th style="width:12%;">公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
-			<tr><th>店家名稱:</th> <td>${attr[1]}</td> <th>目前累積數量:</th> <td>${attr[4]}</td></tr>
-			<tr><th>發起人:</th> <td>${attr[6]}</td>  <th>目前累積金額:</th> <td>${attr[3]}</td></tr>
-			<tr><th>電話:</th> <td>${attr[5]}</td><th>剩餘時間:</th> <td id="reasonid">${EndDay}(${attr[8]})
+			<tr><th style="width:10%;"><span class="glyphicon glyphicon-heart"></span>&nbsp團購名稱:</th> <td style="width:30%;">${attr[0]}</td> 
+				<th style="width:12%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp公告事項:</th> <td style="width:30%;">${attr[2]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-home"></span>&nbsp店家名稱:</th> <td>${attr[1]}</td> 
+				<th><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp當前累積數量:</th> <td>${attr[4]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-user"></span>&nbsp發起人:</th> <td>${attr[6]}</td>  
+				<th><span class="glyphicon glyphicon-usd"></span>&nbsp當前累積金額:</th> <td>${attr[3]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-phone-alt"></span>&nbsp電話:</th> <td>${attr[5]}</td>
+				<th><span class="glyphicon glyphicon-time"></span>&nbsp剩餘時間:</th> <td id="reasonid">${EndDay}(${attr[8]})
 			<c:if test='${attr[10] != null}'>(${attr[10]})</c:if>
 			<c:if test='${group_status >= 1 && EndSec > 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default-xs btn-xs" value="立即截止"  onclick="go3(${group_no})">
@@ -94,9 +98,9 @@
 
 <div class="col-md-12">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#table_ByItem">按件統計</a></li>
-    <li><a data-toggle="tab" href="#table_ByUser">按人統計</a></li>
-    <li><a data-toggle="tab" href="#table_Detail">明細列表</a></li>
+    <li class="active"><a data-toggle="tab" href="#table_ByItem" id="table1btn">按件統計</a></li>
+    <li><a data-toggle="tab" href="#table_ByUser" id="table2btn">按人統計</a></li>
+    <li><a data-toggle="tab" href="#table_Detail" id="table3btn">明細列表</a></li>
   </ul>
 
 <div class="tab-content">
@@ -118,12 +122,13 @@
       <table class="table table-hover table-bordered">
 		<thead>
 		<tr class="info">
+			<th>付款狀態</th>
 			<th>員工編號</th>
 			<th>訂購人</th>
 			<th>數量</th>
 			<th>總價</th>
 			<th>計算後總價</th>
-			<th>商品</th>			
+			<th>商品細項</th>			
 		</tr>
 		</thead>	
 	<tbody id="tb2"></tbody>		
@@ -134,6 +139,7 @@
 	<table class="table table-hover table-bordered">
 		<thead>
 		<tr class="info">
+			<th>付款狀態</th>
 			<th>員工編號</th>
 			<th>訂購人</th>
 			<th>商品名稱</th>
@@ -185,27 +191,10 @@ function go1(groupno){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=sucess&xxx="/>'+groupno;	
 }
 
-
-
-
-// 把錯誤彈跳視窗的text值抓到後用帶參數的方式傳給go2，之後就交給你了 > <
-
-
-
-
-<!--------------------------------- 訂購失敗的方法(上) ------------------------------------->
 function go2(groupno2){		
-		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;
-				
+		location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=failed&xxx="/>'+groupno2;				
 }
 
-<!--------------------------------- 訂購失敗的方法(下) ------------------------------------->
-
-	
-
-	
-	
-//----------------立即截止按鈕-------------------------------	
 function go3(groupno3){
 	location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=end&xxx="/>'+groupno3;		
 }
@@ -243,38 +232,73 @@ function go3(groupno3){
 			   var aa = new Array();
 			   var bb = new Array();
 			   var killer=0;
-			   for(var j = 0; j<ByUser.length; j++){
-				   if(j<5){
-					   aa[j] = $("<td></td>").text(ByUser[j]);
-// 					   console.log('first'+j);
+			   for(var j = 0; j<ByUser.length-1; j++){
+				   　if(j<5){
+					   if(j==0){
+// 						   console.log(ByUser[ByUser.length-1]);
+						   if(ByUser[ByUser.length-1]=='y'){
+						   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+					   	   }else{
+					   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+					   	   }
+					   }
+					   aa[j+1] = $("<td></td>").text(ByUser[j]);
 				    }else{
-// 				    	console.log('else'+j);
 				    	if(ByUser[j+2]==null){
 				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
 				    	}else{
-				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'    '+ByUser[j+2]+'<br/>');
-				    	}				    	
+				    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'		'+ByUser[j+2]+'<br/>');
+				    	}
 				    	j=j+2;
 				    	killer++;
-				    }					
-			   }	
-			   aa[5]=$("<td></td>").append(bb);
+				    }
+			   }
+			   aa[6]=$("<td></td>").append(bb);
 			   
 			   var row = $("<tr></tr>").append(aa);
 			   $('#tb2').append(row);								
 			});
-		   
+		 //----------------表2付款狀態回傳到資料庫-------------------------------
+		 	$('#tb2').on('click','input[type="checkbox"]',function(){
+				 var user_id = $(this).val(); //員工編號
+				 if($(this).prop("checked")){
+					xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.payStatus?prodaction=表2付款狀態修改&group_no="+${group_no}+"&user_id="+user_id+"&pay_status=y", true);
+					xml.send();
+				}else{
+					xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.payStatus?prodaction=表2付款狀態修改&group_no="+${group_no}+"&user_id="+user_id+"&pay_status=n", true);
+					xml.send();
+				}		 
+			 });
+		 
 		 //----------------抓表3-------------------------------
 		   $.each(${detail_Detail}, function(index, Detail){
 			   var aa = new Array(Detail.length);
-			   for(var j = 0; j<Detail.length; j++){	  
-				    aa[j] = $("<td></td>").text(Detail[j]);	
+			   if(Detail[9]=='y'){
+				   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'checked />");
+			   }else{
+				   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
+			   }
+			   for(var j = 0; j<Detail.length-2; j++){
+				    aa[j+1] = $("<td></td>").text(Detail[j]);
 			   }
 			   var row = $("<tr></tr>").append(aa);			   
 			   $('#tb3').append(row);								
 			});
 		   
-		   
+		 //----------------表3付款狀態回傳到資料庫-------------------------------
+			 $('#tb3').on('click','input[type="checkbox"]',function(){
+				 var detail_no = $(this).val(); //order_detail主鍵
+				 if($(this).prop("checked")){
+					xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.payStatus?prodaction=表3付款狀態修改&detail_no="+detail_no+"&pay_status=y", true);
+					xml.send();
+				}else{
+					xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.payStatus?prodaction=表3付款狀態修改&detail_no="+detail_no+"&pay_status=n", true);
+					xml.send();
+				}		 
+			 });
+		 
+		 
+		 
          //----------------excel下載-------------------------------
 			$('#excelbtn').click(function () {
 			   var blob = new Blob([document.getElementById('table_Detail').innerHTML], {
@@ -293,12 +317,31 @@ function go3(groupno3){
 			$('#failBtn').prop("disabled",true);
 		});	
 		
+
+		
+		
+		
 // 		if($("#failreason").val()!=null){
 // 			$("#reasonid").append($("#failreason").val());
 // 			console.log($("#failreason").val());
 // 		}
 
 	});
+	   
+	   
+		//----------------按件、按人、明細button按下就刷新-------------------------------
+		$("#table1btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
+		$("#table2btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
+		$("#table3btn").on('click',function(){
+// 			$('#tb3').epmty();//先清空
+		})
+		
 
 </script>
 </body>

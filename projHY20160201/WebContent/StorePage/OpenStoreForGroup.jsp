@@ -37,6 +37,9 @@
  margin-right: 12px;
  font-size: 24px;
  }
+ #BT{
+ font-size: 32px;
+ }
 </style>
 </head>
 
@@ -56,7 +59,7 @@
 	<div id="f1" class="col-md-5">
 	</div>
 	
-	<div><input type="button" id='BT' value="發起團購"></div>
+	<div><input type="button" id='BT' value="設定團購"></div>
 
     </form>
 </div>

@@ -81,6 +81,7 @@ public class _17_Group_UserDAO implements _17_Group_User_InterfaceDAO {
 			// bean.setGroup_user_name("dogggggggg");
 			//
 			// dao.insert(bean);
+//			System.out.println(dao.getGroupUserNo(2,1));
 
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -113,6 +114,11 @@ public class _17_Group_UserDAO implements _17_Group_User_InterfaceDAO {
 	@Override
 	public List<_17_Group_UserVO> getAll() {
 		return getSession().createQuery("from _17_Group_UserVO").list();
+	}
+	
+	@Override
+	public List<_17_Group_UserVO> getGroupUserNo(Integer group_no, Integer group_user_id) { //按人統計付款狀態用
+		return getSession().createQuery("from _17_Group_UserVO where group_no="+group_no+"and group_user_id="+group_user_id).list();
 	}
 
 	// ........查詢此人參加哪些團購...............................................................................//

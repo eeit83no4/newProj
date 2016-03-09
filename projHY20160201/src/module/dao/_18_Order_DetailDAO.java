@@ -34,7 +34,7 @@ public class _18_Order_DetailDAO implements _18_Order_Detail_InterfaceDAO {
 
 			_18_Order_Detail_InterfaceDAO dao = new _18_Order_DetailDAO();
 			_18_Order_DetailVO bean = new _18_Order_DetailVO();
-			System.out.println(dao.getOdNo(1));
+//			System.out.println(dao.getOdNo(1));
 			// ---------------------
 			// System.out.println(dao.getAll());
 			// ----------------------------
@@ -58,6 +58,7 @@ public class _18_Order_DetailDAO implements _18_Order_Detail_InterfaceDAO {
 			// bean.setGroup_userVO(first);
 			// bean.setOstore_name("綠茶店");
 			// dao.insert(bean);
+//			System.out.println(dao.getDetailNo(2));
 
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -90,7 +91,12 @@ public class _18_Order_DetailDAO implements _18_Order_Detail_InterfaceDAO {
 	@Override
 	public List<_18_Order_DetailVO> getAll() {
 		return getSession().createQuery("from _18_Order_DetailVO").list();
-	}		
+	}
+	
+	@Override
+	public List<_18_Order_DetailVO> getDetailNo(Integer group_user_no) {//用group_user_no抓出detail_no //按人統計付款狀態用
+		return getSession().createQuery("from _18_Order_DetailVO where group_user_no="+group_user_no).list();
+	}
 	
 
 	@Override

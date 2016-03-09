@@ -17,6 +17,7 @@ public interface _17_Group_User_InterfaceDAO {
 	public Long[] countamount(Integer group_user_id);
 	JSONObject getUserIdNo(int group_no);
 	public List<_17_Group_UserVO> findByGroupUserId2(Integer group_user_id, Integer group_no);
+	public List<_17_Group_UserVO> getGroupUserNo(Integer group_no, Integer group_user_id);
 
 
 }

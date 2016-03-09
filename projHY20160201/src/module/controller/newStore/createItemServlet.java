@@ -65,46 +65,79 @@ public class createItemServlet extends HttpServlet {
 		}
 		if(sizePrice==null||sizePrice.trim().length()==0){
 			errorMsg.put("noSizePrice", "商品價錢不可為空白");
-		}		
+		}
+		boolean issizePriceError=false;
+		try {
+			String[] aa=sizePrice.split(",");
+		} catch (Exception e1) {
+			issizePriceError=true;
+			System.out.println("createItemServlet sizePrice格式錯誤"+e1.toString());
+		}
+		if(issizePriceError){
+			errorMsg.put("sizePriceError", "價錢輸入格式格式錯誤");
+		}
+		boolean isclass2class3Error=false;
+		try {
+			String[] bb=class2class3.split(",");
+		} catch (Exception e1) {
+			isclass2class3Error=true;
+			System.out.println("createItemServlet class2class3格式錯誤"+e1.toString());
+		}
+		if(isclass2class3Error){
+			errorMsg.put("class2class3Error", "單選區輸入格式格式錯誤");
+		}
+		boolean isextraStuffError=false;
+		try {
+			String[] cc=extraStuff.split(",");
+		} catch (Exception e1) {
+			isextraStuffError=true;
+			System.out.println("createItemServlet extraStuff格式錯誤"+e1.toString());
+		}
+		if(isextraStuffError){
+			errorMsg.put("extraStuffError", "複選區輸入格式格式錯誤");
+		}
 		//---------------------------處理圖片-------------------
 		System.out.println("insert handle pic");
-		String pictureName = GlobalService.getFileName(pic);		
-		boolean isPicture = false;
-		String newPath=null;//儲存的新路徑
-		if(pic.getSize()!=0){
-			// 判斷圖片格式
-			for (int i = 0; i < pictureSubs.length; i++) {
-				if (pictureName.split("\\.")[1].toLowerCase().equals(pictureSubs[i])) {					
-					isPicture = true;
-					break;
-				} else if (i == pictureSubs.length - 1) {
-					errorMsg.put("mem_pic", "圖片格式錯誤");
-				}
-			}
-			//如果是圖片，開始
-			if(isPicture){
-				byte[] b = new byte[1024 * 8];//緩衝區大小				
-				InputStream picInputStream=pic.getInputStream();
-				FileOutputStream fileOutputStream;				
-				try {
-					newPath="E:/proj/detailPic/"+pictureName;
-					fileOutputStream = new FileOutputStream(newPath);
-					BufferedInputStream bufferedInputStream=new BufferedInputStream(picInputStream);
-					BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(fileOutputStream);			
-					
-					while(bufferedInputStream.read(b)!=-1){
-						bufferedOutputStream.write(b);
+		String newPath=null;//儲存圖片的新路徑
+		if(pic!=null){//確定有東西
+			String pictureName = GlobalService.getFileName(pic);		
+			boolean isPicture = false;		
+			if(pic.getSize()!=0){
+				// 判斷圖片格式
+				for (int i = 0; i < pictureSubs.length; i++) {
+					if (pictureName.split("\\.")[1].toLowerCase().equals(pictureSubs[i])) {					
+						isPicture = true;
+						break;
+					} else if (i == pictureSubs.length - 1) {						
+						errorMsg.put("mem_pic", "圖片格式錯誤");
 					}
-					// 將緩衝區中的資料全部寫出
-					bufferedOutputStream.flush();
-					// 關閉串流
-					bufferedInputStream.close();
-					bufferedOutputStream.close();
-				} catch (Exception e) {
-					System.out.println("存圖片出錯啦"+e.toString());					
-				}				
+				}
+				//如果是圖片，開始
+				if(isPicture){
+					byte[] b = new byte[1024 * 8];//緩衝區大小				
+					InputStream picInputStream=pic.getInputStream();
+					FileOutputStream fileOutputStream;				
+					try {
+						newPath="E:/proj/detailPic/"+pictureName;
+						fileOutputStream = new FileOutputStream(newPath);
+						BufferedInputStream bufferedInputStream=new BufferedInputStream(picInputStream);
+						BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(fileOutputStream);			
+						
+						while(bufferedInputStream.read(b)!=-1){
+							bufferedOutputStream.write(b);
+						}
+						// 將緩衝區中的資料全部寫出
+						bufferedOutputStream.flush();
+						// 關閉串流
+						bufferedInputStream.close();
+						bufferedOutputStream.close();
+					} catch (Exception e) {
+						System.out.println("存圖片出錯啦"+e.toString());					
+					}				
+				}			
 			}			
-		}				
+		}
+		
 		//--------------------開始新增-----------------------
 		System.out.println("start insert");
 		//1.先新增第一層
@@ -141,7 +174,7 @@ public class createItemServlet extends HttpServlet {
 		if(!errorMsg.isEmpty()){
 			request.setAttribute("errorMsg", errorMsg);
 			request.setAttribute("storeNo", storeNo);
-			request.getRequestDispatcher("/newStore/showItemServlet.controller").forward(request, response);
+			request.getRequestDispatcher("").forward(request, response);
 			return;			
 		}else{
 			request.setAttribute("storeNo", storeNo);

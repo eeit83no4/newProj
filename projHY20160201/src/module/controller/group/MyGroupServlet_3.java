@@ -63,23 +63,23 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.setAttribute("detailUpper", detailUpper);
 			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
 			
-		}else if(prodaction.equals("failed")){
-			mg.updateGroupStatus_failed(group_no);
-			
-			List<String[]> detailUpper= myGroupService.orderDetail_byGroup_upper(group_no);
-			long longSec =  Long.parseLong(detailUpper.get(0)[7],10);
-			String longDay =  myGroupService.getTimeDay(longSec);
-			req.setAttribute("status", detailUpper.get(0)[8]);
-			req.setAttribute("EndSec", longSec);
-			req.setAttribute("EndDay", longDay);
-			req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
-			req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));
-					
-			req.setAttribute("detail_Detail", jSONObject);
-			req.setAttribute("detail_ByUser", jSONObject2);
-			req.setAttribute("detail_ByItem", jSONObject3);
-			req.setAttribute("detailUpper", detailUpper);
-			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
+//		}else if(prodaction.equals("failed")){
+//			mg.updateGroupStatus_failed(group_no);
+//			
+//			List<String[]> detailUpper= myGroupService.orderDetail_byGroup_upper(group_no);
+//			long longSec =  Long.parseLong(detailUpper.get(0)[7],10);
+//			String longDay =  myGroupService.getTimeDay(longSec);
+//			req.setAttribute("status", detailUpper.get(0)[8]);
+//			req.setAttribute("EndSec", longSec);
+//			req.setAttribute("EndDay", longDay);
+//			req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
+//			req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));
+//					
+//			req.setAttribute("detail_Detail", jSONObject);
+//			req.setAttribute("detail_ByUser", jSONObject2);
+//			req.setAttribute("detail_ByItem", jSONObject3);
+//			req.setAttribute("detailUpper", detailUpper);
+//			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);
 			

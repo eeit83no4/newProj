@@ -100,7 +100,19 @@ public class InsertStoreAction extends ActionSupport implements RequestAware,Ses
 	}
 	
 	public void validate() {
-		System.out.println(attributes);
+//		System.out.println(store);
+//		System.out.println(phone);
+//		System.out.println(address);
+//		if(store==null || store.length()==0){
+//			String aa = this.getText("nullname");
+//			this.addFieldError("store", "必填");
+//		}
+//		if(phone==null || phone.trim().length()==0) {
+//			this.addFieldError("phone", this.getText("phoneError"));
+//		}
+//		if(address==null || address.trim().length()==0) {
+//			this.addFieldError("address", this.getText("addressError"));
+//		}	
 	}
 	
 	private GetStoreDataService getStoreDataService=new GetStoreDataService();

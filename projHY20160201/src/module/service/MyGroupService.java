@@ -40,7 +40,7 @@ public class MyGroupService {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			MyGroupService mgs = new MyGroupService();
-//			System.out.println(mgs.getUserPayStatus(1, "1"));
+//			System.out.println(mgs.getUserPayStatus(1, "9"));
 			// ------------------抓出此團購剩餘的時間------------------
 //			 System.out.println(mgs.getTimeSec(gr1.findById(1).getEnd_date()));
 			// ------------------找出此團購的商品數量------------------
@@ -53,8 +53,8 @@ public class MyGroupService {
 //			System.out.println(mgs.orderDetail_ByItem(2));
 
 			// ------------------抓出"按人統計"所需資料------------------
-//			JSONArray jSONObject2=JSONArray.fromObject(mgs.orderDetail_ByUser(1));//轉換json
-//			System.out.println(jSONObject2);
+			JSONArray jSONObject2=JSONArray.fromObject(mgs.orderDetail_ByUser(1));//轉換json
+			System.out.println(jSONObject2);
 //			for (List<String> sb : mgs.orderDetail_ByUser(1)) {
 //				for(String s:sb){
 //				 for (int i = 0; i < s.length(); i++) {
@@ -93,7 +93,7 @@ public class MyGroupService {
 //			JSONArray jSONObject=JSONArray.fromObject(mgs.searchMyAllGroup_ed(1));//轉換json
 //			System.out.println(jSONObject);
 			
-			;
+			
 //			System.out.println(mgs.orderDetail_byGroup_upper(1));			 
 			// ------------------查詢個人歷史訂購紀錄------------------
 //			mgs.personalHistoryRecord(1);			
@@ -257,12 +257,14 @@ public class MyGroupService {
 		List<List<String>> finalResult = new ArrayList<>();
 		for (int i = 0; i < empNos.size(); i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
+			String user_id=null;
 			for (String[] sb : mgs.orderDetail_detail(group_no)) { //和orderDetail_detail()抓到的資料比對
 				List<String> result = new ArrayList<>();
 				
-				if (empNos.get(i).equals(sb[0])) {
+				if (empNos.get(i).equals(sb[0])) { //比對員工編號是否相等
 					if (notExsit) {
 						result.add(sb[0]);//團員ID
+						user_id=sb[0];
 						result.add(sb[1]);//姓名
 						result.add(sb[3]);//數量
 						Double price = Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
@@ -287,13 +289,13 @@ public class MyGroupService {
 						finalResult.get(i).set(4, oprice_after.toString());//計算後原總價
 						finalResult.get(i).add(sb[2]);//商品名稱
 						finalResult.get(i).add(sb[3]);//數量
-						finalResult.get(i).add(sb[7]);//商品備註
-						
+						finalResult.get(i).add(sb[7]);//商品備註						
 					}
 				}				
 			}
+			finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
+			
 		}
-//		System.out.println(finalResult);
 		return finalResult;
 	}
 	// ------------------給"按人統計"中付款狀態用，輸入團購編號、員工ID會回傳此人是否付款------------------
@@ -306,9 +308,9 @@ public class MyGroupService {
 		Integer group_user_no = gudao.getGroupUserNo(group_no, user_id).get(0).getGroup_user_no(); 																		
 		//再從order_detail表抓出detail_no	
 		List<_18_Order_DetailVO> vos= oddao.getDetailNo(group_user_no);
+		//只要有一個未付款就回傳n
 		for(_18_Order_DetailVO vo:vos){
 			String pay_status = vo.getPay_status();
-			System.out.println("A="+pay_status);
 			if(pay_status.equals("n")){
 				result="n";
 			}
@@ -477,10 +479,10 @@ public class MyGroupService {
 		int result = 0;
 		for(_17_Group_UserVO a:gu.findByGroupUserId2(group_user_id, group_no)){
 			if(!a.getCo_holder().equals("C")){
-				result = 1;		//有權限	
-			}			
-		}	
-		return result;		
+				result = 1;		//有權限
+			}
+		}
+		return result;
 	}
 	
 	

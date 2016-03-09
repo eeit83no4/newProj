@@ -50,13 +50,19 @@ public class insertGroupServlet extends HttpServlet {
 			JSONObject gup=(JSONObject)jSONArray.get(i);
 			//小幫手
 			String adminid =String.valueOf(gup.get("admin_id"));
-			String[] adminidArray=adminid.split(",");
-			Integer[] adminidIntegerArray=new Integer[adminidArray.length];
-			int k=0;
-			for(String a:adminidArray){
-				adminidIntegerArray[k]=Integer.parseInt(a);
-				k++;
-			}			
+//			if(adminid=="null"){
+//				System.out.println("null");
+//			}
+//			else{
+				String[] adminidArray=adminid.split(",");
+				Integer[] adminidIntegerArray=new Integer[adminidArray.length];
+				int k=0;
+				for(String a:adminidArray){
+					adminidIntegerArray[k]=Integer.parseInt(a);
+					k++;
+//				}		
+			}
+				
 			//被邀請
 			Object user_Ids =gup.get("user_Ids");
 			String user_idstring=String.valueOf(user_Ids);
@@ -108,6 +114,7 @@ public class insertGroupServlet extends HttpServlet {
 //			cc.setStore_no(store_no);/*-------------------------------------------------------*/
 		
 			bean.setStoreVO(cc);
+			
 			//開始時間
 			bean.setStart_date(new java.util.Date());
 			//截止時間
@@ -133,13 +140,15 @@ public class insertGroupServlet extends HttpServlet {
 				_17aa.setGroup_user_name(_04DAO.findById(a).getName());
 				//CO_HOLDER
 				for(Integer ad:adminidIntegerArray){
-					if(a==ad){
+			 
+				if(a==ad){
 						h=1;
 					}				
 				 }
 				 if(h==1){
 					 _17aa.setCo_holder("B");					 
 				 }
+			
 				 //如果是主揪
 				 if(a==creater){
 					 _17aa.setCo_holder("A");

@@ -92,7 +92,7 @@ public class SelectItemsService {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			SelectItemsService selectItemsService=new SelectItemsService();
-			System.out.println(selectItemsService.showc2c3(5));
+			System.out.println(selectItemsService.showc2c3(34));
 			
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();

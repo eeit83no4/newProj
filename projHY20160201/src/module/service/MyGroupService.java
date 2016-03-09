@@ -258,7 +258,7 @@ public class MyGroupService {
 		for (int i = 0; i < empNos.size(); i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
 			String user_id=null;
-			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
+//			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
 			for (String[] sb : mgs.orderDetail_detail(group_no)) { //和orderDetail_detail()抓到的資料比對
 				List<String> result = new ArrayList<>();
 				

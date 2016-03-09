@@ -24,14 +24,14 @@
 	<table class="table table-hover table-bordered table table-condensed">
 	<thead>
 	<tr class="info">
-		<th>截止時間</th>
-		<th>團購編號</th>
-		<th>團購名稱</th>
-		<th>店家</th>
-		<th>發起人</th>
-		<th>參與人數</th>
-		<th>總額</th>
-		<th>訂單明細</th>
+		<th><strong>截止時間</th>
+		<th><strong>團購編號</th>
+		<th><strong>團購名稱</th>
+		<th><strong>店家</th>
+		<th><strong>發起人</th>
+		<th><strong>參與人數</th>
+		<th><strong>總額</th>
+		<th><strong>訂單明細</th>
 	</tr>
 	</thead>
 	<tbody>

@@ -8,6 +8,13 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- -------------jquerycss--------------- -->
+<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/htmleaf-demo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<!-- ------------------------------------- -->
 <style>
  #storename{
  margin-top: 10px;
@@ -40,6 +47,9 @@
  #BT{
  font-size: 32px;
  }
+ a{
+ 
+ }
 </style>
 </head>
 
@@ -55,24 +65,29 @@
 		地址:<span style="font-size: 24px" name="address">${store.address}</span>
 	</div>
 	<label style="font-size: 16px" for="getall"><input type=checkbox id=getall>所有商品</label>
-	<div id="f1" class="col-md-5"></div>
+	<div id="f1" class="col-md-5 panel-heading" ></div>
 	
 	<div><input type="button" id='BT' value="設定團購"></div>
     </form>
     
-    <div id="imgs">
-    </div>
-	    
+<!--     <div id="imgs"></div> -->
     </div>
 	<jsp:include page="/footer.jsp"/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+<!-- ------------------------------------------------- -->
+<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script>window.jQuery || document.write('<script src="../js/jquery-2.1.1.min.js"><\/script>')</script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<!-- -------------------------------------------- -->
+
 <script>
 		$(function(){		
 			var i=1;
 			var x=1;
 			<c:forEach var="itemno" items='${itemnos}'>
-				$("#f1").append('<dl><input type="checkbox" name="ckbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
-				$("#it"+i).append('<dt><span>SIZE<span/><dd id="size'+i+'">');
+				$("#f1").append('<dl><input type="checkbox" style="WIDTH: 20px; HEIGHT: 20px" name="ckbox" value="'+${itemno}+'"/><span data-toggle="collapse" data-parent="#" href="#its'+i+'">${itemnames[itemno]}<span/><div id="its'+i+'" class="panel-collapse collapse"><p id="it'+i+'" class="panel-body"></p></div><dl/>');
+				$("#it"+i).append('<dt class="panel-body"><span>SIZE<span/><dd id="size'+i+'">');
 				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
 // 				$('#imgZone').attr('src','<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}');
 				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
@@ -124,7 +139,17 @@
 // 			xml.open("get", "/projHY20160201/SetGroup.controller?newstoreno="+${newstoreno}, true);
 // 			xml.send();	
 // 		};
-
+		//插入圖片
+// 		$(document).ready(function() {
+// 		  $('.collapse.in').prev('.panel-heading').addClass('active');
+// 		  $('#accordion, #bs-collapse')
+// 		    .on('show.bs.collapse', function(a) {
+// 		      $(a.target).prev('.panel-heading').addClass('active');
+// 		    })
+// 		    .on('hide.bs.collapse', function(a) {
+// 		      $(a.target).prev('.panel-heading').removeClass('active');
+// 		    });
+// 		});
 		
 		
 </script>

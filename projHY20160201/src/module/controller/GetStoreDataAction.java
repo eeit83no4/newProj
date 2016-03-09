@@ -72,11 +72,10 @@ public class GetStoreDataAction extends ActionSupport {
 //		}else{
 			data = getStoreDataService.getStoreClassAll();
 //		}		
-		
 //		System.out.println(data);
 		
 		String storeClassAll = getStoreDataService.storeClassAll();
-		System.out.println(storeClassAll);
+//		System.out.println(storeClassAll);
 //		return INPUT;
 		return SUCCESS;
 	}

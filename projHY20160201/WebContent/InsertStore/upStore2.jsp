@@ -42,7 +42,7 @@
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div><br />				
 		<input type="submit" value="新增店家" name="submit" id="id">
-  		<input type="submit" name="sub" value="59"><br />
+<!--   		<input type="submit" name="sub" value="59"><br /> -->
 		</div>
 	</form>
 	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -59,7 +59,7 @@
 			    var d="${data.storeClassAll}";
 			    var e=d.split(",");
 			    for (var i = 0; i < e.length; i++) {
-				    $("#showBlock").append('<input type="checkbox" id="div' + txtId + '" name="storeClass"  value="'+e[i]+'" />'+e[i]+'');
+				    $("#showBlock").append('<label><input type="checkbox" id="div' + txtId + '" name="storeClass"  value="'+e[i]+'" />'+e[i]+'</label>');
 				    txtId++;
 				    }
 				for(var i = 0; i < c.length; i++){

@@ -43,7 +43,7 @@
 	<div class="form-group">
 		<br />	
 		<label for="inputName" class="control-label">店家名稱</label>
-		<input type="text" value="草莓店" id="inputName" name="store" placeholder="店家名稱"  class="form-control" />
+		<input type="text" value="草莓店" id="inputName" name="store" placeholder="店家名稱" required="required" class="form-control" />
 		<label for="inputName" class="control-label">電話</label>
 		<input type="text" value="093435737" id="phone" name="phone" placeholder="電話" class="form-control" />	
 		<label for="inputName" class="control-label">地址</label>
@@ -174,13 +174,13 @@
 					$.ajax({
 						'type':'post',
 						'url':'/projHY20160201/SelectItemServlet.insert',
-// 						'datatype':'json',
+						'datatype':'json',
 						'data':{jsonString,itemId,itemName,storeNo,first55,jsonImg},
-// 						'success':function(itemName33){
+						'success':function(itemName33){
 // 							alert(itemName33.itemName)
-							
+// 							alert('aa')
 // 							alert(itemName33)
-// 						}
+						}
 					})
 					imgarr=[];
 					//取得物品第一層
@@ -239,7 +239,7 @@
 			              $('input').show()
 						  $('#itemP').show()
 			              var itemName22 = $('#AAB').val()
-			           		alert(itemName22.itemName);
+			           		clickInsertItem(itemName22);
 			    		  }
 			    	  }		      	
 			      }
@@ -348,8 +348,9 @@
 				
 				
 				$('#id').click(function(){
-					 insertItem();
-// 					alert('aa')
+					if($('#inputName').val()!=""){
+					insertItem();	
+					}
 				})
 				
 		})//load end
@@ -458,23 +459,13 @@
 			}
 		})
 		
-// 			var arr=[];
-// 			$('input[name="attributes"]').each(function(){
-// 				arr.push($(this).val());
-// 					console.log($(this).val());
-// 			})
-// 			alert(arr)
+
 			var jsonString=JSON.stringify(arr);
 			storeNo='${StoreNo}'
 			var itemName=$('#itemName').val();	
 			
 			itemId = null;  
 			
-// 			alert(jsonString)
-// 			alert(itemId)
-// 			alert(itemName22)
-// 			alert(storeNo)
-// 			alert(first55)
 			$.ajax({
 				'type':'get',
 				'url':'/projHY20160201/SelectItemServlet.insert',

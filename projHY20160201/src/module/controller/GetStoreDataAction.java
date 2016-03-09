@@ -21,11 +21,46 @@ public class GetStoreDataAction extends ActionSupport {
 	public void setSub(String sub) {
 		this.sub = sub;
 	}
+	//接收資料
+	private String phone;
+	private String address;
+	private String store;
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getStore() {
+		return store;
+	}
+	public void setStore(String store) {
+		this.store = store;
+	}
+	
+	
+	//資料驗證
 	@Override
 	public void validate() {
-//		System.out.println("aaa");
-//		System.out.println(sub);
-		
+		System.out.println(store);
+		System.out.println(phone);
+		System.out.println(address);
+//		if(store==null || store.length()==0){
+//		//String aa = this.getText("nullname");
+//		this.addFieldError("store", "必填");
+//	}
+//	if(phone==null || phone.trim().length()==0) {
+//		this.addFieldError("phone", this.getText("phoneError"));
+//	}
+//	if(address==null || address.trim().length()==0) {
+//		this.addFieldError("address", this.getText("addressError"));
+//	}	
 	}
 	
 	private GetStoreDataService getStoreDataService=new GetStoreDataService();
@@ -37,7 +72,6 @@ public class GetStoreDataAction extends ActionSupport {
 //		}else{
 			data = getStoreDataService.getStoreClassAll();
 //		}		
-//		
 //		System.out.println(data);
 		
 		String storeClassAll = getStoreDataService.storeClassAll();

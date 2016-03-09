@@ -38,16 +38,18 @@ height:500px;
 border: 3px green double; 
 }
 #div1{
-width:440px;
+width:430px;
 height:445px;
 overflow:scroll;
 font-size: 32px;
+margin-left: 10px;
 }
 #div2{
-width:440px;
+width:430px;
 height:445px;
 overflow:scroll;
 font-size: 32px;
+margin-left:10px;
 }
 .txtSearch{
 margin-left: 20%;
@@ -60,6 +62,10 @@ font-size: 28px;
 font-size: 28px;
 }
 .btndiv{
+padding-top:2%;
+float: right;
+}
+#newstore{
 padding-top:2%;
 float: right;
 }
@@ -81,7 +87,7 @@ float: right;
 	</form>
 	<!-- ------------------- -->
 	<form id="form2">
-	<div id="span"><span class="span2">${LoginOK.name}'s Store</span></div>
+	<div id="span"><span class="span2">${LoginOK.name}'s Store <input type="button" id="newstore" class="btn btn-default" value="NEW!!" /></span></div>
 		<div id="mystore">	
 			<div class="txtSearch">
 				<input type="text" style="width: 240px; height: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
@@ -190,6 +196,10 @@ float: right;
 		xml.open("get", "/projHY20160201/UpstoreDeletestore.controller?dlstore_no="+dlstore_no, true);//傳值給StoreServlet
 		xml.send();
 	}
+	
+	$('#newstore').click(function(){
+		location.href='<c:url value="/GetStoreDataAction.action"/>';
+	})	
 	//------------------------------------------------------------------------------------------------------------------
 </script>
 

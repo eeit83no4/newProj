@@ -53,16 +53,17 @@
 		店名:<span style="font-size: 24px" name="group_name">${store.store_name}</span><br>
 		電話:<span style="font-size: 24px" name="phone">${store.phone}</span><br>
 		地址:<span style="font-size: 24px" name="address">${store.address}</span>
-		
 	</div>
 	<label style="font-size: 16px" for="getall"><input type=checkbox id=getall>所有商品</label>
-	<div id="f1" class="col-md-5">
-	</div>
+	<div id="f1" class="col-md-5"></div>
 	
 	<div><input type="button" id='BT' value="設定團購"></div>
-
     </form>
-</div>
+    
+    <div id="imgs">
+    </div>
+	    
+    </div>
 	<jsp:include page="/footer.jsp"/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script>
@@ -72,6 +73,8 @@
 			<c:forEach var="itemno" items='${itemnos}'>
 				$("#f1").append('<dl><input type="checkbox" name="ckbox" value="'+${itemno}+'"/><span>${itemnames[itemno]}<span/><span id="it'+i+'"></span><dl/>');
 				$("#it"+i).append('<dt><span>SIZE<span/><dd id="size'+i+'">');
+				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
+// 				$('#imgZone').attr('src','<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}');
 				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
 					$("#size"+i).append('<span>${sizepriceList.key}<span/><span class="text">${sizepriceList.value}<span/><br>');
 				</c:forEach>

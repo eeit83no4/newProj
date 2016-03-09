@@ -32,16 +32,16 @@ public class GetStoreDataAction extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		
-		if(!sub.equals("新增")){
-			data = getStoreDataService.getStoreData(Integer.parseInt(sub));
-		}else{
+//		if(!sub.equals("新增")){
+//			data = getStoreDataService.getStoreData(Integer.parseInt(sub));
+//		}else{
 			data = getStoreDataService.getStoreClassAll();
-		}		
-		
-		System.out.println(data);
+//		}		
+//		
+//		System.out.println(data);
 		
 		String storeClassAll = getStoreDataService.storeClassAll();
-		System.out.println(storeClassAll);
+//		System.out.println(storeClassAll);
 //		return INPUT;
 		return SUCCESS;
 	}

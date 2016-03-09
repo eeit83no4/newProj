@@ -37,6 +37,8 @@
 	border-color: #2e6da4;
 }
 
+
+
 .tt {
 	border-left: 0px;
 	border-bottom: 0px;
@@ -73,11 +75,18 @@
 	border: 1px solid #00AAAA;
 	width: auto;
 }
-
+#inem1 {
+	 overflow:scroll;
+	 height:400px;
+}
 #inem2 {
 	border: 2px solid #00AAAA;
 	width: auto;
+
+	 height:250px;
+	 overflow:scroll;
 }
+
 
 #but {
 	margin-left: 350px;
@@ -193,6 +202,14 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 							    
 							
 								</div>
+								
+								
+								<div id="admin1">共同管理員:</div>
+								<div id="admin2">
+							    
+							
+								</div>
+								
 															
 							</div>
 
@@ -207,8 +224,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					<tr>
 						<td>公告:</td>
 						<td style="border-left: 0px" ><input type="text" id="Tex2"
-							name="ann"></td>
+							style=" width:800px"  name="ann"></td>
 					</tr>
+	
+					
+					
 				</table>
 			</div>
 			<input type="button" class='btn btn-primary' id="save" value="送出">
@@ -300,6 +320,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				//document.getElementById("inser").value = "加入";
 				$("#inem1").empty();
 				$("#inadmin").empty();
+				$("#admin2").empty();
 				realUser=null;
 				<c:forEach var="bean" items="${emdep}">
 					<c:set var='userID' value='${LoginOK.user_id}'/>
@@ -373,17 +394,46 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			
 			//---------------------共同管理員----------------------------------------
 			var adminIds = null;
+			var adminnas = [];//已經邀請的，比對用
+			var adminnames =null;
 			$('#setadmin').click(function() {
-				 adminIds = null;
+				
+				 
+				var newAdmin=false;
+					
+					
 				$(':checkbox[name="adminDiv"]:checked').each(function() {
 					var adminid = parseInt(($(this).val()).split('*')[0]);//員工編號
+					var adminname = ($(this).val()).split('*')[1];//員工姓名
 					if(adminIds==null){
 						adminIds=adminid;
 					}else{
 						adminIds=adminIds+','+adminid;
 					}
+					var isAdminAlreadyInvited=false;
+					  $.each(adminnas,function(index,value){
+							if(adminname==value){
+								isAdminAlreadyInvited=true;
+							}
+						})
+						if(isAdminAlreadyInvited==false){ //員工還沒有被邀請
+						　adminnas.push(adminname);//儲存員工編號
+					if(adminnames==null){
+						//adminIds=adminid;
+						adminnames=adminname;
+					}else{
+						//adminIds=adminIds+','+adminid;
+						adminnames=adminnames+adminname
+					}
+				  newAdmin=true;
+					  }
 				})
 				console.log("ad--"+adminIds);
+				if(newAdmin){
+				$("#admin2").append(adminnames)//共同管理員
+				}
+			
+				
 			});
 			
 			
@@ -395,6 +445,9 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
 				realUser=realUser+','+holdUser;
+				if(adminIds==null){
+					adminIds="0";
+			   }
 				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser});
 				if(!$.isEmptyObject(arr)){
 					var jsonString=JSON.stringify(arr);

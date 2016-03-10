@@ -7,7 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mysql.fabric.Response;
+
+import module.model._04_EmployeeVO;
+import module.model._17_Group_UserVO;
 import module.service.MyGroupService2db;
 
 @WebServlet(
@@ -18,10 +23,13 @@ public class MyGroupServlet_deleteOrder extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session=req.getSession();
+//		_04_EmployeeVO mb=(_04_EmployeeVO)session.getAttribute("LoginOK");
 		String temp_detail_no = req.getParameter("detail_no");
+//		Integer groupNo=Integer.parseInt(req.getParameter("groupno").trim());
 		Integer detail_no = Integer.parseInt(temp_detail_no);
 		mgs2db.deleteOrder(detail_no);
-		
+	
 	}
 
 	@Override

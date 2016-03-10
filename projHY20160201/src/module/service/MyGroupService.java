@@ -255,14 +255,18 @@ public class MyGroupService {
 		}
 		MyGroupService mgs = new MyGroupService();
 		List<List<String>> finalResult = new ArrayList<>();
-		for (int i = 0; i < 1; i++) {
+		int j =0; //表finalResult中第幾筆資料	
+		for (int i = 0; i < empNos.size(); i++) {
+
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
+			Boolean index=false; //判斷此人是否只受到邀請但沒訂購
 			String user_id=null;
 //			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
 			for (String[] sb : mgs.orderDetail_detail(group_no)) { //和orderDetail_detail()抓到的資料比對
 				List<String> result = new ArrayList<>();
 				
 				if (empNos.get(i).equals(sb[0])) { //比對員工編號是否相等
+					index=true;
 					if (notExsit) {
 						result.add(sb[0]);//團員ID
 						user_id=sb[0];
@@ -280,28 +284,30 @@ public class MyGroupService {
 						
 						finalResult.add(result);
 						notExsit = false;
+						j++;
 						
 					} else { //finalResult裡面已經有此團員ID則抓出資料修改
-						Integer quantity=Integer.parseInt(finalResult.get(i).get(2))+Integer.parseInt(sb[3]);
-						finalResult.get(i).set(2, quantity.toString());//數量
-						Double oprice = Double.parseDouble(finalResult.get(i).get(3))+Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
-						finalResult.get(i).set(3, oprice.toString());//原總價
-						Double oprice_after = Double.parseDouble(finalResult.get(i).get(4))+Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
-						finalResult.get(i).set(4, oprice_after.toString());//計算後原總價
-						finalResult.get(i).add(sb[2]);//商品名稱
-						finalResult.get(i).add(sb[3]);//數量
-						finalResult.get(i).add(sb[7]);//商品備註						
+						Integer quantity=Integer.parseInt(finalResult.get(j-1).get(2))+Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(2, quantity.toString());//數量
+						Double oprice = Double.parseDouble(finalResult.get(j-1).get(3))+Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(3, oprice.toString());//原總價
+						Double oprice_after = Double.parseDouble(finalResult.get(j-1).get(4))+Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(4, oprice_after.toString());//計算後原總價
+						finalResult.get(j-1).add(sb[2]);//商品名稱
+						finalResult.get(j-1).add(sb[3]);//數量
+						finalResult.get(j-1).add(sb[7]);//商品備註						
 					}
-				}				
+				}
 			}
-			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0){
-//				finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
+			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0&&index==true){
+				finalResult.get(j-1).add(mgs.getUserPayStatus(group_no, finalResult.get(j-1).get(0)));//在資料最後加上付款狀態
 			}	
 		}
 		return finalResult;
 	}
 	// ------------------給"按人統計"中付款狀態用，輸入團購編號、員工ID會回傳此人是否付款------------------
 	public String getUserPayStatus(Integer group_no, String Suser_id){
+		System.out.println(group_no+"aaaaaaaaaaaaaaaa"+Suser_id);
 		Integer user_id = Integer.parseInt(Suser_id);
 		_17_Group_UserDAO gudao = new _17_Group_UserDAO();
 		_18_Order_DetailDAO oddao = new _18_Order_DetailDAO();
@@ -354,7 +360,7 @@ public class MyGroupService {
 			for (_17_Group_UserVO a : users) {
 				Set<_18_Order_DetailVO> details = a.getOrder_Details();
 				for (_18_Order_DetailVO b : details) {
-					String[] starray = new String[10]; // 小袋子
+					String[] starray = new String[11]; // 小袋子
 						starray[0] = a.getEmployeeVO().getUser_id().toString(); // 員工ID
 						starray[1] = a.getEmployeeVO().getName(); // 員工姓名
 						starray[2] = b.getOitem_name();
@@ -365,6 +371,7 @@ public class MyGroupService {
 						starray[7] = format.format(a.getOrder_time()).toString(); // 訂購時間
 						starray[8] = b.getDetail_no().toString(); //團購編號
 						starray[9] = b.getPay_status();//付款狀態
+						starray[10] = b.getDetail_no().toString();//order_detail的主鍵
 					sbs.add(starray);				
 				}
 			}

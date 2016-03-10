@@ -25,7 +25,11 @@ public class MyGroupService2db {
 //				mg.updateForFail(3, "ssssss");
 //				mg.updatePayStatus(1,"y");
 //				mg.updatePayStatusByUser(1,1,"n");
+
 //				mg.updateEndTime(1, "2016-03-16T01:00");
+
+//				mg.deleteOrder(9);
+
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -36,6 +40,7 @@ public class MyGroupService2db {
 	
 	_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
 //	_16_Group_RecordVO grvo = new _16_Group_RecordVO();
+	_18_Order_DetailDAO oddao = new _18_Order_DetailDAO();
 	
 	public void updateGroupStatus_success(Integer group_no){
 		_16_Group_RecordVO a = grdao.findById(group_no);
@@ -94,6 +99,7 @@ public class MyGroupService2db {
 		}		
 	}
 	
+
 	/*-------------重設時間-----------------------------------------------------------------*/
 	public void updateEndTime(Integer group_no,String enddate){
 		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
@@ -110,5 +116,12 @@ public class MyGroupService2db {
 		vo.setEnd_date(date);
 		grdao.update(vo);
 	}
+
+	/*-------------刪除訂購(明細列表)-----------------------------------------------------------------*/
+	public void deleteOrder(Integer detail_no){
+		oddao.delete(detail_no);
+		
+	}
+	
 
 }

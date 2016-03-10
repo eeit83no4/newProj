@@ -158,6 +158,7 @@
 			<th><strong>計算後</th>
 			<th><strong>備註</th>
 			<th><strong>訂購時間</th>
+			<th><strong>刪除</th>
 		</tr>
 		</thead>
 	<tbody id="tb3"></tbody>
@@ -304,11 +305,11 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-//					   console.log(ByUser[ByUser.length-1]);
+// 					   console.log(ByUser);
 					   if(ByUser[ByUser.length-1]=='y'){
-					   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
 				   	   }else{
-				   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+				   			aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
 				   	   }
 				   }
 				   aa[j+1] = $("<td></td>").text(ByUser[j]);
@@ -339,8 +340,18 @@ function go3(groupno3){
 // 			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
 // 		   }
 		   for(var j = 0; j<Detail.length-2; j++){
+			   if(j<Detail.length-3){
 			    aa[j] = $("<td></td>").text(Detail[j]);
+			   }else if(j==Detail.length-3){			   
+				   aa[j] = $("<td></td>").append($('<input/>')
+			  				  .attr('type','button')
+			  				  .attr('value','刪除')
+			    			  .attr('class','btn btn-default btn-xs')
+			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+')'))
+			  				  .attr('id',"odid"+Detail[j]);//id為order_detail的主鍵
+			   }
 		   }
+		   
 		   var row = $("<tr></tr>").append(aa);			   
 		   $('#tb3').append(row);								
 		});
@@ -369,6 +380,13 @@ function go3(groupno3){
 					xml.send();
 				}		 
 			 });
+		//----------------明細列表刪除訂購-------------------------------
+			function deleteOrder(detail_no){
+				$("#odid"+detail_no).parent("tr").remove();
+				xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.deleteOrder?detail_no="+detail_no, true);//傳值給StoreServlet
+				xml.send();
+			}
+			 
 	   
 
 		 

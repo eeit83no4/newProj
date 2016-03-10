@@ -47,7 +47,6 @@ public class InsertItemServlet extends HttpServlet {
 		//取得資料
 		Integer itemId =null;
 		String jsonString=req.getParameter("jsonString").trim();
-//		String itemName = req.getParameter("itemName").trim();
 		Integer storeNo =Integer.parseInt(req.getParameter("storeNo").trim());
 		String first =req.getParameter("first55").trim();
 		//----------------------處理圖片------------------

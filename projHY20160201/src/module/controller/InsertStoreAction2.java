@@ -10,9 +10,12 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
+import module.model._09_Class_FirstVO;
+import module.model._10_Class_SecondVO;
 import module.model._12_ItemVO;
 import module.service.GetStoreClass;
 import module.service.GetStoreDataService;
+import module.service.UpdateStoreService;
 import module.service._07_StoreService;
 
 public class InsertStoreAction2 extends ActionSupport implements RequestAware {
@@ -20,10 +23,7 @@ public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	private String store;
 	private String storeClass;
 	private String phone;
-	private String attributes;	
-	private String item;
 	private String address;	
-	private String submit;	
 	private String sub;			
 	private Map<String, String> data;	
 	public Map<String, String> getData() {
@@ -38,12 +38,6 @@ public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	public void setSub(String sub) {
 		this.sub = sub;
 	}
-	public String getSubmit() {
-		return submit;
-	}
-	public void setSubmit(String submit) {
-		this.submit = submit;
-	}
 	public String getPhone() {
 		return phone;
 	}
@@ -55,18 +49,6 @@ public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String getItem() {
-		return item;
-	}
-	public void setItem(String item) {
-		this.item = item;
-	}
-	public String getAttributes() {
-		return attributes;
-	}
-	public void setAttributes(String attributes) {
-		this.attributes = attributes;
 	}
 	public String getStore() {
 		return store;
@@ -91,57 +73,48 @@ public class InsertStoreAction2 extends ActionSupport implements RequestAware {
 	public void setRequest(Map<String, Object> request) {
 		this.request=request;		
 	}
-	
-	
 	public void validate() {
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		System.out.println(store);
 		System.out.println(storeClass);
 		System.out.println(phone);
-		System.out.println(attributes);
-		System.out.println(item);
 		System.out.println(address);
-		System.out.println(submit);
 		System.out.println(sub);
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		
+		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 	}
 	
 	private GetStoreDataService getStoreDataService=new GetStoreDataService();
 	@Override
 	public String execute() throws Exception {
-		_07_StoreVO bean=new _07_StoreVO();
-		bean.setStore_name(store);
-		bean.setPhone(phone);
-		bean.setAddress(address);
-		bean.setFinal_update(new java.util.Date());	
-		//參考員工
-		_04_EmployeeVO bean4=new _04_EmployeeVO();
-		bean4.setUser_id(166);
-		bean.setEmployeeVO(bean4);
-		System.out.println(sub);
-		_07_StoreVO bean7 = new _07_StoreVO();;
-		if(sub==null){
-		_07_StoreService storeService=new _07_StoreService();
-		Integer StoreNo = storeService.insertStore(bean, storeClass.replace(" ", ""));
-//		System.out.println(StoreNo);
-		request.put("StoreNo", StoreNo);		
-		bean7.setStore_no(StoreNo);
-				data = getStoreDataService.getStoreData(StoreNo);
-			}else{
-			request.put("StoreNo", sub);					
-			bean7.setStore_no(Integer.parseInt(sub.trim()));
-				data = getStoreDataService.getStoreData(Integer.parseInt(sub.trim()));
-			}		
-		GetStoreClass getStoreClass = new GetStoreClass();  
-//		List<_12_ItemVO> getItemAll = getStoreClass.get07IsItemAll(bean7);
-//		System.out.println(getItemAll);		
-		 Object getItemAll = getStoreClass.get07IsItemAllJson(bean7);
-//		System.out.println(getItemAll);		
-		request.put("getItemAll", getItemAll);
+		//取得資料
+		Integer stroeNo = Integer.parseInt(sub);
+//		_07_StoreVO bean=new _07_StoreVO();
+//		bean.setStore_no(stroeNo);
+//		bean.setStore_name(store);
+//		bean.setPhone(phone);
+//		bean.setAddress(address);
+//		bean.setFinal_update(new java.util.Date());
 		
-		 String storeClassAll = getStoreDataService.storeClassAll();
-//		 System.out.println(submit);
-//		 System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		
+		UpdateStoreService updateStoreService = new UpdateStoreService();
+		
+		//刪除關聯
+		_07_StoreVO bean7 = new _07_StoreVO();			
+		bean7.setStore_no(stroeNo);
+		updateStoreService.updateStore(bean7);
+		//重新建立關聯
+		//砍字串
+		String getClass = updateStoreService.cuttingStoreString(storeClass);	
+		//存資料
+		bean7.setStore_name(store);
+		bean7.setPhone(phone);
+		bean7.setAddress(address);
+		bean7.setFinal_update(new java.util.Date());
+		//呼叫建立方法
+		updateStoreService.inserStoreClass(bean7,getClass);
 			 return "success";
 	}
 	

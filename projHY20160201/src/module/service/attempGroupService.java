@@ -328,7 +328,11 @@ public class attempGroupService {
 					public int compare(String o1, String o2) {						
 						int start=o1.indexOf("(");
 						int end=o1.indexOf(")");
-						return o2.substring(start+1, end).compareTo(o1.substring(start+1, end));				
+						
+						int start2=o2.indexOf("(");
+						int end2=o2.indexOf(")");
+						
+						return o2.substring(start2+1, end2).compareTo(o1.substring(start+1, end));				
 					}
 				});
 				//--------排序後				

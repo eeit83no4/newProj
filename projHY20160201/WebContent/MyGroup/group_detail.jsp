@@ -329,7 +329,7 @@ function go3(groupno3){
 		   $('#tb2').append(row);								
 		});
 	}
-	
+	${LoginOK.user_id};
 	 //----------------抓表3-------------------------------
 	function gettable3() {
 	   $.each(${detail_Detail}, function(index, Detail){
@@ -342,13 +342,21 @@ function go3(groupno3){
 		   for(var j = 0; j<Detail.length-2; j++){
 			   if(j<Detail.length-3){
 			    aa[j] = $("<td></td>").text(Detail[j]);
-			   }else if(j==Detail.length-3){			   
+			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]){			   
 				   aa[j] = $("<td></td>").append($('<input/>')
 			  				  .attr('type','button')
 			  				  .attr('value','刪除')
 			    			  .attr('class','btn btn-default btn-xs')
-			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+')'))
+			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+","+'${group_no}'+')'))
 			  				  .attr('id',"odid"+Detail[j]);//id為order_detail的主鍵
+			   }else if(j==Detail.length-3){			   
+				   aa[j] = $("<td></td>").append($('<input/>')
+			  				  .attr('type','button')
+			  				  .prop('disabled',true)
+			  				  .attr('value','刪除')
+			    			  .attr('class','btn btn-default btn-xs')
+			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+","+'${group_no}'+')'))
+			  				  .attr('id',"odid"+Detail[j]);//id為order_detail的主鍵			  				  
 			   }
 		   }
 		   
@@ -381,9 +389,9 @@ function go3(groupno3){
 				}		 
 			 });
 		//----------------明細列表刪除訂購-------------------------------
-			function deleteOrder(detail_no){
+			function deleteOrder(detail_no,groupno){
 				$("#odid"+detail_no).parent("tr").remove();
-				xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.deleteOrder?detail_no="+detail_no, true);//傳值給StoreServlet
+				xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.deleteOrder?detail_no="+detail_no+"&groupno="+groupno, true);//傳值給StoreServlet
 				xml.send();
 			}
 			 

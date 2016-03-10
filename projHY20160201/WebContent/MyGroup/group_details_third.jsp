@@ -30,15 +30,15 @@
 	<table>
 	<table class="table table-hover table-bordered table table-condensed">
 	<tr class="info">
-		<th>截止時間</th>
-		<th>團購名稱</th>
-		<th>店家</th>
-		<th>商品名稱</th>		
-		<th>備註</th>
-		<th>原價</th>
-		<th>數量</th>
-		<th>實付金額</th>
-		<th>實付小計</th>
+		<th><strong>截止時間</th>
+		<th><strong>團購名稱</th>
+		<th><strong>店家</th>
+		<th><strong>商品名稱</th>		
+		<th><strong>備註</th>
+		<th><strong>原價</th>
+		<th><strong>數量</th>
+		<th><strong>實付金額</th>
+		<th><strong>實付小計</th>
 	</tr>
 	</thead>
 	<tbody id="tb">

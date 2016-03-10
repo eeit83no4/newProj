@@ -154,7 +154,7 @@ float: right;
 						for (var i = 0; i < (datas.mylists.length); i++) { //陣列 取出我新增的 店家名稱
 							var txtBtn1 = document.createTextNode(datas.mylists[i][1]);
 							var p=document.createElement("span");
-							p.setAttribute("style","float:left");
+// 							p.setAttribute("style","float:left");
 							var eleBtn = document.createElement("a");
 							eleBtn.setAttribute("style","text-decoration:none");
 							eleBtn.setAttribute("href","/projHY20160201/OpenStoreForGroupServlet.select?store_no="+datas.mylists[i][0]);
@@ -173,11 +173,15 @@ float: right;
 							dlBtn.setAttribute("class","btn btn-default");
 							dlBtn.setAttribute("onclick","if(confirm('確定要刪除 :"+datas.mylists[i][1]+" 嗎?'))dldata("+datas.mylists[i][0]+")");
 // 							dlBtn.setAttribute("onclick","dldata("+datas.mylists[i][0]+")");
+							var pdiv　= document.createElement("div");
 							p.appendChild(eleBtn);
+							pdiv.appendChild(p);
+							
 							btndiv.appendChild(upBtn);
 							btndiv.appendChild(dlBtn);
-							eleDivX.appendChild(p);
-							eleDivX.appendChild(btndiv);	
+							pdiv.appendChild(btndiv);
+							eleDivX.appendChild(pdiv);	
+							
 						}
 						showmystore.appendChild(eleDivX);
 					}

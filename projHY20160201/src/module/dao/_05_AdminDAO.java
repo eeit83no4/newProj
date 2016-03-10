@@ -51,6 +51,17 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 		return query.list();		
 	}
 
+	public String findAuthByUserId2(Integer user_id){
+		Query query = getSession().createQuery("select auth from _05_AdminVO where user_id=?");
+		query.setParameter(0, user_id);
+		String aaaa = (String)query.list().get(0);
+		
+//		System.out.println(query.list().get(0));
+		return aaaa;		
+	}
+	
+	
+	
 	public void updateAuthByUserId(String user_id,String auth){
 		Query query = getSession().createQuery("update _05_AdminVO set auth=? where user_id=?");
 		query.setParameter(0, auth);
@@ -66,7 +77,7 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 			
 //			dao.updateAuthByUserId("1","A");
 			
-//			System.out.println(dao.findAuthByUserId(166));
+			System.out.println(dao.findAuthByUserId2(166));
 //			System.out.println(dao.findById(1));
 //			System.out.println(dao.getAll());
 			

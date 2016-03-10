@@ -50,7 +50,6 @@
 }
 
 #Div1 {
-	font-family: 標楷體;
 	color: #D87093;
 	font-size: xx-large;
 	text-align: center;
@@ -86,7 +85,12 @@
 	 height:250px;
 	 overflow:scroll;
 }
+#money{
+    margin-top: 250px;
 
+
+
+}
 
 #but {
 	margin-left: 350px;
@@ -97,7 +101,6 @@
 
 td, th {
 	font-size: 15px;
-	font-family: 標楷體;
 	font-weight: bold;
 	margin: 0px;
 	border: 3px solid #AAAAAA;
@@ -217,7 +220,18 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 								<input type="button" class='btn btn-primary' id="inser"
 									value="加入" /> <br> <br> <input type="reset"
 									class='btn btn-primary' id="clear" value="取消" />
+									
 							</div>
+							<div id="money">							 							
+							<label><input type="radio" name="gender" id="havemon">是</label>
+							<label><input type="radio" name="gender" id="havemon2">否</label>
+				             <span>運費:</span><input type="text" id="gold" style="width:50px"><br>
+				             </div>
+				             
+				             <div id="money2">
+							
+							</div>
+							
 						</td>
 					</tr>
 
@@ -373,10 +387,6 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			});
 //-------------------------------------------------------------------------------------------------------	
 			
-//------------------------------------------------------------------------------------------------------------------
-	
-	
-
 //--------------------依部門分類------------------------------------------------------
 			$("#select1").change(function() {
 								
@@ -432,6 +442,28 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 
 			//---------------部門分類結束-----------------------------------------------------
 			
+		   //----------------運     費 ------------------------------------------------------------
+			
+	      $("#havemon").click(function(){
+	    	  
+	    	  $("#money2").append(  	      	
+	  	    	    '<label><input type="radio" name="gender" value="人頭分攤">'+'人頭分攤'+'</label>'+
+	  				'<label><input type="radio" name="gender" value="數量分攤">'+'數量分攤'+'</label>'+
+	  				'<label><input type="radio" name="gender" value="主揪自己吸收">'+'主揪自己吸收'+'</label>')
+	  				$(this).prop('disabled',true);
+	  				
+	      })
+			$("#havemon2").click(function(){
+				$("#havemon").prop('disabled',false);
+				 $("#money2").empty(); 	 
+				
+				
+			})
+			
+			  
+			  
+			 
+			
 			
 			
 			
@@ -443,7 +475,10 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				var enddate = $("#enddate").val();
 				var groupna=$("#Tex1").val();
 				var ann=$("#Tex2").val();
-			
+				var gold1=$("#gold").val();
+				
+			    var gold=$(':radio[name="gender"]:checked').val()+'('+gold1+')';
+			    
 				if(adminIds==null){
 					adminIds="0";
 			   }
@@ -453,7 +488,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 				alert("請輸入團購名稱及截止日");
 			}else if(groupna!=0 || enddate!=0){ 
 				realUser=realUser+','+holdUser;
-				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser});
+				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser,'shipment':gold});
 				if(!$.isEmptyObject(arr)){
 				var jsonString=JSON.stringify(arr);
 			    console.log(jsonString);

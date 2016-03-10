@@ -112,7 +112,9 @@ public class InsertItemService {
 			System.out.println(itemPic);
 			bean12=_12DAO.findById(bean12.getItem_no());
 			bean12.setItem_name(itemName);
-			bean12.setPic(itemPic);
+			if(itemPic!=null){
+				bean12.setPic(itemPic);
+			}
 			getSession().update(bean12);
 			pk12 = bean12.getItem_no();
 		}
@@ -157,7 +159,7 @@ public class InsertItemService {
 				 pk11 = list22.getClass3_no();
 				 bean11.setClass3_no(pk11);  //如果比對到了  就帶著PK值出來
 				 break;
-				}			  
+				}	  
 			}
 //取得   超熱,有點溫...   的PK			
 			if(bean11.getClass3_no() != null){
@@ -257,16 +259,16 @@ public class InsertItemService {
 //		
 //		
 //		
-////		String attributes="SIZE, 特大(30), 大(25), 中(20), 小(15), 冷熱, 正常冰(0), 少冰(0), 去冰(0), 溫(0), 甜度, 正常(0), 半糖(0), 少糖(0), 無糖(0)";
+//		String attributes="SIZE, 特大(30), 大(25), 中(20), 小(15), 冷熱, 正常冰(0), 少冰(0), 去冰(0), 溫(0), 甜度, 正常(0), 半糖(0), 少糖(0), 無糖(0)";
 //
-//		String attributes="加料,加雞塊(10.0),加飯飯(5.0),Size,不分大小(55)";
+		String attributeCs="加料,加雞塊(10.0),加飯飯(5.0),Size,不分大小(55)";
 //		
 //		ArrayList bb = insertSecondService.cuttingHtmlString(attributes);
 //		System.out.println(bb.get(1));
 		
-		 _10_Class_SecondVO bean10=new _10_Class_SecondVO();
-		 bean10.setClass2_name("加料");
-		 insertSecondService.getThird(bean10.getClass2_name());
+//		 _10_Class_SecondVO bean10=new _10_Class_SecondVO();
+//		 bean10.setClass2_name("加料");
+//		 insertSecondService.getThird(bean10.getClass2_name());
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {

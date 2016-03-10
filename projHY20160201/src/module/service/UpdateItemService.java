@@ -107,8 +107,6 @@ public class UpdateItemService {
 //			
 //		InsertItemService insertItemService=new InsertItemService();
 //		insertItemService.insertSecond(bean9, bean12, bean10, thirdName);
-		
-		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
 			HibernateUtil.closeSessionFactory();

@@ -81,6 +81,9 @@ public class insertGroupServlet extends HttpServlet {
 			if(gup.get("ann")!=null){
 				ann =String.valueOf(gup.get("ann"));
 			}			
+			//運費
+			String	shipment= String.valueOf(gup.get("shipment"));
+			
 			//截止時間
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 			String enddate =String.valueOf(gup.get("enddate"));
@@ -123,6 +126,8 @@ public class insertGroupServlet extends HttpServlet {
 			if(ann!=null&&ann.trim().length()>0){
 				bean.setAnn(ann);
 			}			
+			//運費
+			bean.setShipment(shipment);
 			//---------------------
 			//for _17_Group_RecordVO
 			Set<_17_Group_UserVO> _17VOset=new HashSet<>();

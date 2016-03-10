@@ -61,7 +61,16 @@
 <%-- 			<c:if test='${failure!=null}'> --%>
 <%-- 					${failure} --%>
 <%-- 			</c:if>  --%>
-			</td></tr>
+				
+			  <c:if test='${EndSec <= 0 && status == "進行中"}'>
+<!-- 			  	<form action=""> -->
+<!-- 					<td class="tt"><input id="enddate"	 type="datetime-local"/></td> -->
+					<input type="button" value="重設時間" class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
+<!-- 			 	</form> -->
+			  </c:if>
+			</td>
+
+			</tr>
 			
 		</c:forEach>
 		</table>
@@ -149,6 +158,7 @@
 			<th><strong>計算後</th>
 			<th><strong>備註</th>
 			<th><strong>訂購時間</th>
+			<th><strong>刪除</th>
 		</tr>
 		</thead>
 	<tbody id="tb3"></tbody>
@@ -174,6 +184,22 @@
         </div>        
         <div class="modal-footer">
         	<button type="button" id="failreasonbtn" class="btn btn-default" data-dismiss="modal" onclick="go2(${group_no})">送出</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 	重新設定團購時間視窗 -->
+	<div class="modal fade" id="myModal_Time" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header label-danger">
+          <h4 class="modal-title"><b>設定截止時間</h4>
+        </div>        
+		<input id="enddate"	 type="datetime-local"/>
+        <div class="modal-footer">
+        	<button type="submit" id="resetBtn" class="btn btn-default" data-dismiss="modal">送出</button>
         	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         </div>
       </div>
@@ -220,9 +246,19 @@ function go3(groupno3){
 		//----------------訂購失敗按鈕-------------------------------
 		$('#failreasonbtn').on('click',function(){
 			var failreason=$('#failreason').val();
-			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
-			xml.send();
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure='+failreason+'&xxx="/>'+${group_no};
+// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
+// 			xml.send();
 			$('#failBtn').prop("disabled",true);
+		});	
+		
+		//----------------重設時間按鈕-------------------------------
+		$('#resetBtn').on('click',function(){
+			var enddate=$('#enddate').val();
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate='+enddate+'&xxx="/>'+${group_no};	
+// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate="+enddate+"&xxx="+${group_no}, true);
+// 			xml.send();
+			$('#resetTimeBtn').prop("disabled",true);
 		});	
 		
 
@@ -269,11 +305,11 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-//					   console.log(ByUser[ByUser.length-1]);
+// 					   console.log(ByUser);
 					   if(ByUser[ByUser.length-1]=='y'){
-					   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
 				   	   }else{
-				   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+				   			aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
 				   	   }
 				   }
 				   aa[j+1] = $("<td></td>").text(ByUser[j]);
@@ -293,7 +329,7 @@ function go3(groupno3){
 		   $('#tb2').append(row);								
 		});
 	}
-	
+	${LoginOK.user_id};
 	 //----------------抓表3-------------------------------
 	function gettable3() {
 	   $.each(${detail_Detail}, function(index, Detail){
@@ -304,8 +340,26 @@ function go3(groupno3){
 // 			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
 // 		   }
 		   for(var j = 0; j<Detail.length-2; j++){
+			   if(j<Detail.length-3){
 			    aa[j] = $("<td></td>").text(Detail[j]);
+			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]){			   
+				   aa[j] = $("<td></td>").append($('<input/>')
+			  				  .attr('type','button')
+			  				  .attr('value','刪除')
+			    			  .attr('class','btn btn-default btn-xs')
+			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+","+'${group_no}'+')'))
+			  				  .attr('id',"odid"+Detail[j]);//id為order_detail的主鍵
+			   }else if(j==Detail.length-3){			   
+				   aa[j] = $("<td></td>").append($('<input/>')
+			  				  .attr('type','button')
+			  				  .prop('disabled',true)
+			  				  .attr('value','刪除')
+			    			  .attr('class','btn btn-default btn-xs')
+			  				  .attr('onclick','if(confirm("確定要刪除 :'+Detail[1]+'訂購的 '+Detail[2]+' 嗎??"))deleteOrder('+Detail[j]+","+'${group_no}'+')'))
+			  				  .attr('id',"odid"+Detail[j]);//id為order_detail的主鍵			  				  
+			   }
 		   }
+		   
 		   var row = $("<tr></tr>").append(aa);			   
 		   $('#tb3').append(row);								
 		});
@@ -334,6 +388,13 @@ function go3(groupno3){
 					xml.send();
 				}		 
 			 });
+		//----------------明細列表刪除訂購-------------------------------
+			function deleteOrder(detail_no,groupno){
+				$("#odid"+detail_no).parent("tr").remove();
+				xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet.deleteOrder?detail_no="+detail_no+"&groupno="+groupno, true);//傳值給StoreServlet
+				xml.send();
+			}
+			 
 	   
 
 		 

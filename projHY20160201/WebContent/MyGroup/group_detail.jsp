@@ -269,11 +269,11 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-//					   console.log(ByUser[ByUser.length-1]);
+					   console.log(ByUser);
 					   if(ByUser[ByUser.length-1]=='y'){
-					   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
+					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
 				   	   }else{
-				   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
+				   			aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
 				   	   }
 				   }
 				   aa[j+1] = $("<td></td>").text(ByUser[j]);

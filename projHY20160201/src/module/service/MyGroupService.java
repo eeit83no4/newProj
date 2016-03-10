@@ -260,12 +260,14 @@ public class MyGroupService {
 		
 		for (int i = 0; i < empNos.size(); i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
+			Boolean index=false; //判斷此人是否只受到邀請但沒訂購
 			String user_id=null;
 //			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
 			for (String[] sb : mgs.orderDetail_detail(group_no)) { //和orderDetail_detail()抓到的資料比對
 				List<String> result = new ArrayList<>();
 				
 				if (empNos.get(i).equals(sb[0])) { //比對員工編號是否相等
+					index=true;
 					if (notExsit) {
 						result.add(sb[0]);//團員ID
 						user_id=sb[0];
@@ -298,7 +300,7 @@ public class MyGroupService {
 					}
 				}
 			}
-			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0){
+			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0&&index==true){
 				finalResult.get(j-1).add(mgs.getUserPayStatus(group_no, finalResult.get(j-1).get(0)));//在資料最後加上付款狀態
 			}	
 		}

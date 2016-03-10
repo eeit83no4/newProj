@@ -153,7 +153,7 @@ table,tr,td,th{
 				<fieldset>
 					<span>原始單價：</span><input type="text" value="0" id="originitemprice" readonly/><br/>
 					<span>加料後單價：</span><input type="text" value="0" id="itemprice" readonly/><br/>
-					<span>運費計算後單價：</span><input type="text" value="0" id="discountitemprice" readonly/><br/>
+					<span style='display:none'>運費計算後單價：</span><input type="text" value="0" id="discountitemprice" style='display:none' readonly/><br/>
 					<span>數量：</span><input type="number" min="1" value="1" id="quantity"/><br/>
 				</fieldset>
 			</div>
@@ -194,8 +194,7 @@ table,tr,td,th{
 						//sieze區域
 						<c:forEach var="sizeprices" items="${sizepriceLists}">
 							$('#sizeZone').text('Size：');
-							<c:forEach var="sizeprice" items="${sizeprices[itemno]}">
-											
+							<c:forEach var="sizeprice" items="${sizeprices[itemno]}">											
 								var y='${sizeprice}';
 								var priceno=y.split("=")[0];//價錢編號
 								var price=y.split("=")[1];//價錢
@@ -204,44 +203,8 @@ table,tr,td,th{
 								var itemprice=($(':input:radio:checked').val().split("=")[1]).match(/[0-9]+/g);
 								$('#itemprice').val(itemprice);//改變單價區塊
 								$('#originitemprice').val(itemprice);//改變原始單價區塊
-								//----------運費計算
-								<c:choose>
-									<c:when test='${!empty notice.shipment}'>
-										
-										var shipment='${notice.shipment}';
-										var shipmentRule=shipment.split(',')[0];
-										switch(shipmentRule){
-											case '人頭分攤':
-																							
-												$.ajax({
-													'type':'get',
-													'url':'/projHY20160201/userOrder/ShipmentServlet.controller',
-													'data':{'ajaxShipt':'人頭分攤'},
-													
-												})
-												
-												
-												
-												break;
-											case '數量分攤':
-												console.log('數量分攤');
-												break;
-											case '比例分攤':
-												console.log('比例分攤');
-												break;
-											case '主揪自己吸收':
-												console.log('主揪自己吸收');
-												break;
-											default:
-												console.log('default');
-										}
-									</c:when>
-									<c:otherwise>
-										$('#discountitemprice').val(itemprice);////改變運費計算後單價區塊
-									</c:otherwise>
-								</c:choose>
-								
-									
+								//----------運費計算								
+								$('#discountitemprice').val(itemprice);////改變運費計算後單價區塊
 							</c:forEach>						
 						</c:forEach>
 						//第二第三屬性

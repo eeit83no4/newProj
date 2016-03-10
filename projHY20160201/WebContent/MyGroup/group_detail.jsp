@@ -140,7 +140,7 @@
 	<table class="table table-hover table-bordered">
 		<thead>
 		<tr class="info">
-			<th><strong>付款狀態</th>
+<!-- 			<th><strong>付款狀態</th> -->
 			<th><strong>員工編號</th>
 			<th><strong>訂購人</th>
 			<th><strong>商品名稱</th>
@@ -209,7 +209,7 @@ function go3(groupno3){
 		   gettable3();
          //----------------excel下載-------------------------------
 			$('#excelbtn').click(function () {
-			   var blob = new Blob([document.getElementById('table_Detail').innerHTML], {
+			   var blob = new Blob([document.getElementById('table_ByUser').innerHTML], {
 			       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
 			   });
 			   var strFile = "Group.xls";
@@ -235,9 +235,8 @@ function go3(groupno3){
 // 		}
 
 	});
-// 	  ----------------------------------------------- 
-function gettable1() {
 	//----------------抓表1-------------------------------
+	function gettable1() {
 	   $.each(${detail_ByItem}, function(index, ByItem){
 		   var aa = new Array();
 		   var bb = new Array();
@@ -260,9 +259,9 @@ function gettable1() {
 		   var row = $("<tr></tr>").append(aa);			   
 		   $('#tb1').append(row);								
 		});
-}
-function gettable2() {
+	}
 	//----------------抓表2-------------------------------
+	function gettable2() {	
 	   $.each(${detail_ByUser}, function(index, ByUser){
 		   var aa = new Array();
 		   var bb = new Array();
@@ -293,23 +292,24 @@ function gettable2() {
 		   var row = $("<tr></tr>").append(aa);
 		   $('#tb2').append(row);								
 		});
-}
-function gettable3() {
+	}
+	
 	 //----------------抓表3-------------------------------
+	function gettable3() {
 	   $.each(${detail_Detail}, function(index, Detail){
 		   var aa = new Array(Detail.length);
-		   if(Detail[9]=='y'){
-			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'checked />");
-		   }else{
-			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
-		   }
+// 		   if(Detail[9]=='y'){
+// 			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'checked />");
+// 		   }else{
+// 			   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
+// 		   }
 		   for(var j = 0; j<Detail.length-2; j++){
-			    aa[j+1] = $("<td></td>").text(Detail[j]);
+			    aa[j] = $("<td></td>").text(Detail[j]);
 		   }
 		   var row = $("<tr></tr>").append(aa);			   
 		   $('#tb3').append(row);								
 		});
-}
+	}
 		 
 		 //----------------表2付款狀態回傳到資料庫-------------------------------
 		 	$('#tb2').on('click','input[type="checkbox"]',function(){
@@ -335,74 +335,26 @@ function gettable3() {
 				}		 
 			 });
 	   
+
+		 
 	   
-// 	 ---------------------------------------------------  
-	   
-		//----------------按件、按人、明細button按下就刷新-------------------------------
-// 		$("#table1btn").click(function(){
-// 			$('#tb1').empty();//先清空再將新資料放回
-// 			xml.open("get", "/projHY20160201/MyGroup/group_detail.controller?xxx="+${group_no}, true);
-// 			xml.send();			
+		//----------------按人、明細button按下就刷新-------------------------------
+		
+// 		$('#table2btn').click(function(){
+// 			$('#tb2').empty();//先清空再將新資料放回
+// 			gettable2();
+// 			xml.open("get", "/projHY20160201/MyGroup/group_detail.controller4?xxx="+${group_no}, true);
+// 			xml.send();
+// 			location.href='<c:url value="/MyGroup/group_detail.controller?xxx="/>'+groupno;
+			
 // 		})
 		
-		$('#table2btn').click(function(){
-			$('#tb2').empty();//先清空再將新資料放回
-			gettable2();
-// 			xml.open("get", "/projHY20160201/MyGroup/group_detail.controller?xxx="+${group_no}, true);
+// 		$("#table3btn").click(function(){
+// 			$('#tb3').empty();//先清空再將新資料放回
+// 			gettable3();
+// 			xml.open("get", "/projHY20160201/MyGroup/group_detail.controller4?xxx="+${group_no}, true);
 // 			xml.send();
-// // 			location.href='<c:url value="/MyGroup/group_detail.controller?xxx="/>'+groupno;
-// 			$.each(${detail_ByUser}, function(index, ByUser){
-// 				   var aa = new Array();
-// 				   var bb = new Array();
-// 				   var killer=0;
-// 				   for(var j = 0; j<ByUser.length-1; j++){
-// 					   　if(j<5){
-// 						   if(j==0){
-// //	 						   console.log(ByUser[ByUser.length-1]);
-// 							   if(ByUser[ByUser.length-1]=='y'){
-// 							   aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
-// 						   	   }else{
-// 						   	aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
-// 						   	   }
-// 						   }
-// 						   aa[j+1] = $("<td></td>").text(ByUser[j]);
-// 					    }else{
-// 					    	if(ByUser[j+2]==null){
-// 					    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'<br/>');
-// 					    	}else{
-// 					    		bb[killer] = $("<span>").append(ByUser[j]+'*'+ByUser[j+1]+'		'+ByUser[j+2]+'<br/>');
-// 					    	}
-// 					    	j=j+2;
-// 					    	killer++;
-// 					    }
-// 				   }
-// 				   aa[6]=$("<td></td>").append(bb);
-				   
-// 				   var row = $("<tr></tr>").append(aa);
-// 				   $('#tb2').append(row);								
-// 				});
-			
-		})
-		
-		$("#table3btn").click(function(){
-			$('#tb3').empty();//先清空再將新資料放回
-			gettable3();
-// 			xml.open("get", "/projHY20160201/MyGroup/group_detail.controller?xxx="+${group_no}, true);
-// 			xml.send();
-// 			 $.each(${detail_Detail}, function(index, Detail){
-// 				   var aa = new Array(Detail.length);
-// 				   if(Detail[9]=='y'){
-// 					   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'checked />");
-// 				   }else{
-// 					   aa[0] =  $("<td></td>").append("<input type='checkbox' value='"+Detail[8]+"'/>");
-// 				   }
-// 				   for(var j = 0; j<Detail.length-2; j++){
-// 					    aa[j+1] = $("<td></td>").text(Detail[j]);
-// 				   }
-// 				   var row = $("<tr></tr>").append(aa);			   
-// 				   $('#tb3').append(row);								
-// 				});
-		})
+// 		})
 		
 
 </script>

@@ -90,8 +90,8 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 		class3List.add(class3);
 		request.put("class3Lists", class3List);//<------------------------
 		//---------------找出該團購的所有商品size,price--------------------
-		Map<Integer,Set<String>> sizeprice=att.findSizePricesbyGroup(group_no);
-		List<Map<Integer,Set<String>>> sizepriceList=new ArrayList<>();
+		Map<Integer,List<String>> sizeprice=att.findSizePricesbyGroup(group_no);
+		List<Map<Integer,List<String>>> sizepriceList=new ArrayList<>();
 		sizepriceList.add(sizeprice);
 		request.put("sizepriceLists", sizepriceList);//<------------------------
 		

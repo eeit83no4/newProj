@@ -57,7 +57,7 @@ public class attempGroupService {
 //			System.out.println(att.findItemsByGroup(1));
 //			System.out.println(att.findItemsNoByGroup(1));
 			//找出該團購的所有商品size,price----------------------------------
-//			System.out.println(att.findSizePricesbyGroup(1).get(16));
+			System.out.println(att.findSizePricesbyGroup(1));
 			
 			//找出該團購目前的訂購人數-------------------------------------		
 //			System.out.println(att.findUserByGroup(1));
@@ -167,7 +167,7 @@ public class attempGroupService {
 			
 //			System.out.println(att.find3nds(1));			
 			//--------------------------運費計算
-			System.out.println(att.findShipmentByGroup(2));
+//			System.out.println(att.findShipmentByGroup(2));
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
@@ -298,18 +298,18 @@ public class attempGroupService {
 //		return null;
 //	}
 	//---------------找出該團購的所有商品size,price--------------------
-	public Map<Integer,Set<String>> findSizePricesbyGroup(Integer group_no){				
+	public Map<Integer,List<String>> findSizePricesbyGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
 		if(store!=null){
 			Set<_12_ItemVO> items=store.getItems();
-			Map<Integer,Set<String>> sizeprices=new HashMap<Integer,Set<String>>();			
+			Map<Integer,List<String>> sizeprices=new HashMap<>();			
 			for(_12_ItemVO a:items){
 				Set<String> iprices=new HashSet<String>();//用來存放size and price				
 				Integer itemno=a.getItem_no();//商品編號
 				Set<_15_Item_PriceVO> prices2=a.getItem_prices();
+
 				for(_15_Item_PriceVO c:prices2){					
-					try {
-						
+					try {						
 						Integer priceno=c.getPrice_no();
 						String size=c.getSizeVO().getSize_name();
 						Double sizeInprice=c.getIprice();
@@ -321,7 +321,18 @@ public class attempGroupService {
 						e.printStackTrace();
 					}
 				}
-				sizeprices.put(itemno, iprices);			
+				List<String> sortedIprices=new ArrayList<>(iprices);//排序過後的價錢
+//				//---------開始排序
+				Collections.sort(sortedIprices, new Comparator<String>() {
+					@Override
+					public int compare(String o1, String o2) {						
+						int start=o1.indexOf("(");
+						int end=o1.indexOf(")");
+						return o2.substring(start+1, end).compareTo(o1.substring(start+1, end));				
+					}
+				});
+				//--------排序後				
+				sizeprices.put(itemno, sortedIprices);			
 			}		
 			return sizeprices;		
 		}else{

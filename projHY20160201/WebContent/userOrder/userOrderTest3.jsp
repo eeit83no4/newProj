@@ -186,8 +186,6 @@ table,tr,td,th{
 						$('#itemname').text('${itemname[itemno]}');
 						//圖片
 						$('#imgZone').attr('src','<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}');
-// 						$('#imgZone').attr('src','${itempic[itemno]}');
-// 						console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx===============${itempic[itemno]}');
 						//sieze區域
 						<c:forEach var="sizeprices" items="${sizepriceLists}">
 							$('#sizeZone').text('Size：');

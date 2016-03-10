@@ -70,9 +70,11 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 		_16_Group_RecordDAO _16dao=new _16_Group_RecordDAO();
 		String storename=_16dao.findById(group_no).getStoreVO().getStore_name();
 		notice.put("store", storename);
+		
+		request.put("notice", notice);
 		//----------------找出該商品的照片本機路徑------------------------
-		Map<Integer, String> picmap=att.findItemPicByGroup(group_no);
-		request.put("itempic", picmap);
+//		Map<Integer, String> picmap=att.findItemPicByGroup(group_no);
+//		request.put("itempic", picmap);
 		//------------找出物品的第二層屬性-------------------
 		List<Map<Integer, Set<String>>> class2List=new ArrayList<>();
 		Map<Integer, Set<String>> class2=att.find2nds(group_no);
@@ -102,7 +104,7 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 				
 		
 		
-		request.put("notice", notice);
+		
 		
 
 		

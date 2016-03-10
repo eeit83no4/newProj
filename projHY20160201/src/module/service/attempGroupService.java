@@ -222,24 +222,24 @@ public class attempGroupService {
 		
 	}
 	//----------------找出該商品的照片本機路徑------------------------
-	public Map<Integer,String> findItemPicByGroup(Integer group_no){
-		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
-		if(store!=null){
-			Set<_12_ItemVO> storeitems=store.getItems();
-			Map<Integer,String> xx=new HashMap<>();
-			for(_12_ItemVO a:storeitems){			
-				try {
-					String pic=new String(a.getPic());
-					xx.put(a.getItem_no(), pic);
-				} catch (Exception e) {
-					System.out.println("錯誤啦="+e.toString());				
-				}
-			}
-			return xx;
-		}else{
-			return null;
-		}
-	}
+//	public Map<Integer,String> findItemPicByGroup(Integer group_no){
+//		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
+//		if(store!=null){
+//			Set<_12_ItemVO> storeitems=store.getItems();
+//			Map<Integer,String> xx=new HashMap<>();
+//			for(_12_ItemVO a:storeitems){			
+//				try {
+//					String pic=new String(a.getPic());
+//					xx.put(a.getItem_no(), pic);
+//				} catch (Exception e) {
+//					System.out.println("錯誤啦="+e.toString());				
+//				}
+//			}
+//			return xx;
+//		}else{
+//			return null;
+//		}
+//	}
 	//----------------找出該團購的商品(純編號)------------------------
 	public Set<Integer> findItemsNoByGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
@@ -279,22 +279,22 @@ public class attempGroupService {
 		
 	}
 	//---------------找出該團購的所有商品的priceno--------------------
-	public Map<String,Set<Integer>> findPricenoByGroup(Integer group_no){
-		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
-		if(store!=null){
-			Map<String,Set<Integer>> findPricenoByGroup=new HashMap<>();
-			for(_12_ItemVO a:store.getItems()){
-				Set<Integer> pricenoSet=new HashSet<>();
-				for(_15_Item_PriceVO b:a.getItem_prices()){					
-					int priceno=b.getPrice_no();
-					pricenoSet.add(priceno);					
-				}
-				findPricenoByGroup.put(String.valueOf(a.getItem_no()), pricenoSet);
-			}
-			return findPricenoByGroup;
-		}
-		return null;
-	}
+//	public Map<String,Set<Integer>> findPricenoByGroup(Integer group_no){
+//		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
+//		if(store!=null){
+//			Map<String,Set<Integer>> findPricenoByGroup=new HashMap<>();
+//			for(_12_ItemVO a:store.getItems()){
+//				Set<Integer> pricenoSet=new HashSet<>();
+//				for(_15_Item_PriceVO b:a.getItem_prices()){					
+//					int priceno=b.getPrice_no();
+//					pricenoSet.add(priceno);					
+//				}
+//				findPricenoByGroup.put(String.valueOf(a.getItem_no()), pricenoSet);
+//			}
+//			return findPricenoByGroup;
+//		}
+//		return null;
+//	}
 	//---------------找出該團購的所有商品size,price--------------------
 	public Map<Integer,Set<String>> findSizePricesbyGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();

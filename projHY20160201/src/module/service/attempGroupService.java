@@ -76,51 +76,51 @@ public class attempGroupService {
 //			user.setGroup_user_no(1);
 			_17_Group_UserVO user=_17guDAO.findById(1);
 //			System.out.println("user="+user);
-			d1.setGroup_userVO(user);
-			d1.setOstore_name("紅茶店");
-			d1.setOprice_no(528);
-			d1.setOitem_name("紅茶");
-			d1.setOriginal_oprice(25.0);
-			d1.setOprice(30.0);
-			d1.setOprice_after(30.0);
-			d1.setOclass("中,正常(全糖),少冰,加珍珠(5)");
-			d1.setQuantity(2);
-			
-			d2.setGroup_userVO(user);
-			d2.setOstore_name("紅茶店");
-			d2.setOprice_no(527);
-			d2.setOitem_name("紅茶");
-			d2.setOriginal_oprice(20.0);
-			d2.setOprice(25.0);
-			d2.setOprice_after(25.0);
-			d2.setOclass("小,正常(全糖),少冰,加珍珠(5)");
-			d2.setQuantity(2);
-			
-			d3.setGroup_userVO(user);
-			d3.setOstore_name("紅茶店");
-			d3.setOprice_no(534);
-			d3.setOitem_name("綠茶");
-			d3.setOriginal_oprice(25.0);
-			d3.setOprice(30.0);
-			d3.setOprice_after(30.0);
-			d3.setOclass("中,正常(全糖),少冰,加珍珠(5)");
-			d3.setQuantity(2);
-			
-			d4.setGroup_userVO(user);
-			d4.setOstore_name("紅茶店");
-			d4.setOprice_no(531);
-			d4.setOitem_name("奶茶");
-			d4.setOriginal_oprice(25.0);
-			d4.setOprice(25.0);
-			d4.setOprice_after(25.0);
-			d4.setOclass("中,正常(全糖),少冰");
-			d4.setQuantity(2);
-			
-			listDetail.add(d1);
-			listDetail.add(d2);
-			listDetail.add(d3);
-			listDetail.add(d4);
-			att.ordering(listDetail);
+//			d1.setGroup_userVO(user);
+//			d1.setOstore_name("紅茶店");
+//			d1.setOprice_no(528);
+//			d1.setOitem_name("紅茶");
+//			d1.setOriginal_oprice(25.0);
+//			d1.setOprice(30.0);
+//			d1.setOprice_after(30.0);
+//			d1.setOclass("中,正常(全糖),少冰,加珍珠(5)");
+//			d1.setQuantity(2);
+//			
+//			d2.setGroup_userVO(user);
+//			d2.setOstore_name("紅茶店");
+//			d2.setOprice_no(527);
+//			d2.setOitem_name("紅茶");
+//			d2.setOriginal_oprice(20.0);
+//			d2.setOprice(25.0);
+//			d2.setOprice_after(25.0);
+//			d2.setOclass("小,正常(全糖),少冰,加珍珠(5)");
+//			d2.setQuantity(2);
+//			
+//			d3.setGroup_userVO(user);
+//			d3.setOstore_name("紅茶店");
+//			d3.setOprice_no(534);
+//			d3.setOitem_name("綠茶");
+//			d3.setOriginal_oprice(25.0);
+//			d3.setOprice(30.0);
+//			d3.setOprice_after(30.0);
+//			d3.setOclass("中,正常(全糖),少冰,加珍珠(5)");
+//			d3.setQuantity(2);
+//			
+//			d4.setGroup_userVO(user);
+//			d4.setOstore_name("紅茶店");
+//			d4.setOprice_no(531);
+//			d4.setOitem_name("奶茶");
+//			d4.setOriginal_oprice(25.0);
+//			d4.setOprice(25.0);
+//			d4.setOprice_after(25.0);
+//			d4.setOclass("中,正常(全糖),少冰");
+//			d4.setQuantity(2);
+//			
+//			listDetail.add(d1);
+//			listDetail.add(d2);
+//			listDetail.add(d3);
+//			listDetail.add(d4);
+//			att.ordering(listDetail);
 			//------------------找出該團購的商品------------------
 //			System.out.println(att.findGroupItem(1));
 //			int groupno=3;
@@ -167,7 +167,7 @@ public class attempGroupService {
 			
 //			System.out.println(att.find3nds(1));			
 			//--------------------------運費計算
-			att.findShipmentByGroup(1);
+			System.out.println(att.findShipmentByGroup(2));
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
@@ -434,7 +434,18 @@ public class attempGroupService {
 	}
 	//--------------------------運費計算----------------------
 	public String findShipmentByGroup(Integer group_no){
-		return _16grDAO.findById(group_no).getShipment();
+		String shipfromDB=_16grDAO.findById(group_no).getShipment();
+		if(shipfromDB!=null&&shipfromDB.trim().length()>0){
+			int start=shipfromDB.indexOf("(");
+			int end=shipfromDB.indexOf(")");
+			
+			String shiprule=shipfromDB.substring(0, start);//運費計算規則
+			String shipfee=shipfromDB.substring(start+1, end);//運費
+			
+			String ship=shiprule+","+shipfee;
+			return ship;
+		}		
+		return null;		
 	}	
 	//-----------拿到group_user_no(透過團購編號與使用者編號)
 	public Integer getGroupUserNo(Integer group_no,Integer group_user_id){

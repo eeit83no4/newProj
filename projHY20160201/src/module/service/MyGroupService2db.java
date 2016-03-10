@@ -37,15 +37,10 @@ public class MyGroupService2db {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 				MyGroupService2db mg = new MyGroupService2db();
-				
-
-
 //				mg.updateEndTime(1, "2016-03-16T01:00");
-
 //				mg.deleteOrder(9);
-
-
 //				mg.deleteOrder(9);
+				mg.copyGroup(1, "AAAAAAAAA", "拜偷偷偷", "2222-05-16T01:00");
 
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
@@ -178,9 +173,28 @@ public class MyGroupService2db {
 		groupVO.setGroup_no(groupno);
 		groupVO.setGroup_amount(user_amount);
 		groupVO.setGroup_amount_after(user_amount_after);		
-		groupDao.update(groupVO);				
+		groupDao.update(groupVO);			
+	}
+	
+	/*-------------重設時間-----------------------------------------------------------------*/
+	public void copyGroup(Integer group_no,String name_new, String ann_new, String enddate2){
+		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
+		_16_Group_RecordVO vo = grdao.findById(group_no);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		java.util.Date date = null;
+		try {
+			date = format.parse(enddate2);
+			System.out.println("成功");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int newstoreno =(int) grdao.getSession().getIdentifier(vo);
 		
-		
+//		vo.setGroup_no(newstoreno);
+		vo.setGroup_name(name_new);
+		vo.setAnn(ann_new);
+		vo.setEnd_date(date);		
+		grdao.insert(vo);
 	}
 
 }

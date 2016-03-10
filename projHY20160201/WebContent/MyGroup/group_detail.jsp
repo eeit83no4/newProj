@@ -95,6 +95,10 @@
 				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="訂購失敗" id="failBtn" data-toggle="modal" data-target="#myModal"><br/>
 			</c:if>
 		</c:if>
+		<c:if test='${status != "進行中"}'>
+			<input type="button" style="margin:3px" class="btn btn-default" name="" value="複製團購" data-toggle="modal" data-target="#myModal_copy"><br/>
+		
+		</c:if>
 	</div>
 	
 </div>
@@ -170,7 +174,7 @@
 
 
 <!-------------------------------------內容寫在上面 --------------------------------------------->
-	<!-- 	載入底部 -->
+	<!-------------------------- 載入底部 ------------------------ -->
 	<jsp:include page="/footer.jsp"/>
     <!-- 	訂購失敗理由視窗 -->
 	<div class="modal fade" id="myModal" role="dialog">
@@ -190,7 +194,7 @@
     </div>
   </div>
   
-  <!-- 	重新設定團購時間視窗 -->
+  <!------------------------ 重新設定團購時間視窗 ------------------------ -->
 	<div class="modal fade" id="myModal_Time" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -205,6 +209,32 @@
       </div>
     </div>
   </div>
+  
+  <!--------------------------  複製團購視窗 ------------------------ -->
+	<div class="modal fade" id="myModal_copy" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header label-danger">
+          <h4 class="modal-title"><b>設定新團購</h4>
+        </div>
+        <div class="modal-body" align="center">
+			<h5>團購名稱:</h5><textarea id="name_new" style="width:200px;height:30px;"></textarea>
+        </div>
+        <div class="modal-body" align="center">
+			<h5>公告:</h5><textarea id="ann_new" style="width:200px;height:30px;"></textarea>
+        </div>
+        <div class="modal-body" align="center">
+			<h5>截止時間:</h5><input id="enddate2"	 type="datetime-local"/>
+        </div>  
+                    
+        <div class="modal-footer">
+        	<button type="button" id="copyBtn" class="btn btn-default" data-dismiss="modal">送出</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 	
 </div>
@@ -247,8 +277,6 @@ function go3(groupno3){
 		$('#failreasonbtn').on('click',function(){
 			var failreason=$('#failreason').val();
 			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure='+failreason+'&xxx="/>'+${group_no};
-// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
-// 			xml.send();
 			$('#failBtn').prop("disabled",true);
 		});	
 		
@@ -256,13 +284,16 @@ function go3(groupno3){
 		$('#resetBtn').on('click',function(){
 			var enddate=$('#enddate').val();
 			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate='+enddate+'&xxx="/>'+${group_no};	
-// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate="+enddate+"&xxx="+${group_no}, true);
-// 			xml.send();
 			$('#resetTimeBtn').prop("disabled",true);
 		});	
 		
-
-		
+		//----------------複製團購按鈕-------------------------------
+		$('#copyBtn').on('click',function(){
+			var enddate=$('#enddate2').val();
+			var name_new=$('#name_new').val();
+			var ann_new=$('#ann_new').val();
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=複製團購&name_new='+name_new+'&ann_new='+ann_new+'&enddate='+enddate2+'&xxx="/>'+${group_no};	
+		});	
 		
 		
 // 		if($("#failreason").val()!=null){

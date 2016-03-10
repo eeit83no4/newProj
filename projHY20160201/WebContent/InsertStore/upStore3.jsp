@@ -11,7 +11,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/InsertStore/js/table.css" />
+<style>
 
+/* input[class^="class"]{ */
+/* 	background-color: #337ab7; */
+/* 	} */
+ 		.s {
+            -webkit-filter: grayscale(1);            
+        }
+ 		.n {
+            -webkit-filter: grayscale(0);
+        }        
+ 		.b {
+            -webkit-filter: invert(1);
+        }   
+</style>
 <title>鴻揚科技有限公司-團購系統</title>
 
 
@@ -19,27 +33,27 @@
 <body class="home">
 <div id="wrap">
 	<jsp:include page="/header.jsp"/>
-	<form action="<c:url value='/insertStoreAction2.action' />" method="get" role="form" data-toggle="validator">
+	<form id="target" action="<c:url value='/insertStoreAction2.action' />" method="get" role="form" data-toggle="validator">
 	<div class="container col-md-2"><br />
   <ul class="nav nav-pills nav-stacked" id="item">
   </ul>
   <input type="button" value="+" class='btn btn-default' id="but88" /><br />
-</div>			
+</div>							
 		<div style="float: left; border: 10px;margin: 100px" id="right" class="form-group">
 			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none" /><br /><br />
-			<span id="itemI" style="display:none">圖片: </span> <input id="img" type="file" value="上傳圖片" accept="image/*" onchange="show(this)"/>
+			<span id="itemI" style="display:none">圖片: </span> <input id="img" type="file" value="上傳圖片" style="display:none" accept="image/*" onchange="show(this)"/>
 			<input type="button" id="bt0" value="+" style="display:none" />
 			<div id="second"><input type="button" id="but99" value="+" style="display:none" class='btn2 btn-danger'/></div>
 		</div>
 		
-		<div id="dialog" title="Basic dialog">
-  		<input type="text" value="" id="AAB"/><br/>
-  		<input type="radio" name="first" value="飲料" id="radio" checked="checked" />飲料
-  		<input type="radio" name="first" value="便當" />便當
-  		<input type="radio" name="first" value="甜點" />甜點
-  		<input type="radio" name="first" value="其他" />其他
-</div>
-	<div>
+		<div id="dialog" title="新增商品">
+	  		<input type="text" value="" id="AAB"/><br/>
+	  		<input type="radio" name="first" value="飲料" id="radio" checked="checked" />飲料
+	  		<input type="radio" name="first" value="便當" />便當
+	  		<input type="radio" name="first" value="甜點" />甜點
+	  		<input type="radio" name="first" value="其他" />其他
+		</div>
+	
 	<div class="form-group">
 		<br />	
 		<label for="inputName" class="control-label">店家名稱</label>
@@ -50,12 +64,16 @@
 		<input type="text" value="大安區" id="address" name="address" placeholder="地址" class="form-control" />
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div> 					
-		<input type="submit" name="submit" value="送出" id="id">		
-		</div>
+		<input type="submit" name="submit" value="送出" id="id" >
+		<input type="text" name="sub"  style="display:none" id="sub"/>		
 		</div>
 	</form>
+	
+	
 	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	
+	
 	<script>
 
 	var txtId = 1;
@@ -76,20 +94,22 @@
 		}
 		//img end	
 	
-	
-	
-	
-	
+
 		$(function(){	
 			ii=0;
 			jsonData = null;
 			itemId = null;
 			first55 = null;		
-			storeNo = null;		
-			//點擊彈出視窗
-		    $( "#but88" ).click(function() {						
-		    	$( "#dialog" ).dialog( "open" );			      
-		    });
+			storeNo = null;	
+			exp = null;
+			//submit
+			$('#id').click(function(){
+				insertItem();
+				alert('新增成功')
+//					$( "#divlog" ).dialog( "open" );
+				if($('#inputName').val()!=""){
+				}
+			})
 			//長出店家類型 名稱
 			$('#inputName').val('${data.storeName}');
 			$('#phone').val('${data.storePhone}');
@@ -125,7 +145,7 @@
 						 									  .attr('name','item'+value.getItem_no)
 						 									  .attr('class','item')
 						 									  .text(value.item_name)))
-					//載入執行
+					//載入執行  (自動選擇一項商品)
 					if(flag == true){
 						itemId = value.getItem_no;
 						$('#itemName').val(value.item_name)
@@ -136,31 +156,56 @@
 							'data':{'item_no':itemId},
 							'success':function(data){						
 								jsonData = data;
-								item();						
+								item();	
+// 								alert(itemId);
+// 								getItemClass(itemIda);
 							}
+						})
+						
+						$.ajax({
+								'type':'get',
+								'url':'/projHY20160201/SelectFirstServlet.select',
+								'datatype':'json',
+								'data':{'item_no':itemId},
+								'success':function(data2){						
+									first55 = data2.first;
+// 									alert(first55)
+								}
 						})
 						$('.item').attr('aria-expanded',true)
 						$('li').attr('class','active')
 						$('input').show()
 						$('#itemP').show()
+						$('#sub').hide()
 						flag = false;
 						}
 				})
 			}//if end
 			
-			
+			//點擊彈出視窗
+		    $( "#but88" ).click(function() {						
+		    	$( "#dialog" ).dialog( "open" );
+		    	if(k!=0){
+		    	$('.item[aria-expanded="true"]').text($('#itemName').val())
+		    	insertItem();
+		    	}
+		    });    
 			//改變書籤的名子 (左邊)
 			$('.item').click(function(){
-// 				alert($('#itemName').val())
-// 				alert($('.item[aria-expanded="true"]').text())
+				var itNo=$('.item[aria-expanded="true"]').attr('name')
+		    	var getExp = $('.item[aria-expanded="true"]').attr('name').slice(4,itNo.length)
+				if(exp != getExp){							
 				$('.item[aria-expanded="true"]').text($('#itemName').val())
+				}
 			})
-			
 			
 			//偷偷把商品存進資料庫	
 			$('.item').on('click',insertItem)
 			
  				 function insertItem(){
+					var itNo=$('.item[aria-expanded="true"]').attr('name')
+			    	var getExp = $('.item[aria-expanded="true"]').attr('name').slice(4,itNo.length)
+					if(exp != getExp){
 					var jsonImg=JSON.stringify(imgarr);//圖片
 					var arr=[];
 					$('input[name="attributes"]').each(function(){
@@ -183,24 +228,29 @@
 						}
 					})
 					imgarr=[];
-					//取得物品第一層
+					getItemClass(itemId);							
+ 				}
+			}
+			//取得物品第一層
+			function getItemClass(itemIda){
 				$.ajax({
 					'type':'get',
 					'url':'/projHY20160201/SelectFirstServlet.select',
 					'datatype':'json',
-					'data':{'item_no':itemId},
+					'data':{'item_no':itemIda},
 					'success':function(data2){						
-// 						alert(data2.first)
 						first55 = data2.first;
-// 						alert(first55)
 					}
-				})				
- 			}
-			
+				})
+			}
 			//SHOW  點擊使用ajax抓出資料
 			$('.item').click(function() {
+				var itNo=$('.item[aria-expanded="true"]').attr('name')
+		    	var getExp = $('.item[aria-expanded="true"]').attr('name').slice(4,itNo.length)
+				if(exp != getExp){
 				$('#itemName').val($(this).text())
-				var itemIdShow = $(this).attr('name').substr(4,100);
+				var ggetName = $(this).attr('name')			
+				var itemIdShow = $(this).attr('name').substr(4,ggetName.length);
 				itemId = itemIdShow;
 				$.ajax({
 					'type':'get',
@@ -217,6 +267,8 @@
 				$(this).show()	
 				$('input').show()
 				$('#itemP').show()
+				$('#sub').hide()
+				}
 				}
 			)	
 				
@@ -244,8 +296,13 @@
 			    	  }		      	
 			      }
 			    });			 
-				
-				
+			
+			 $('.item').click(function(){
+			    	var itNo=$('.item[aria-expanded="true"]').attr('name')
+			    	var getExp = $('.item[aria-expanded="true"]').attr('name').slice(4,itNo.length)
+			    	exp = getExp;
+			   })
+			
 			  //長出第二層屬性 第三層
 			    function item(){
 // 			    	$('#right').empty();
@@ -262,7 +319,8 @@
 											 .append($('<input>').attr('type','text')
 						                      			         .attr('name','attributes')
 						                      			         .attr('value',index2)
-						                	                     .attr('class','classDDD'+ii)).append($('<br>')));
+						                	                     .attr('class','classDDD'+ii)
+						                	                     .attr('onblur','aaa(this)')).append($('<br>')));
 													if(index2 == "Size"){$('input[value="Size"]').prop('readonly','readonly')}
 									//target第三層
 													for(var y = 0; y < target.length; y++){
@@ -271,7 +329,8 @@
 											           									.attr('name','attributes')
 											           								   .attr('value',target[y])
 											           								   .attr('class','classCCC'+ii)
-											           								   .attr('style','width: 50px'))
+											           								   .attr('style','width: 50px')
+											           								   .attr('onblur','bbb(this)'))
 											           								   		.append($('<input>').attr('type','button')
 											           								   							.attr('id','bt'+ii)
 											           								   							.attr('class','btn3 btn-success')
@@ -308,6 +367,7 @@
 						$(this).attr('onclick','focus1()');
 	                       ii++;
 			})
+			
 			//刪除細項
 				$('input[class^="classC"]').blur(function(){
 					var val=$(this).val()					
@@ -334,7 +394,10 @@
 				})
 				
 
-   												
+//    			$('input[class^="classC"]').click(function(){
+// 				alert('a')
+// 			})	
+			
 	
 				$('#a').click(function(){
 					$('input[id^="but88"]').before($('<a>').attr('href','#')
@@ -347,13 +410,20 @@
 				})
 				
 				
-				$('#id').click(function(){
-					if($('#inputName').val()!=""){
-					insertItem();	
-					}
-				})
 				
+				
+				//儲存店家id
+				storeNo='${StoreNo}'
+				$('#sub').val(storeNo)
+				
+// 				$('input').click(function(){
+// 				alert('a')
+					
+// 				})
+				
+
 		})//load end
+		//++右邊
 		function killer(aa){
 				var getId=$(aa).attr('id');
 				var no=getId.substring(2);
@@ -364,7 +434,7 @@
 	           								   .attr('style','width: 65px')
 	           								   .attr('onblur','bbb(this)'))
 		}
-		
+		//++右邊
 		function abc(obj){	
 			var getId=$(obj).attr('id');
 			var no=getId.substring(2);
@@ -375,7 +445,8 @@
            								   .attr('class','classCCC'+ii)
            								   .attr('style','width: 65px')
            								   .attr('onblur','bbb(this)'))			   
-		}		
+		}	
+		//--紅色
 		function aaa(obj){
 					var no=$(obj).attr('class').substring(8);
 					var val=$(obj).val()
@@ -383,6 +454,7 @@
 							$("div[id$="+no+"]").remove();
 						}
 		}
+		//--綠色
 		function bbb(obj){
 
 			var val=$(obj).val()
@@ -398,7 +470,7 @@
 				
 			}
 			
-}
+		}
 		
 		function focus1() {
 		    $('input[class^=classDDD'+(ii-1)+']').focus();
@@ -498,7 +570,7 @@
 // // 									}
 // 								})
 		   location.reload();
-		}			
+		}		
 	</script>
 	<jsp:include page="/footer.jsp"/>
 </div>

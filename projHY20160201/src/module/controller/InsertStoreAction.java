@@ -21,11 +21,11 @@ public class InsertStoreAction extends ActionSupport implements RequestAware,Ses
 	private String store;
 	private String storeClass;
 	private String phone;
+	private String address;	
+	private String sub;			
 	private String attributes;	
 	private String item;
-	private String address;	
 	private String submit;	
-	private String sub;			
 	private Map<String, String> data;	
 	public Map<String, String> getData() {
 		return data;

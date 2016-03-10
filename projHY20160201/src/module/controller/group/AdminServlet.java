@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.model._04_EmployeeVO;
+import module.model._05_AdminVO;
 import module.service.AdminService;
 import net.sf.json.JSONArray;
 @WebServlet(
@@ -22,15 +23,18 @@ public class AdminServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//		_04_EmployeeVO employeeVO = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
+		_04_EmployeeVO employeeVO = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
 //		System.out.println(employeeVO.getUser_id()); //登入者的ID
 		//接收資料
 		String prodaction = req.getParameter("prodaction");
 		String auth = req.getParameter("auth");
 		String user_id = req.getParameter("user_id");
 		String group_noString = req.getParameter("groupno");
-		
 	
+		String wewe = adminservice.Authhh(employeeVO.getUser_id());
+		
+//		System.out.println("Auth  =  " + wewe);
+		if(wewe.equals("A")){
 			if(prodaction.equals("主畫面")){
 				List<Map> all_order = adminservice.orderMaintain();
 				JSONArray jSONObject1=JSONArray.fromObject(all_order);
@@ -48,6 +52,11 @@ public class AdminServlet extends HttpServlet {
 			}else if(prodaction.equals("管理員維護")){
 				adminservice.updateAuthByUserId(user_id, auth);
 			}
+		}else{
+			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
+			
+		}
+			
 			
 	}
 

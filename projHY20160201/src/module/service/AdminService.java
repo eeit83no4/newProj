@@ -37,7 +37,8 @@ public class AdminService {
 //			System.out.println(as.adminMaintain());		
 			// ------------------修改auth---------------------------------
 //			as.updateAuthByUserId("3", "A");
-		
+			// ------------------查詢此人權限--------------------------------
+//			as.Authhh(166);
 			
 		
 		
@@ -102,12 +103,18 @@ public class AdminService {
 	
 	// ------------------修改auth---------------------------------
 	public void updateAuthByUserId(String user_id,String auth){
-			a.updateAuthByUserId(user_id, auth);
+		a.updateAuthByUserId(user_id, auth);
 	}
 	
 	// ------------------刪除團購---------------------------------
 	public void delete(Integer group_no){
 		gr.delete(group_no);
+	}
+	
+	// ------------------查詢此人權限---------------------------------
+	public String Authhh(Integer user_id){			
+		String aaa = a.findAuthByUserId2(user_id);
+		return aaa;
 	}
 
 }

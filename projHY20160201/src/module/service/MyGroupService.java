@@ -255,6 +255,9 @@ public class MyGroupService {
 		}
 		MyGroupService mgs = new MyGroupService();
 		List<List<String>> finalResult = new ArrayList<>();
+
+		int j =0; //表finalResult中第幾筆資料
+		
 		for (int i = 0; i < empNos.size(); i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
 			String user_id=null;
@@ -280,28 +283,30 @@ public class MyGroupService {
 						
 						finalResult.add(result);
 						notExsit = false;
+						j++;
 						
 					} else { //finalResult裡面已經有此團員ID則抓出資料修改
-						Integer quantity=Integer.parseInt(finalResult.get(i).get(2))+Integer.parseInt(sb[3]);
-						finalResult.get(i).set(2, quantity.toString());//數量
-						Double oprice = Double.parseDouble(finalResult.get(i).get(3))+Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
-						finalResult.get(i).set(3, oprice.toString());//原總價
-						Double oprice_after = Double.parseDouble(finalResult.get(i).get(4))+Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
-						finalResult.get(i).set(4, oprice_after.toString());//計算後原總價
-						finalResult.get(i).add(sb[2]);//商品名稱
-						finalResult.get(i).add(sb[3]);//數量
-						finalResult.get(i).add(sb[7]);//商品備註						
+						Integer quantity=Integer.parseInt(finalResult.get(j-1).get(2))+Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(2, quantity.toString());//數量
+						Double oprice = Double.parseDouble(finalResult.get(j-1).get(3))+Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(3, oprice.toString());//原總價
+						Double oprice_after = Double.parseDouble(finalResult.get(j-1).get(4))+Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
+						finalResult.get(j-1).set(4, oprice_after.toString());//計算後原總價
+						finalResult.get(j-1).add(sb[2]);//商品名稱
+						finalResult.get(j-1).add(sb[3]);//數量
+						finalResult.get(j-1).add(sb[7]);//商品備註						
 					}
-				}				
+				}
 			}
 			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0){
-				finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
+				finalResult.get(j-1).add(mgs.getUserPayStatus(group_no, finalResult.get(j-1).get(0)));//在資料最後加上付款狀態
 			}	
 		}
 		return finalResult;
 	}
 	// ------------------給"按人統計"中付款狀態用，輸入團購編號、員工ID會回傳此人是否付款------------------
 	public String getUserPayStatus(Integer group_no, String Suser_id){
+		System.out.println(group_no+"aaaaaaaaaaaaaaaa"+Suser_id);
 		Integer user_id = Integer.parseInt(Suser_id);
 		_17_Group_UserDAO gudao = new _17_Group_UserDAO();
 		_18_Order_DetailDAO oddao = new _18_Order_DetailDAO();

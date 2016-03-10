@@ -53,16 +53,16 @@ public class MyGroupService {
 //			System.out.println(mgs.orderDetail_ByItem(2));
 
 			// ------------------抓出"按人統計"所需資料------------------
-			JSONArray jSONObject2=JSONArray.fromObject(mgs.orderDetail_ByUser(1));//轉換json
-			System.out.println(jSONObject2);
-//			for (List<String> sb : mgs.orderDetail_ByUser(1)) {
-//				for(String s:sb){
-//				 for (int i = 0; i < s.length(); i++) {
-//				 System.out.print(s+" ,");
-//				 }
-//				}
-//				 System.out.println("");
-//				 }
+//			JSONArray jSONObject2=JSONArray.fromObject(mgs.orderDetail_ByUser(1));//轉換json
+//			System.out.println(jSONObject2);
+			for (List<String> sb : mgs.orderDetail_ByUser(1)) {
+				for(String s:sb){
+				 for (int i = 0; i < s.length(); i++) {
+				 System.out.print(s+" ,");
+				 }
+				}
+				 System.out.println("");
+				 }
 			// ------------------抓出"明細列表"所需資料------------------
 //			 for (String[] sb : mgs.orderDetail_detail_new(1)) {
 //			 for (int i = 0; i < sb.length; i++) {
@@ -255,7 +255,7 @@ public class MyGroupService {
 		}
 		MyGroupService mgs = new MyGroupService();
 		List<List<String>> finalResult = new ArrayList<>();
-		for (int i = 0; i < empNos.size(); i++) {
+		for (int i = 0; i < 1; i++) {
 			Boolean notExsit = true;//判斷finalResult中是否已經有此團員，沒有則新增
 			String user_id=null;
 //			System.out.println("mgs.orderDetail_detail(group_no)="+mgs.orderDetail_detail(group_no));
@@ -295,7 +295,7 @@ public class MyGroupService {
 				}				
 			}
 			if(finalResult!=null&&!finalResult.isEmpty()&&finalResult.size()>0){
-				finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
+//				finalResult.get(i).add(mgs.getUserPayStatus(group_no, user_id));//在資料最後加上付款狀態
 			}	
 		}
 		return finalResult;

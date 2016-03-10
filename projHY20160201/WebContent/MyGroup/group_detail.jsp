@@ -61,7 +61,16 @@
 <%-- 			<c:if test='${failure!=null}'> --%>
 <%-- 					${failure} --%>
 <%-- 			</c:if>  --%>
-			</td></tr>
+				
+			  <c:if test='${EndSec <= 0 && status == "進行中"}'>
+<!-- 			  	<form action=""> -->
+<!-- 					<td class="tt"><input id="enddate"	 type="datetime-local"/></td> -->
+					<input type="button" value="重設時間" class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
+<!-- 			 	</form> -->
+			  </c:if>
+			</td>
+
+			</tr>
 			
 		</c:forEach>
 		</table>
@@ -179,6 +188,22 @@
       </div>
     </div>
   </div>
+  
+  <!-- 	重新設定團購時間視窗 -->
+	<div class="modal fade" id="myModal_Time" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header label-danger">
+          <h4 class="modal-title"><b>設定截止時間</h4>
+        </div>        
+		<input id="enddate"	 type="datetime-local"/>
+        <div class="modal-footer">
+        	<button type="submit" id="resetBtn" class="btn btn-default" data-dismiss="modal">送出</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 	
 </div>
@@ -220,9 +245,19 @@ function go3(groupno3){
 		//----------------訂購失敗按鈕-------------------------------
 		$('#failreasonbtn').on('click',function(){
 			var failreason=$('#failreason').val();
-			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
-			xml.send();
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure='+failreason+'&xxx="/>'+${group_no};
+// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=訂購失敗&failure="+failreason+"&xxx="+${group_no}, true);
+// 			xml.send();
 			$('#failBtn').prop("disabled",true);
+		});	
+		
+		//----------------重設時間按鈕-------------------------------
+		$('#resetBtn').on('click',function(){
+			var enddate=$('#enddate').val();
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate='+enddate+'&xxx="/>'+${group_no};	
+// 			xml.open("get", "/projHY20160201/module.controller.group/MyGroupServlet_3.controller?prodaction=重設時間&enddate="+enddate+"&xxx="+${group_no}, true);
+// 			xml.send();
+			$('#resetTimeBtn').prop("disabled",true);
 		});	
 		
 

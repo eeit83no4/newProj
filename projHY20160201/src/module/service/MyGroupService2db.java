@@ -1,5 +1,7 @@
 package module.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import module.dao._04_EmployeeDAO;
@@ -22,7 +24,8 @@ public class MyGroupService2db {
 //				mg.updateGroupEndDate(4);
 //				mg.updateForFail(3, "ssssss");
 //				mg.updatePayStatus(1,"y");
-				mg.updatePayStatusByUser(1,1,"n");
+//				mg.updatePayStatusByUser(1,1,"n");
+//				mg.updateEndTime(1, "2016-03-16T01:00");
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -91,6 +94,21 @@ public class MyGroupService2db {
 		}		
 	}
 	
-	
+	/*-------------重設時間-----------------------------------------------------------------*/
+	public void updateEndTime(Integer group_no,String enddate){
+		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
+		_16_Group_RecordVO vo = grdao.findById(group_no);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		java.util.Date date = null;
+		try {
+			date = format.parse(enddate);
+			System.out.println("成功");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println(date);
+		vo.setEnd_date(date);
+		grdao.update(vo);
+	}
 
 }

@@ -105,12 +105,7 @@ table,tr,td,th{
 		</div>
 		<div class="ann">目前人數：<font id="peopleNo">${notice.usersString}</font></div>
 		<div class="ann">目前累積金額：<font id="amountTotal">${notice.amountString}元</font></div>
-		<c:if test="${!empty notice.ann}">
-			<div class="ann">公告事項：<div id="annZone">${notice.ann}</div></div>
-		</c:if>
-		<c:if test='${!empty notice.shipment}'>
-			<div class="ann">運費計算：<div id="shipmentZone">${notice.shipment}</div></div>
-		</c:if>
+		<div class="ann">公告事項：<div id="annZone">${notice.ann}</div></div>
 	</div>	
 	<!-- -------------確認區塊-------------------- -->
 	<div id="RightDiv">

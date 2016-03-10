@@ -163,9 +163,11 @@ public class attempGroupService {
 //			cc[0]="奶茶";
 //			cc[1]="大:30,中:25,小:20";
 //			nn.put(3, cc);
+			//---------------------------------------------------------------
 			
-			
-//			System.out.println(att.find3nds(1));
+//			System.out.println(att.find3nds(1));			
+			//--------------------------運費計算
+			att.findShipmentByGroup(1);
 			
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
@@ -345,12 +347,8 @@ public class attempGroupService {
 			return _2nds;
 		}else{
 			return null;
-		}
-		
-	}
-	
-	
-	
+		}		
+	}	
 	//------------找出該物品的第三層屬性-------------------
 	public Map<Integer,Map<String,Set<String>>> find3nds(Integer group_no){
 		
@@ -414,10 +412,8 @@ public class attempGroupService {
 			return counts.size();
 		}else{
 			return 0;
-		}
-		
-	}
-	
+		}		
+	}	
 	//------------------找出該團購目前的累積金額------------------
 	public double findAmountByGroup(Integer group_no){		
 		Set<_17_Group_UserVO> users=_16grDAO.findById(group_no).getGroup_Users();
@@ -434,9 +430,12 @@ public class attempGroupService {
 			return total;
 		}else{
 			return total;
-		}
-		
+		}		
 	}
+	//--------------------------運費計算----------------------
+	public String findShipmentByGroup(Integer group_no){
+		return _16grDAO.findById(group_no).getShipment();
+	}	
 	//-----------拿到group_user_no(透過團購編號與使用者編號)
 	public Integer getGroupUserNo(Integer group_no,Integer group_user_id){
 		List<_17_Group_UserVO> groupUserList=_17guDAO.findByGroupUserId(group_user_id);

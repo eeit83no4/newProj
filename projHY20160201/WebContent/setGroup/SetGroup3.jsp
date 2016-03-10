@@ -448,8 +448,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 	    	  
 	    	  $("#money2").append(  	      	
 	  	    	    '<label><input type="radio" name="gender" value="人頭分攤">'+'人頭分攤'+'</label>'+
-	  				'<label><input type="radio" name="gender" value="數量分攤">'+'數量分攤'+'</label>'+
-	  				'<label><input type="radio" name="gender" value="主揪自己吸收">'+'主揪自己吸收'+'</label>')
+	 	  			'<label><input type="radio" name="gender" value="主揪自己吸收">'+'主揪自己吸收'+'</label>')
 	  				$(this).prop('disabled',true);
 	  				
 	      })

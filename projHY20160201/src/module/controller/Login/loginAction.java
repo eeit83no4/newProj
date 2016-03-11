@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import module.dao._04_EmployeeDAO;
 import module.model._04_EmployeeVO;
+import module.model._05_AdminVO;
 
 public class loginAction extends ActionSupport implements SessionAware {
 	
@@ -36,6 +37,14 @@ public class loginAction extends ActionSupport implements SessionAware {
 		//透過使用者的email取的使用者在資料庫的資料
 		mb = dao.findActive("email",email);
 		System.out.println("mb="+mb);
+		
+		for(_05_AdminVO a:mb.getAdms()){
+			if(a.getAuth().equals("A")){
+				session.put("admin", "admin");
+			}
+		}
+		
+		
 		//將使用者的資料存入session，識別字串為LoginOK
 		session.put("LoginOK", mb);
 		return Action.NONE;

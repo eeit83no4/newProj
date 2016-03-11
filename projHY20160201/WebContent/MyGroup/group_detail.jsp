@@ -360,7 +360,6 @@ function go3(groupno3){
 		   $('#tb2').append(row);								
 		});
 	}
-	${LoginOK.user_id};
 	 //----------------抓表3-------------------------------
 	function gettable3() {
 	   $.each(${detail_Detail}, function(index, Detail){

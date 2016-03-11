@@ -46,7 +46,11 @@ margin-top: 5%;
  font-size: 24px;
  padding: 12px;
  }
+ dl{
+ margin: 6px;
+ }
  dt{
+ margin-top:-12px;
  margin-left: 10px;
  font-size: 24px;
  }
@@ -60,13 +64,12 @@ margin-top: 5%;
  }
  span{
  margin-right: 12px;
- font-size: 24px;
+ font-size: 18px;
  }
  #BT{
  font-size: 18px;
  }
  a{
- 
  }
 </style>
 </head>
@@ -106,9 +109,9 @@ margin-top: 5%;
 			var i=1;
 			var x=1;
 			<c:forEach var="itemno" items='${itemnos}'>
-				$("#d1").append('<dl><input id="ck'+${itemno}+'" type="checkbox" style="WIDTH: 20px; HEIGHT: 20px" name="ckbox" value="'+${itemno}+'"/><span data-toggle="collapse" data-parent="#" href="#its'+i+'">${itemnames[itemno]}</span><div id="its'+i+'" class="panel-collapse collapse"><p id="it'+i+'" class="panel-body"></p></div><dl/>');
-				$("#it"+i).append('<dt class="pan el-body" style="margin-left:8px">SIZE</dt><dd id="size'+i+'">');
-				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
+				$("#d1").append('<dl><input id="ck'+${itemno}+'" type="checkbox" style="WIDTH: 20px; HEIGHT: 20px" name="ckbox" value="'+${itemno}+'"/><span style="font-size: 24px;" data-toggle="collapse" data-parent="#" href="#its'+i+'">${itemnames[itemno]}</span><div id="its'+i+'" class="panel-collapse collapse"><p id="it'+i+'" class="panel-body"></p></div><dl/>');
+				$("#it"+i).append('<dt class="pan el-body" style="font-size: 18px;">SIZE</dt><dd id="size'+i+'">');
+// 				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
 // 				$('#imgZone').attr('src','<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}');
 				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
 					$("#size"+i).append('<span>${sizepriceList.key}</span><span class="text">${sizepriceList.value}</span><br>');

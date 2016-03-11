@@ -40,20 +40,10 @@ public class showPicAction extends ActionSupport implements ServletResponseAware
 		
 		_12_ItemDAO _12dao=new _12_ItemDAO();
 		//取得圖片來源，從資料庫
-		byte[] imgByte=null;
-		boolean isPicNotExist=false;
-		try {
-			imgByte=_12dao.findById(itemno).getPic();
-			int a=imgByte.length;
-		} catch (Exception e1) {
-			isPicNotExist=true;
-			e1.printStackTrace();
-		}
-		
-		if(isPicNotExist){//如果圖片不存在
-			
-			
-			
+		byte[] imgByte=_12dao.findById(itemno).getPic();
+		if(imgByte==null){//如果圖片不存在
+						
+			//......?
 			
 		}else{//如果圖片存在
 			String imgString=new String(imgByte);

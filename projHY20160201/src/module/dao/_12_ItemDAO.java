@@ -33,7 +33,12 @@ public class _12_ItemDAO implements _12_Item_InterfaceDAO{
 			
 			_12_ItemDAO dao=new _12_ItemDAO();
 			byte[] imgByte=dao.findById(1).getPic();
-			System.out.println(imgByte.length);
+			
+			if(imgByte==null){
+				System.out.println("imgBytexx=b");
+			}
+			
+			
 //			System.out.println((dao.getStoreItem(1)).get(2).getClass_firstVO().getClass1_name());
 			
 

@@ -48,7 +48,7 @@ public class attempGroupService {
 		}
 		return null;
 	}
-	
+	//----------------測試----------------------------
 	public static void main(String args[]){		
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
@@ -223,25 +223,6 @@ public class attempGroupService {
 		groupDao.update(groupVO);
 		
 	}
-	//----------------找出該商品的照片本機路徑------------------------
-//	public Map<Integer,String> findItemPicByGroup(Integer group_no){
-//		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
-//		if(store!=null){
-//			Set<_12_ItemVO> storeitems=store.getItems();
-//			Map<Integer,String> xx=new HashMap<>();
-//			for(_12_ItemVO a:storeitems){			
-//				try {
-//					String pic=new String(a.getPic());
-//					xx.put(a.getItem_no(), pic);
-//				} catch (Exception e) {
-//					System.out.println("錯誤啦="+e.toString());				
-//				}
-//			}
-//			return xx;
-//		}else{
-//			return null;
-//		}
-//	}
 	//----------------找出該團購的商品(純編號)------------------------
 	public Set<Integer> findItemsNoByGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
@@ -280,23 +261,6 @@ public class attempGroupService {
 		}
 		
 	}
-	//---------------找出該團購的所有商品的priceno--------------------
-//	public Map<String,Set<Integer>> findPricenoByGroup(Integer group_no){
-//		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
-//		if(store!=null){
-//			Map<String,Set<Integer>> findPricenoByGroup=new HashMap<>();
-//			for(_12_ItemVO a:store.getItems()){
-//				Set<Integer> pricenoSet=new HashSet<>();
-//				for(_15_Item_PriceVO b:a.getItem_prices()){					
-//					int priceno=b.getPrice_no();
-//					pricenoSet.add(priceno);					
-//				}
-//				findPricenoByGroup.put(String.valueOf(a.getItem_no()), pricenoSet);
-//			}
-//			return findPricenoByGroup;
-//		}
-//		return null;
-//	}
 	//---------------找出該團購的所有商品size,price--------------------
 	public Map<Integer,List<String>> findSizePricesbyGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
@@ -469,9 +433,17 @@ public class attempGroupService {
 		int start=shipRulefromDB.indexOf("(");
 		int end=shipRulefromDB.indexOf(")");
 		String shipRule=shipRulefromDB.substring(0, start);//運費規則
-		Double shipFee=Double.parseDouble(shipRulefromDB.substring(start+1, end));//運費		
-		switch(shipRule){
-			case "人頭分攤":				
+		Double shipFee=Double.parseDouble(shipRulefromDB.substring(start+1, end));//運費
+		boolean isAnyOneOrder=false;//是否有人訂購
+		for(_17_Group_UserVO a:_16VO.getGroup_Users()){
+			if(a.getOrder_Details()!=null&&a.getOrder_Details().size()>0){
+				isAnyOneOrder=true;
+			}
+		}		
+		//如果有人訂購，才開始計算
+		if(isAnyOneOrder){
+			switch(shipRule){
+			case "人頭分攤":
 				Double orderNumber=new Double(findUserByGroup(group_no));//目前的訂購人數
 				Double userPerShipfee=shipFee/orderNumber;//每個人要分擔的運費			
 				for(_17_Group_UserVO groupUser:_16VO.getGroup_Users()){
@@ -506,7 +478,7 @@ public class attempGroupService {
 					}
 				}
 				//
-				if(holderVO.getOrder_Details().size()>0&&holderVO!=null){//如果主揪沒訂購
+				if(holderVO.getOrder_Details().size()>0&&holderVO!=null){//如果主揪有訂購
 					int quantity=0;//要分攤的商品數量
 					for(_18_Order_DetailVO detail:holderVO.getOrder_Details()){
 						quantity=quantity+detail.getQuantity();
@@ -518,24 +490,13 @@ public class attempGroupService {
 					}					
 				}
 				//
-				if(holderVO==null){//如果主揪沒訂購
-					holderVO=new _17_Group_UserVO();
-					holderVO.setEmployeeVO(_16VO.getEmployeeVO());
-					holderVO.setGroup_user_name(_16VO.getEmployeeVO().getName());
-					holderVO.setCo_holder("A");
-					holderVO.setUser_amount_after(shipFee);
-					holderVO.setOriginal_user_amount(shipFee);
-					holderVO.setUser_amount(shipFee);
-					holderVO.setGroup_RecordVO(_16VO);
-					_17guDAO.insert(holderVO);
-				}else{
-					holderVO.setUser_amount_after(shipFee+holderVO.getUser_amount_after());
-					_17guDAO.update(holderVO);
-				}
+				holderVO.setUser_amount_after(shipFee+holderVO.getUser_amount_after());
+				_17guDAO.update(holderVO);				
 				_16VO.setGroup_amount_after(_16VO.getGroup_amount_after()+shipFee);
 				_16grDAO.update(_16VO);				
 				System.out.println("主揪自己吸收");
 				break;
+			}					
 		}		
 	}
 	//-----------拿到group_user_no(透過團購編號與使用者編號)

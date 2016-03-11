@@ -78,7 +78,12 @@
 	
 	<div class="col-md-2" style="text-align:right;">
 		<c:if test='${status == "進行中"}'>
-<!-- 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="editBtn"><br>		 -->
+			<c:if test='${EndSec > 0}'>
+				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
+			</c:if>
+			<c:if test='${EndSec <= 0}'>
+				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
+			</c:if>
 			<c:if test='${group_status >= 1}'>
 				 <c:if test='${EndSec <= 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default" name="" value="訂購完成" id="succBtn" onclick="go1(${group_no})"><br/>
@@ -235,6 +240,37 @@
     </div>
   </div>
   
+   <!--------------------------  修改團購設定 ------------------------ -->
+	<div class="modal fade" id="myModal_edit" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header label-danger">
+          <h4 class="modal-title"><b>修改團購設定</h4>
+        </div>
+        <div class="modal-body" align="center">
+			<h5>團購名稱:</h5><textarea id="name_new2" style="width:200px;height:30px;"></textarea>
+        </div>
+        <div class="modal-body" align="center">
+			<h5>公告:</h5><textarea id="ann_new2" style="width:200px;height:30px;"></textarea>
+        </div>
+        <div class="modal-body" align="center">
+			<span>運費:</span>
+			<label><input type="radio" name="gender" id="havemon">是</label>
+			<label><input type="radio" name="gender" id="havemon2">否</label>
+			<div id="money">
+							
+			</div>
+	
+        </div> 
+                    
+        <div class="modal-footer">
+        	<button type="button" id="editBtn" class="btn btn-default" data-dismiss="modal">送出</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 	
 </div>
@@ -294,6 +330,42 @@ function go3(groupno3){
 			var ann_new=$('#ann_new').val();
 			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=複製團購&name_new='+name_new+'&ann_new='+ann_new+'&enddate2='+enddate2+'&xxx="/>'+${group_no};	
 		});	
+		
+		 //----------------運     費 ------------------------------------------------------------
+		
+	      $("#havemon").click(function(){
+	    	  $("#money").append('<span>'+'金額:'+'</span>'+'<input type="text" id="gold" style="width:50px">')
+	    	  
+	    	  $("#money").append(  	      	
+	  	    	    '<label><input type="radio" checked name="gender" value="人頭分攤" id="ship_head">'+'人頭分攤'+'</label>'+
+	 	  			'<label><input type="radio" name="gender" value="主揪自己吸收">'+'主揪自己吸收'+'</label>')
+	  				$(this).prop('disabled',true);	
+	      })
+			$("#havemon2").click(function(){
+			$("#havemon").prop('disabled',false);
+			 $("#money").empty(); 	 
+				
+				
+			})
+		
+		
+		//------------------重新設定團購----------------------------------------
+		$('#editBtn').on('click',function(){
+			var name_new2=$('#name_new2').val();
+			var ann_new2=$('#ann_new2').val();
+			var gold=$('#gold').val();		
+			var ship_head=$('#ship_head').val();
+			var gold_final=null;
+			$('input:radio[name="gender"]').each(function(){
+				if($(this).prop('checked')){
+					gold_final = $(this).val() + '(' + gold + ')';
+				}
+			})			
+			alert("成功");
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=重新設定團購&name_new2='+name_new2+'&ann_new2='+ann_new2+'&gold='+gold_final+'&xxx="/>'+${group_no};	
+		});
+		
+		
 		
 		
 // 		if($("#failreason").val()!=null){
@@ -360,7 +432,6 @@ function go3(groupno3){
 		   $('#tb2').append(row);								
 		});
 	}
-	${LoginOK.user_id};
 	 //----------------抓表3-------------------------------
 	function gettable3() {
 	   $.each(${detail_Detail}, function(index, Detail){

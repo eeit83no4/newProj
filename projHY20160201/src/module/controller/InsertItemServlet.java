@@ -42,6 +42,7 @@ public class InsertItemServlet extends HttpServlet {
 		}		
 		System.out.println(req.getParameter("storeNo").trim());
 		System.out.println(req.getParameter("first55").trim());
+//		System.out.println(req.getParameter("jsonImg").trim().length());
 		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 		InsertItemService insertItemService=new InsertItemService();
 		//取得資料

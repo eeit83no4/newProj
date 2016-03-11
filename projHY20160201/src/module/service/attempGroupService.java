@@ -54,7 +54,7 @@ public class attempGroupService {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			attempGroupService att=new attempGroupService();
 			//找出該團購的商品
-//			System.out.println(att.findItemsByGroup(1));
+			System.out.println(att.findItemsByGroup(1));
 //			System.out.println(att.findItemsNoByGroup(1));
 			//找出該團購的所有商品size,price----------------------------------
 //			System.out.println(att.findSizePricesbyGroup(1));
@@ -168,7 +168,7 @@ public class attempGroupService {
 //			System.out.println(att.find3nds(1));			
 			//--------------------------運費計算
 //			System.out.println(att.findShipmentByGroup(2));
-			att.shipmentCount(3);
+//			att.shipmentCount(3);
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
 			HibernateUtil.closeSessionFactory();
@@ -255,7 +255,16 @@ public class attempGroupService {
 				}
 			}
 			items.add(x);
-			return items;
+			List<Map<Integer,String>> sortedItems=new ArrayList<>(items);//排序過後的價錢
+//			//---------開始排序
+			Collections.sort(sortedItems, new Comparator<Map<Integer,String>>() {
+				@Override
+				public int compare(Map<Integer, String> arg0, Map<Integer, String> arg1) {					
+					return compare(arg0, arg1);
+				}				
+			});
+			//--------排序後	
+			return sortedItems;
 		}else{
 			return null;
 		}

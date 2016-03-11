@@ -30,9 +30,12 @@ public class MyGroupServlet_3 extends HttpServlet {
 		String temp_group_no = req.getParameter("xxx");
 		String prodaction = req.getParameter("prodaction");
 		String enddate = req.getParameter("enddate");
+		String enddate2 = req.getParameter("enddate2");
 		_04_EmployeeVO emp = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
 		String failure = req.getParameter("failure");
-		
+		String name_new = req.getParameter("name_new");
+		String ann_new = req.getParameter("ann_new");
+		System.out.println("EEEEEEEEEEE" + enddate2);
 		//轉換資料
 		Integer group_no = Integer.parseInt(temp_group_no);
 		//驗證資料
@@ -63,24 +66,7 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.setAttribute("detail_ByItem", jSONObject3);
 			req.setAttribute("detailUpper", detailUpper);
 			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
-			
-//		}else if(prodaction.equals("failed")){
-//			mg.updateGroupStatus_failed(group_no);
-//			
-//			List<String[]> detailUpper= myGroupService.orderDetail_byGroup_upper(group_no);
-//			long longSec =  Long.parseLong(detailUpper.get(0)[7],10);
-//			String longDay =  myGroupService.getTimeDay(longSec);
-//			req.setAttribute("status", detailUpper.get(0)[8]);
-//			req.setAttribute("EndSec", longSec);
-//			req.setAttribute("EndDay", longDay);
-//			req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
-//			req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));
-//					
-//			req.setAttribute("detail_Detail", jSONObject);
-//			req.setAttribute("detail_ByUser", jSONObject2);
-//			req.setAttribute("detail_ByItem", jSONObject3);
-//			req.setAttribute("detailUpper", detailUpper);
-//			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
+	
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);
 			
@@ -138,15 +124,14 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.setAttribute("detail_ByUser", jSONObject2);
 			req.setAttribute("detail_ByItem", jSONObject3);
 			req.setAttribute("detailUpper", detailUpper);
-			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
+			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
+		}else if(prodaction.equals("複製團購")){
+			mg.copyGroup(emp.getUser_id(), group_no, name_new, ann_new, enddate2);
 			
+			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 			
-			
-						
 			
 		}
-
-		
 		
 		
 	}

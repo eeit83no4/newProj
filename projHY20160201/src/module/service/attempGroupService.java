@@ -430,74 +430,77 @@ public class attempGroupService {
 	public void shipmentCount(Integer group_no){
 		_16_Group_RecordVO _16VO=_16grDAO.findById(group_no);
 		String shipRulefromDB=_16VO.getShipment();
-		int start=shipRulefromDB.indexOf("(");
-		int end=shipRulefromDB.indexOf(")");
-		String shipRule=shipRulefromDB.substring(0, start);//運費規則
-		Double shipFee=Double.parseDouble(shipRulefromDB.substring(start+1, end));//運費
-		boolean isAnyOneOrder=false;//是否有人訂購
-		for(_17_Group_UserVO a:_16VO.getGroup_Users()){
-			if(a.getOrder_Details()!=null&&a.getOrder_Details().size()>0){
-				isAnyOneOrder=true;
-			}
-		}		
-		//如果有人訂購，才開始計算
-		if(isAnyOneOrder){
-			switch(shipRule){
-			case "人頭分攤":
-				Double orderNumber=new Double(findUserByGroup(group_no));//目前的訂購人數
-				Double userPerShipfee=shipFee/orderNumber;//每個人要分擔的運費			
-				for(_17_Group_UserVO groupUser:_16VO.getGroup_Users()){
-					if(groupUser.getOrder_Details()!=null&&groupUser.getOrder_Details().size()>0){//排除掉沒有訂購的
-						//計算每個人買了多少數量
-						int quantity=0;
-						for(_18_Order_DetailVO detail:groupUser.getOrder_Details()){
+		if(shipRulefromDB!=null&&shipRulefromDB.trim().length()>0){//如果有填寫運費
+			int start=shipRulefromDB.indexOf("(");
+			int end=shipRulefromDB.indexOf(")");
+			String shipRule=shipRulefromDB.substring(0, start);//運費規則
+			Double shipFee=Double.parseDouble(shipRulefromDB.substring(start+1, end));//運費
+			boolean isAnyOneOrder=false;//是否有人訂購
+			for(_17_Group_UserVO a:_16VO.getGroup_Users()){
+				if(a.getOrder_Details()!=null&&a.getOrder_Details().size()>0){
+					isAnyOneOrder=true;
+				}
+			}		
+			//如果有人訂購，才開始計算
+			if(isAnyOneOrder){
+				switch(shipRule){
+				case "人頭分攤":
+					Double orderNumber=new Double(findUserByGroup(group_no));//目前的訂購人數
+					Double userPerShipfee=shipFee/orderNumber;//每個人要分擔的運費			
+					for(_17_Group_UserVO groupUser:_16VO.getGroup_Users()){
+						if(groupUser.getOrder_Details()!=null&&groupUser.getOrder_Details().size()>0){//排除掉沒有訂購的
+							//計算每個人買了多少數量
+							int quantity=0;
+							for(_18_Order_DetailVO detail:groupUser.getOrder_Details()){
+								quantity=quantity+detail.getQuantity();
+							}
+							Double shipfeePerQuantity=userPerShipfee/quantity;//每件商品要分攤的運費
+							//開始加減				
+							for(_18_Order_DetailVO detail:groupUser.getOrder_Details()){
+								Double newOprice_after=detail.getOprice_after()+shipfeePerQuantity;						
+								detail.setOprice_after(newOprice_after);						
+								_18detailDAO.update(detail);
+							}
+							//再更新groupUser
+							groupUser.setUser_amount_after(userPerShipfee+groupUser.getUser_amount_after());					
+							_17guDAO.update(groupUser);						
+						}
+					}
+					//最後再更新groupRecord
+					_16VO.setGroup_amount_after(shipFee+_16VO.getGroup_amount_after());
+					_16grDAO.update(_16VO);
+					System.out.println("人頭分攤");
+					break;
+				case "主揪自己吸收":
+					_17_Group_UserVO holderVO=null;//找出主揪
+					for(_17_Group_UserVO groupUser:_16VO.getGroup_Users()){
+						if(groupUser.getCo_holder().equals("A")){
+							holderVO=groupUser;
+						}
+					}
+					//
+					if(holderVO.getOrder_Details().size()>0&&holderVO!=null){//如果主揪有訂購
+						int quantity=0;//要分攤的商品數量
+						for(_18_Order_DetailVO detail:holderVO.getOrder_Details()){
 							quantity=quantity+detail.getQuantity();
 						}
-						Double shipfeePerQuantity=userPerShipfee/quantity;//每件商品要分攤的運費
-						//開始加減				
-						for(_18_Order_DetailVO detail:groupUser.getOrder_Details()){
-							Double newOprice_after=detail.getOprice_after()+shipfeePerQuantity;						
-							detail.setOprice_after(newOprice_after);						
+						Double shipfeePerQuantity=shipFee/quantity;
+						for(_18_Order_DetailVO detail:holderVO.getOrder_Details()){
+							detail.setOprice_after(shipfeePerQuantity);
 							_18detailDAO.update(detail);
-						}
-						//再更新groupUser
-						groupUser.setUser_amount_after(userPerShipfee+groupUser.getUser_amount_after());					
-						_17guDAO.update(groupUser);						
+						}					
 					}
-				}
-				//最後再更新groupRecord
-				_16VO.setGroup_amount_after(shipFee+_16VO.getGroup_amount_after());
-				_16grDAO.update(_16VO);
-				System.out.println("人頭分攤");
-				break;
-			case "主揪自己吸收":
-				_17_Group_UserVO holderVO=null;//找出主揪
-				for(_17_Group_UserVO groupUser:_16VO.getGroup_Users()){
-					if(groupUser.getCo_holder().equals("A")){
-						holderVO=groupUser;
-					}
-				}
-				//
-				if(holderVO.getOrder_Details().size()>0&&holderVO!=null){//如果主揪有訂購
-					int quantity=0;//要分攤的商品數量
-					for(_18_Order_DetailVO detail:holderVO.getOrder_Details()){
-						quantity=quantity+detail.getQuantity();
-					}
-					Double shipfeePerQuantity=shipFee/quantity;
-					for(_18_Order_DetailVO detail:holderVO.getOrder_Details()){
-						detail.setOprice_after(shipfeePerQuantity);
-						_18detailDAO.update(detail);
-					}					
-				}
-				//
-				holderVO.setUser_amount_after(shipFee+holderVO.getUser_amount_after());
-				_17guDAO.update(holderVO);				
-				_16VO.setGroup_amount_after(_16VO.getGroup_amount_after()+shipFee);
-				_16grDAO.update(_16VO);				
-				System.out.println("主揪自己吸收");
-				break;
-			}					
-		}		
+					//
+					holderVO.setUser_amount_after(shipFee+holderVO.getUser_amount_after());
+					_17guDAO.update(holderVO);				
+					_16VO.setGroup_amount_after(_16VO.getGroup_amount_after()+shipFee);
+					_16grDAO.update(_16VO);				
+					System.out.println("主揪自己吸收");
+					break;
+				}					
+			}
+		}
+		
 	}
 	//-----------拿到group_user_no(透過團購編號與使用者編號)
 	public Integer getGroupUserNo(Integer group_no,Integer group_user_id){

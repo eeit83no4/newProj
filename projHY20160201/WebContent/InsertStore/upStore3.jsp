@@ -119,7 +119,7 @@
 			    var d="${data.storeClassAll}";
 			    var e=d.split(",");
 			    for (var i = 0; i < e.length; i++) {
-				    $("#showBlock").append('<input type="checkbox" id="div' + txtId + '" name="storeClass"  value="'+e[i]+'" />'+e[i]+'');
+				    $("#showBlock").append('<label><input type="checkbox" id="div' + txtId + '" name="storeClass"  value="'+e[i]+'" />'+e[i]+'</label>');
 				    txtId++;
 				    }
 				for(var i = 0; i < c.length; i++){
@@ -492,7 +492,7 @@
 							 {Size : ['特大(30)', '大(25)' , '中(20)', '小(15)'],
 					       		冷熱 : ['正常冰(0)','少冰(0)', '去冰(0)' ,'溫(0)'],
 					 		       甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)'],
-					 		    加料 : ['加珍珠(5)','加布丁(10)', '少糖(0)' ,'無糖(0)']}
+					 		    加料 : ['加珍珠(5)','加布丁(10)', '加椰果(5)']}
 							]}
 				jsonData = jsonData1;
 					break;

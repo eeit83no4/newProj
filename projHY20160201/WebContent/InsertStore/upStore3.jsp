@@ -105,7 +105,7 @@
 			//submit
 			$('#id').click(function(){
 				insertItem();
-				alert('新增成功')
+				alert('successed')
 //					$( "#divlog" ).dialog( "open" );
 				if($('#inputName').val()!=""){
 				}

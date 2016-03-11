@@ -18,7 +18,7 @@
 	<package name="insertStoreAction2" namespace="/" extends="struts-default">
 		<action name="insertStoreAction2" class="module.controller.InsertStoreAction2">			                                       											   
 <!-- 					<result name="success2">/InsertStore/dom.jsp</result> -->
-				<result name="success">/InsertStore/upStore4.jsp</result>
+				<result name="success">/index/indexServlet.controller</result>
 		</action>		
 	</package>
 		<package name="insertStoreAction3" namespace="/" extends="struts-default">

@@ -1,0 +1,28 @@
+#storename{
+ margin-top: 10px;
+ font-size: 24px;
+ }
+ #f1 { 
+ top:0px;
+ width:450px;
+ height:500px;
+ border: 3px green double; 
+ overflow:scroll;
+ font-size: 24px;
+ }
+ dt{
+ margin-left: 40px;
+ font-size: 24px;
+ }
+ dd{
+ margin-left: 60px;
+ font-size: 24px;
+ }
+ .text{
+ width: 48px;
+ font-size: 24px;
+ }
+ span{
+ margin-right: 12px;
+ font-size: 24px;
+ }

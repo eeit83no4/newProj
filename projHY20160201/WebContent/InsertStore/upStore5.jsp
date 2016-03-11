@@ -21,10 +21,10 @@
 	<form action="<c:url value='/insertStoreAction.action' />" method="get">
 	<input type="text" value="" id="id" name="sub"/>
 	
-	${StoreNo}
-	${StoreNo}
-	${StoreNo}
-	${StoreNo}
+<%-- 	${StoreNo} --%>
+<%-- 	${StoreNo} --%>
+<%-- 	${StoreNo} --%>
+<%-- 	${StoreNo} --%>
 	
 	</form>
 	
@@ -39,7 +39,7 @@
 
 		var formData=new FormData($('form')[0]);
 
-		location.href='/projHY20160201/insertStoreAction.action?sub='+storeNo;
+		location.href='/projHY20160201/insertStoreAction3.action?sub='+storeNo;
 	})
 	
 	</script>

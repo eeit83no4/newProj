@@ -83,9 +83,24 @@ public class insertGroupServlet extends HttpServlet {
 			}			
 			//運費
 			String	shipment=null;
-			if(!gup.get("shipment").equals("undefined(undefined)")){
-				System.out.println("gup.get(shipment)="+gup.get("shipment"));
-				shipment= String.valueOf(gup.get("shipment"));
+			if(!gup.get("shipment").equals("undefined(undefined)")&&!gup.get("shipment").equals("on()")){
+			
+				String test=String.valueOf(gup.get("shipment"));
+				
+				int start=test.indexOf("(");
+				int end=test.indexOf(")");				
+				//判斷是否有填寫或不是數字
+				boolean isNoShipfee=false;
+				
+				try {
+					System.out.println("如果轉型="+Integer.parseInt(test.substring(start+1, end)));
+				} catch (NumberFormatException e) {
+					isNoShipfee=true;
+					e.printStackTrace();
+				}
+				if(isNoShipfee==false){
+					shipment= String.valueOf(gup.get("shipment"));
+				}				
 			}
 			//截止時間
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");

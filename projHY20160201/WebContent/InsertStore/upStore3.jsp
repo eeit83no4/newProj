@@ -228,6 +228,13 @@
 						}
 					})
 					imgarr=[];
+					$('#img').remove();
+ 					$('#itemI').after($('<input>').attr('id','img')
+ 												  .attr('type','file')
+ 												  .attr('value','上傳圖片')
+ 												  .attr('style','display:none')
+ 												  .attr('accept','image/*')
+ 												  .attr('onchange','show(this)'))					
 					getItemClass(itemId);							
  				}
 			}
@@ -484,15 +491,16 @@
 				var jsonData1 = {defaultClass :[
 							 {Size : ['特大(30)', '大(25)' , '中(20)', '小(15)'],
 					       		冷熱 : ['正常冰(0)','少冰(0)', '去冰(0)' ,'溫(0)'],
-					 		       甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)']}
+					 		       甜度 : ['正常(0)','半糖(0)', '少糖(0)' ,'無糖(0)'],
+					 		    加料 : ['加珍珠(5)','加布丁(10)', '少糖(0)' ,'無糖(0)']}
 							]}
 				jsonData = jsonData1;
 					break;
 				case "便當":
 				var jsonData2 = {defaultClass :[
 				  							 {Size : ['基本(50)', '加大(60)']},
-				  							{添加 : ['辣蘿蔔(0)','多飯(0)', '少飯(0)']},
-				  					        {其他 : ['加飯(5)','加飯(10)', '加菜(10)']},				  					        
+				  							{加料 : ['辣蘿蔔(0)','多飯(0)', '少飯(0)']},
+				  					        {其他 : ['加飯(5)','加麵(10)', '加菜(10)']},				  					        
 				  				]}
 				jsonData = jsonData2;
 					break;

@@ -118,6 +118,7 @@ public class InsertStoreAction extends ActionSupport implements RequestAware,Ses
 	private GetStoreDataService getStoreDataService=new GetStoreDataService();
 	@Override
 	public String execute() throws Exception {
+		
 		_07_StoreVO bean=new _07_StoreVO();
 		bean.setStore_name(store);
 		bean.setPhone(phone);

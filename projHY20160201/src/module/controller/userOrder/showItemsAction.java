@@ -1,6 +1,8 @@
 package module.controller.userOrder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,22 +75,52 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 		notice.put("store", storename);
 		
 		request.put("notice", notice);//<------------------------
-		//------------找出物品的第二層屬性-------------------
+		//------------找出物品的第二層屬性-------------------*
 		List<Map<Integer, Set<String>>> class2List=new ArrayList<>();
 		Map<Integer, Set<String>> class2=att.find2nds(group_no);
 		class2List.add(class2);
-		request.put("class2Lists", class2List);//<------------------------
-		//----------------找出該團購的商品------------------------
+		List<Map<Integer, Set<String>>> sortedClass2List=new ArrayList<>(class2List);//排序過後
+		//開始排序
+		Collections.sort(sortedClass2List, new Comparator<Map<Integer, Set<String>>>() {
+			@Override
+			public int compare(Map<Integer, Set<String>> o1, Map<Integer, Set<String>> o2) {				
+				return compare(o1, o2);
+			}						
+		});
+		//排序後
+
+		request.put("class2Lists", sortedClass2List);//<------------------------
+		//----------------找出該團購的商品------------------------*
 		List<Map<Integer,String>> itemnames=att.findItemsByGroup(group_no);
 		request.put("itemnames", itemnames);//<------------------------
-		//----------------找出該團購的商品(純編號)------------------------
+		//----------------找出該團購的商品(純編號)------------------------*
 		Set<Integer> itemnos=att.findItemsNoByGroup(group_no);
-		request.put("itemnos", itemnos);//<------------------------
-		//------------找出該物品的第三層屬性-------------------
+		List<Integer> itemnosSorted=new ArrayList<>(itemnos);
+		//開始排序
+		Collections.sort(itemnosSorted, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {				
+				return o1.compareTo(o2);
+			}								
+		});
+		//排序後		
+		request.put("itemnos", itemnosSorted);//<------------------------
+		//------------找出該物品的第三層屬性-------------------*
 		Map<Integer, Map<String, Set<String>>> class3=att.find3nds(group_no);		
 		List<Map<Integer, Map<String, Set<String>>>> class3List=new ArrayList<>();		
-		class3List.add(class3);
-		request.put("class3Lists", class3List);//<------------------------
+		class3List.add(class3);		
+		
+		List<Map<Integer, Map<String, Set<String>>>> class3ListSorted=new ArrayList<>(class3List);
+		//開始排序
+		Collections.sort(class3ListSorted, new Comparator<Map<Integer, Map<String, Set<String>>>>() {
+			@Override
+			public int compare(Map<Integer, Map<String, Set<String>>> o1, Map<Integer, Map<String, Set<String>>> o2) {
+				
+				return compare(o1, o2);
+			}										
+		});
+		//排序後
+		request.put("class3Lists", class3ListSorted);//<------------------------
 		//---------------找出該團購的所有商品size,price--------------------
 		Map<Integer,List<String>> sizeprice=att.findSizePricesbyGroup(group_no);
 		List<Map<Integer,List<String>>> sizepriceList=new ArrayList<>();

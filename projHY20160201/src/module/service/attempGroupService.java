@@ -255,7 +255,7 @@ public class attempGroupService {
 				}
 			}
 			items.add(x);
-			List<Map<Integer,String>> sortedItems=new ArrayList<>(items);//排序過後的價錢
+			List<Map<Integer,String>> sortedItems=new ArrayList<>(items);//排序過後
 //			//---------開始排序
 			Collections.sort(sortedItems, new Comparator<Map<Integer,String>>() {
 				@Override

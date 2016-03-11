@@ -48,10 +48,10 @@
 		
 		<div id="dialog" title="新增商品">
 	  		<input type="text" value="" id="AAB"/><br/>
-	  		<input type="radio" name="first" value="飲料" id="radio" checked="checked" />飲料
-	  		<input type="radio" name="first" value="便當" />便當
-	  		<input type="radio" name="first" value="甜點" />甜點
-	  		<input type="radio" name="first" value="其他" />其他
+	  		<label><input type="radio" name="first" value="飲料" id="radio" checked="checked" />飲料</label>
+	  		<label><input type="radio" name="first" value="便當" />便當</label>
+	  		<label><input type="radio" name="first" value="甜點" />甜點</label>
+	  		<label><input type="radio" name="first" value="其他" />其他</label>
 		</div>
 	
 	<div class="form-group">
@@ -331,7 +331,7 @@
 											           									.attr('name','attributes')
 											           								   .attr('value',target[y])
 											           								   .attr('class','classCCC'+ii)
-											           								   .attr('style','width: 50px')
+											           								   .attr('style','width: 68px')
 											           								   .attr('onblur','bbb(this)'))
 											           								   		.append($('<input>').attr('type','button')
 											           								   							.attr('id','bt'+ii)
@@ -361,7 +361,7 @@
 							.attr('name','attributes')
 						   .attr('placeholder','加布丁(10)')
 						   .attr('class','classCCC'+ii)
-						   .attr('style','width: 65px').attr('onblur','bbb(this)'))
+						   .attr('style','width: 68px').attr('onblur','bbb(this)'))
 						   		.append($('<input>').attr('type','button')
 						   							.attr('id','bt'+ii)
 						   							.attr('class','btn3 btn-success')
@@ -433,7 +433,7 @@
 			    								.attr('name','attributes')
 	           								   .attr('placeholder','加布丁(10)')
 	           								   .attr('class','classCCC'+ii)
-	           								   .attr('style','width: 65px')
+	           								   .attr('style','width: 68px')
 	           								   .attr('onblur','bbb(this)'))
 		}
 		//++右邊
@@ -445,7 +445,7 @@
 //            								   .attr('value','細項(0)')
            								   .attr('placeholder','加布丁(10)')
            								   .attr('class','classCCC'+ii)
-           								   .attr('style','width: 65px')
+           								   .attr('style','width: 68px')
            								   .attr('onblur','bbb(this)'))			   
 		}	
 		//--紅色

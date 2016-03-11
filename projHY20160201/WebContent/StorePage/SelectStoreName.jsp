@@ -80,7 +80,7 @@ float: right;
 	<div id="span"><span class="span1">AllStore</span></div>
 		<div id="allstore">	
 			<div class="txtSearch">
-				<input type="text" style="width: 240px; height: 36px;" id="txtSearch" name="keyword" autocomplete="off">
+				<input type="text" style="width: 240px; height: 36px; font-size: 36px;" id="txtSearch" name="keyword" autocomplete="off">
 			</div>
 			<div id="div1"></div>
 		</div>
@@ -90,7 +90,7 @@ float: right;
 	<div id="span"><span class="span2">${LoginOK.name}'s Store <input type="button" id="newstore" class="btn btn-default" value="NEW!!" /></span></div>
 		<div id="mystore">	
 			<div class="txtSearch">
-				<input type="text" style="width: 240px; height: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
+				<input type="text" style="width: 240px; height: 36px; font-size: 36px;" id="sotretext" name="mystoreneme" autocomplete="off">
 			</div>
 			<div id="div2"></div>
 		</div>

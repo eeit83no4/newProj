@@ -1,10 +1,13 @@
 package module.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -92,7 +95,7 @@ public class GetAttributes {
 			Set<_13_Item_Class_ThirdVO> icts=item.getItem_class_thirds();
 			
 			
-			Map[] aaa=new HashMap[1];
+			Map[] aaa=new TreeMap[1];
 			Map<String,Set<String>> c2c3=new HashMap<String,Set<String>>();//用來存放個別商品的第二層第三層
 			for(_13_Item_Class_ThirdVO b:icts){	
 				
@@ -120,15 +123,18 @@ public class GetAttributes {
 				size.add(sizename+"("+sizeprice+")");
 			}
 			c2c3.put("Size", size);
-			aaa[0]=c2c3;
+			
+			
+			Map<String,Set<String>> resultMap = sortMapByKey(c2c3);    //按Key进行排序  
+			  
+	        for (Map.Entry<String, Set<String>> entry : resultMap.entrySet()) {  
+//	            System.out.println(entry.getKey() + " " + entry.getValue());  
+	        }
+
+//	        aaa[0]=c2c3;  //舊的
+	        aaa[0]=resultMap;
 			object.put("defaultClass", aaa);
-			return object;
-			
-			
-			
-			
-			
-			
+			return object;	
 			
 //			if(store!=null){
 //				Set<_12_ItemVO> items=store.getItems();//找到該商店內的商品s
@@ -168,7 +174,34 @@ public class GetAttributes {
 //			}
 			
 		}
-	
-	
-	
+
+
+
+/** 
+ * 使用 Map按key进行排序 
+ * @param map 
+ * @return 
+ */  
+public static Map<String,Set<String>> sortMapByKey(Map<String,Set<String>> map) {
+    if (map == null || map.isEmpty()) {  
+        return null;  
+    } 
+
+    Map<String,Set<String>> sortMap = new TreeMap<String, Set<String>>(new MapKeyComparator());  
+
+    sortMap.putAll(map);  
+
+    return sortMap;  
+	}
+
+
+//比较器类  
+public static class MapKeyComparator implements Comparator<String>{  
+  public int compare(String str1, String str2) {  
+      return str1.compareTo(str2);  
+ 		}
+	}
+
+
+
 }

@@ -21,7 +21,7 @@
 <div id="wrap">
 	<jsp:include page="/header.jsp"/>
 	
-	<form action="<c:url value='/insertStoreAction.action' />" method="get">
+	<form onsubmit="return check();" action="<c:url value='/insertStoreAction.action' />" method="get" >
 	
 		<h1>新增店家</h1>
 <!-- 		店家名稱: <input type="text" value="草莓店" id="name" name="store" placeholder="店家名稱" /><br /> -->
@@ -34,7 +34,7 @@
   		<div class="form-group" id="store">
 		<br />	
 		<label for="inputName" class="control-label">店家名稱</label>
-		<input type="text" value="" id="inputName" name="store" placeholder="店家名稱"  class="form-control" />
+		<input type="text" value="" id="inputName" name="store" placeholder="店家名稱"  class="form-control"  required="required" />
 		<label for="inputName" class="control-label">電話</label>
 		<input type="text" value="" id="phone" name="phone" placeholder="電話" class="form-control" />	
 		<label for="inputName" class="control-label">地址</label>
@@ -72,7 +72,16 @@
 					}
 		})
 		
-		
+		function check() {  
+	    var f = document.forms[0];  
+	    for (var i=0;i<f.elements.length;i++) {  
+	        var e = f.elements[i]; 
+	        if (e.type == "checkbox" && e.checked)  
+	            return true;  
+	    }  
+	    alert("至少選一個類型");  
+	    return false;  
+	}  
 		
 		
 		

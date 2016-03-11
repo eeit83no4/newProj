@@ -298,9 +298,11 @@
 			    });			 
 			
 			 $('.item').click(function(){
-			    	var itNo=$('.item[aria-expanded="true"]').attr('name')
+				 if(exp != getExp){
+				 	var itNo=$('.item[aria-expanded="true"]').attr('name')
 			    	var getExp = $('.item[aria-expanded="true"]').attr('name').slice(4,itNo.length)
 			    	exp = getExp;
+				 }
 			   })
 			
 			  //長出第二層屬性 第三層
@@ -560,15 +562,6 @@
 				    .text($('#AAB').val())))
 			$('#itemName').val($('#AAB').val())
 			$('#AAB').val('')	
-			
-// 			$.ajax({
-// 							"type":"post",
-// 							"url":'/projHY20160201/insertStoreAction.action?store='+storeNo+'&item='+itemId,
-// // 							"data":{jsonString},											
-// // 							"success":function(){
-// // 								alert("55555555");
-// // 									}
-// 								})
 		   location.reload();
 		}		
 	</script>

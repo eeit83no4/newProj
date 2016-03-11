@@ -92,14 +92,16 @@ public class insertGroupServlet extends HttpServlet {
 				//判斷是否有填寫或不是數字
 				boolean isNoShipfee=false;
 				
-				try {
-					System.out.println("如果轉型="+Integer.parseInt(test.substring(start+1, end)));
-				} catch (NumberFormatException e) {
-					isNoShipfee=true;
-					e.printStackTrace();
-				}
-				if(isNoShipfee==false){
-					shipment= String.valueOf(gup.get("shipment"));
+				if(test.substring(0, start).equals("人頭分攤")||test.substring(0, start).equals("主揪自己吸收")){
+					try {
+						System.out.println("如果轉型="+Double.parseDouble(test.substring(start+1, end)));
+					} catch (NumberFormatException e) {
+						isNoShipfee=true;
+						e.printStackTrace();
+					}
+					if(isNoShipfee==false){
+						shipment= String.valueOf(gup.get("shipment"));
+					}						
 				}				
 			}
 			//截止時間

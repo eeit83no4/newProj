@@ -11,6 +11,7 @@
 				<result name="success">/InsertStore/upStore3.jsp</result>
 <!-- 				<result name="replace" type="redirectAction">/insertStoreAction3.action</result> -->
 						<result name="replace">/InsertStore/upStore5.jsp</result>
+						<result name="error">/InsertStore/upStore2.jsp</result>
 <!-- 				                       /insertStoreAction.action -->
 		</action>		
 	</package>

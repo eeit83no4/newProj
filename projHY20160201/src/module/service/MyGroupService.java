@@ -391,12 +391,19 @@ public class MyGroupService {
 			if(a.getGroup_RecordVO().getStatus().equals("進行中")){
 			try {
 				starray[0] = format.format(b.getEnd_date()).toString();
+				System.out.println(starray[0]);
 				starray[1] = b.getGroup_name();
+				System.out.println(starray[1]);
 				starray[2] = b.getStoreVO().getStore_name();
+				System.out.println(starray[2]);
 				starray[3] = b.getEmployeeVO().getName();
+				System.out.println(starray[3]);
 				starray[4] = myGroupService.findUserByGroup(b.getGroup_no());
+				System.out.println(starray[4]);
 				starray[5] = b.getGroup_amount_after().toString();
+				System.out.println(starray[5]);
 				starray[6] = String.valueOf(a.getGroup_RecordVO().getGroup_no());
+				System.out.println("group_no = " + starray[6]);
 			} catch (NullPointerException e) {
 				System.out.println("MyGroupService-searchMyAllGroup_ing錯誤啦="+e.toString());
 			}			

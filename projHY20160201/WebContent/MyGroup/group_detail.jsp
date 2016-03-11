@@ -289,10 +289,10 @@ function go3(groupno3){
 		
 		//----------------複製團購按鈕-------------------------------
 		$('#copyBtn').on('click',function(){
-			var enddate=$('#enddate2').val();
+			var enddate2=$('#enddate2').val();
 			var name_new=$('#name_new').val();
 			var ann_new=$('#ann_new').val();
-			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=複製團購&name_new='+name_new+'&ann_new='+ann_new+'&enddate='+enddate2+'&xxx="/>'+${group_no};	
+			location.href='<c:url value="/module.controller.group/MyGroupServlet_3.controller?prodaction=複製團購&name_new='+name_new+'&ann_new='+ann_new+'&enddate2='+enddate2+'&xxx="/>'+${group_no};	
 		});	
 		
 		

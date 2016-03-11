@@ -29,9 +29,12 @@ public class MyGroupServlet_3 extends HttpServlet {
 		String temp_group_no = req.getParameter("xxx");
 		String prodaction = req.getParameter("prodaction");
 		String enddate = req.getParameter("enddate");
+		String enddate2 = req.getParameter("enddate2");
 		_04_EmployeeVO emp = (_04_EmployeeVO)req.getSession().getAttribute("LoginOK");
 		String failure = req.getParameter("failure");
-		
+		String name_new = req.getParameter("name_new");
+		String ann_new = req.getParameter("ann_new");
+		System.out.println("EEEEEEEEEEE" + enddate2);
 		//轉換資料
 		Integer group_no = Integer.parseInt(temp_group_no);
 		//驗證資料
@@ -50,8 +53,9 @@ public class MyGroupServlet_3 extends HttpServlet {
 			att.shipmentCount(group_no);
 			mg.updateGroupStatus_success(group_no);
 			
-			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction=已完成的團購");
-			
+
+			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction=已完成的團購");			
+
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);
 			
@@ -109,15 +113,14 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.setAttribute("detail_ByUser", jSONObject2);
 			req.setAttribute("detail_ByItem", jSONObject3);
 			req.setAttribute("detailUpper", detailUpper);
-			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
+			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
+		}else if(prodaction.equals("複製團購")){
+			mg.copyGroup(emp.getUser_id(), group_no, name_new, ann_new, enddate2);
 			
+			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 			
-			
-						
 			
 		}
-
-		
 		
 		
 	}

@@ -2,12 +2,15 @@ package module.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import module.dao._04_EmployeeDAO;
+import module.dao._07_StoreDAO;
 import module.dao._16_Group_RecordDAO;
 import module.dao._17_Group_UserDAO;
 import module.dao._18_Order_DetailDAO;
@@ -37,11 +40,11 @@ public class MyGroupService2db {
 		try {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 				MyGroupService2db mg = new MyGroupService2db();
+				_16_Group_RecordDAO grdao_test = new _16_Group_RecordDAO();
 //				mg.updateEndTime(1, "2016-03-16T01:00");
 //				mg.deleteOrder(9);
 //				mg.deleteOrder(9);
-				mg.copyGroup(1, "AAAAAAAAA", "拜偷偷偷", "2222-05-16T01:00");
-
+				mg.copyGroup(5, 1, "T3", "測試3", "2133-11-11T01:00");
 		
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally {
@@ -136,25 +139,67 @@ public class MyGroupService2db {
 
 	}
 	
-	/*-------------重設時間-----------------------------------------------------------------*/
-	public void copyGroup(Integer group_no,String name_new, String ann_new, String enddate2){
-		_16_Group_RecordDAO grdao = new _16_Group_RecordDAO();
-		_16_Group_RecordVO vo = grdao.findById(group_no);
+	/*-------------複製團購----------------------------------------------------------------*/
+	public void copyGroup(Integer user_id, Integer group_no,String name_new, String ann_new, String enddate2){
+		_04_EmployeeDAO emp = new _04_EmployeeDAO();
+		_07_StoreDAO storevo = new _07_StoreDAO();
+		Set<_17_Group_UserVO> _17VOset=new HashSet<>();
+		
+		_16_Group_RecordVO vo_old = grdao.findById(group_no);//原團購
+		_16_Group_RecordVO vo_new = new _16_Group_RecordVO();//新團購
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		java.util.Date date = null;
 		try {
 			date = format.parse(enddate2);
-			System.out.println("成功");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		int newstoreno =(int) grdao.getSession().getIdentifier(vo);
 		
-//		vo.setGroup_no(newstoreno);
-		vo.setGroup_name(name_new);
-		vo.setAnn(ann_new);
-		vo.setEnd_date(date);		
-		grdao.insert(vo);
+		Set<_04_EmployeeVO> newEmpVO=new HashSet<>();
+		for(_17_Group_UserVO a:vo_old.getGroup_Users()){
+			_17_Group_UserVO new17VO=new _17_Group_UserVO();
+			if(!a.getCo_holder().equals("A")){//本來不是主揪
+				if(a.getEmployeeVO()!=vo_old.getEmployeeVO()){//本來不是主揪，現在也不是主揪
+					new17VO.setGroup_RecordVO(vo_new);
+					new17VO.setEmployeeVO(a.getEmployeeVO());
+					new17VO.setGroup_user_name(a.getGroup_user_name());
+					new17VO.setCo_holder(a.getCo_holder());	
+				}else{//本來不是主揪，現在是主揪
+					new17VO.setGroup_RecordVO(vo_new);
+					new17VO.setEmployeeVO(a.getEmployeeVO());
+					new17VO.setGroup_user_name(a.getGroup_user_name());
+					new17VO.setCo_holder("A");
+				}							
+			}else {//本來是主揪				
+				if(a.getEmployeeVO()!=vo_old.getEmployeeVO()){//本來是主糾，現在不是是主揪
+					new17VO.setGroup_RecordVO(vo_new);
+					new17VO.setEmployeeVO(a.getEmployeeVO());
+					new17VO.setGroup_user_name(a.getGroup_user_name());
+					new17VO.setCo_holder("B");
+				}else{//本來是主糾，現在又是主揪
+					new17VO.setGroup_RecordVO(vo_new);
+					new17VO.setEmployeeVO(a.getEmployeeVO());
+					new17VO.setGroup_user_name(a.getGroup_user_name());
+					new17VO.setCo_holder("A");
+				}				
+			}
+			_17VOset.add(new17VO);
+		}		
+		
+		vo_new.setEmployeeVO(emp.findById(user_id));//主糾
+		vo_new.setGroup_name(name_new);
+		vo_new.setStoreVO(storevo.findById(vo_old.getStoreVO().getStore_no()));
+		vo_new.setStart_date(new java.util.Date());
+		vo_new.setEnd_date(date);
+		vo_new.setAnn(ann_new);
+//		vo_new.setFailure(null);
+//		vo_new.setDiscount(null);
+		vo_new.setShipment(vo_old.getShipment());
+		//
+		vo_new.setGroup_Users(_17VOset);
+		grdao.insert(vo_new);
+		
+
 	}
 
 }

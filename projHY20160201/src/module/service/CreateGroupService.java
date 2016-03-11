@@ -97,7 +97,7 @@ public class CreateGroupService {
 			bean12.setStoreVO(Dao07.findById(newstoreno));
 			bean12.setClass_firstVO(Item.getClass_firstVO());
 			bean12.setItem_name(Item.getItem_name());
-			bean12.setItem_prices(Item.getItem_prices());
+			bean12.setPic(Item.getPic());
 		Dao12.insert(bean12);
 		//儲存新的商品no
 		newitemno =(int) Dao12.getSession().getIdentifier(bean12);

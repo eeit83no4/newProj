@@ -111,7 +111,7 @@ margin-top: 5%;
 			<c:forEach var="itemno" items='${itemnos}'>
 				$("#d1").append('<dl><input id="ck'+${itemno}+'" type="checkbox" style="WIDTH: 20px; HEIGHT: 20px" name="ckbox" value="'+${itemno}+'"/><span style="font-size: 24px;" data-toggle="collapse" data-parent="#" href="#its'+i+'">${itemnames[itemno]}</span><div id="its'+i+'" class="panel-collapse collapse"><p id="it'+i+'" class="panel-body"></p></div><dl/>');
 				$("#it"+i).append('<dt class="pan el-body" style="font-size: 18px;">SIZE</dt><dd id="size'+i+'">');
-				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
+// 				$("#imgs").append('<img src="<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}" height="160" width="120"/>');
 // 				$('#imgZone').attr('src','<c:url value="/userOrder/showPicAction.action?itemno="/>${itemno}');
 				<c:forEach var="sizepriceList" items='${sizeprices[itemno]}'>
 					$("#size"+i).append('<span>${sizepriceList.key}</span><span class="text">${sizepriceList.value}</span><br>');

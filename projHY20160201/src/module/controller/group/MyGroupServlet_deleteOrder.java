@@ -23,13 +23,13 @@ public class MyGroupServlet_deleteOrder extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session=req.getSession();
-//		_04_EmployeeVO mb=(_04_EmployeeVO)session.getAttribute("LoginOK");
+
 		String temp_detail_no = req.getParameter("detail_no");
-//		Integer groupNo=Integer.parseInt(req.getParameter("groupno").trim());
+		Integer groupNo=Integer.parseInt(req.getParameter("groupno").trim());
 		Integer detail_no = Integer.parseInt(temp_detail_no);
 		mgs2db.deleteOrder(detail_no);
-	
+		req.setAttribute("groupNo", groupNo);
+		req.getRequestDispatcher("/MyGroup/forJump.jsp").forward(req, resp);
 	}
 
 	@Override

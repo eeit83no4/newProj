@@ -131,49 +131,9 @@ public class MyGroupService2db {
 
 	/*-------------刪除訂購(明細列表)-----------------------------------------------------------------*/
 	public void deleteOrder(Integer detail_no){	
-		_17_Group_UserVO groupUser=_18detailDAO.findById(detail_no).getGroup_userVO();
+		
 		oddao.delete(detail_no);
-//		int groupUserNo=groupUser.getGroup_user_no();
-		double originAmout=0.0;
-		double amount=0;
-		double amountAfter=0;
-		//--------------新增order_tail----------------
-		for(_18_Order_DetailVO a:groupUser.getOrder_Details()){
-//			_18detailDAO.insert(a);
-//			groupUserNo=a.getGroup_userVO().getGroup_user_no();
-			System.out.println("_18_Order_DetailVO="+a);
-			originAmout=originAmout+(a.getQuantity()*a.getOriginal_oprice());
-			amount=amount+(a.getQuantity()*a.getOprice());
-			amountAfter=amountAfter+(a.getQuantity()*a.getOprice_after());
-		}
-//		System.out.println("groupUserNo="+groupUserNo);
-		//--------------更新GroupUser金額-----------------		
-//		_17_Group_UserVO user=_17guDAO.findById(groupUserNo);
-		System.out.println("user="+groupUser);
-		Double alOriginal_user_amount=groupUser.getOriginal_user_amount();
-		Double alUser_amount=groupUser.getUser_amount();
-		Double alUser_amount_after=groupUser.getUser_amount_after();
-		groupUser.setOriginal_user_amount(originAmout+alOriginal_user_amount);
-		groupUser.setUser_amount(amount+alUser_amount);
-		groupUser.setUser_amount_after(amountAfter+alUser_amount_after);
-		groupUser.setOrder_time(new java.util.Date());
-		_17guDAO.update(groupUser);
-		//----------------更新GroupRecord金額-------------
-		_16_Group_RecordDAO groupDao=new _16_Group_RecordDAO();
-		
-		Integer groupno=groupUser.getGroup_RecordVO().getGroup_no();//團購編號
-		
-		_16_Group_RecordVO groupVO=groupDao.findById(groupno);	
-		Double user_amount=0.0;
-		Double user_amount_after=0.0;
-		for(_17_Group_UserVO a:groupVO.getGroup_Users()){
-			user_amount=user_amount+a.getUser_amount();
-			user_amount_after=user_amount_after+a.getUser_amount_after();
-		}	
-		groupVO.setGroup_no(groupno);
-		groupVO.setGroup_amount(user_amount);
-		groupVO.setGroup_amount_after(user_amount_after);		
-		groupDao.update(groupVO);			
+
 	}
 	
 	/*-------------重設時間-----------------------------------------------------------------*/

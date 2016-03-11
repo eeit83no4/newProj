@@ -109,7 +109,7 @@ public class attempGroupServicePicTest {
 		FileOutputStream fileOutputStream;
 		try {
 			int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱
-			picPath="e:/projPic/proj"+picname+".jpg";//設定目的地
+			picPath="C:/Images/proj"+picname+".jpg";//設定目的地
 			FileInputStream fileInputStream=new FileInputStream(file);
 			fileOutputStream = new FileOutputStream(picPath);
 			//使用緩衝區

@@ -94,7 +94,7 @@ table,tr,td{
 	</div>
 	<!-- 發起團購按鈕 -->
 	<div style='text-align:center'>
-		<input type="button" class="btn btn-primary btn-block" value="發起團購" id="holdGroup" style="width:60%"/>
+		<input type="button" class="btn btn-primary" value="發起團購" id="holdGroup" style="width:60%"/>
 	</div>
 	
 	<c:choose>

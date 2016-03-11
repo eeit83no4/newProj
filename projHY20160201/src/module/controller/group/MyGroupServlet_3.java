@@ -34,7 +34,11 @@ public class MyGroupServlet_3 extends HttpServlet {
 		String failure = req.getParameter("failure");
 		String name_new = req.getParameter("name_new");
 		String ann_new = req.getParameter("ann_new");
-		System.out.println("EEEEEEEEEEE" + enddate2);
+		String name_new2 = req.getParameter("name_new2");
+		String ann_new2 = req.getParameter("ann_new2");
+		String gold = req.getParameter("gold");
+		
+
 		//轉換資料
 		Integer group_no = Integer.parseInt(temp_group_no);
 		//驗證資料
@@ -120,6 +124,9 @@ public class MyGroupServlet_3 extends HttpServlet {
 			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 			
 			
+		}else if(prodaction.equals("重新設定團購")){
+			mg.editGroup(group_no, name_new2, ann_new2, gold);
+			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 		}
 		
 		

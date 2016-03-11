@@ -232,14 +232,17 @@ public class MyGroupService2db {
 		vo_new.setStart_date(new java.util.Date());
 		vo_new.setEnd_date(date);
 		vo_new.setAnn(ann_new);
-//		vo_new.setFailure(null);
-//		vo_new.setDiscount(null);
 		vo_new.setShipment(vo_old.getShipment());
-		//
 		vo_new.setGroup_Users(_17VOset);
 		grdao.insert(vo_new);
-		
-
+	}
+	/*-------------複製團購----------------------------------------------------------------*/
+	public void editGroup( Integer group_no,String name_new2, String ann_new2, String ship){
+		_16_Group_RecordVO grvo = grdao.findById(group_no);
+		grvo.setGroup_name(name_new2);
+		grvo.setAnn(ann_new2);
+		grvo.setShipment(ship);
+		grdao.update(grvo);
 	}
 
 }

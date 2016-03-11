@@ -38,13 +38,15 @@ public class loginAction extends ActionSupport implements SessionAware {
 		mb = dao.findActive("email",email);
 		System.out.println("mb="+mb);
 		
+		//使用者權限存入session
 		for(_05_AdminVO a:mb.getAdms()){
 			if(a.getAuth().equals("A")){
 				session.put("admin", "admin");
 			}
 		}
 		
-		
+		//員工姓名存入session
+		session.put("empname", mb.getName());		
 		//將使用者的資料存入session，識別字串為LoginOK
 		session.put("LoginOK", mb);
 		return Action.NONE;

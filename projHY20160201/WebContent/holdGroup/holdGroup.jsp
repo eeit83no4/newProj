@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <link type="text/css" rel="stylesheet" href="../css/table2.css" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
 <style>
 .btn {
   display: inline-block;
@@ -93,7 +94,7 @@ table,tr,td{
 	</div>
 	<!-- 發起團購按鈕 -->
 	<div style='text-align:center'>
-		<input type="button" class="btn btn-primary" value="發起團購" id="holdGroup"/>
+		<input type="button" class="btn btn-primary btn-block" value="發起團購" id="holdGroup" style="width:60%"/>
 	</div>
 	
 	<c:choose>

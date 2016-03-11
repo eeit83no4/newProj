@@ -103,7 +103,11 @@ $(function(){
 		var cell4 = $("<td></td>").text(bean.店家);
 		var cell5 = $("<td></td>").text(bean.發起人);
 		var cell6 = $("<td></td>").text(bean.訂單狀態);
-		var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');
+		if(bean.訂單狀態=="進行中"){
+			var cell7 = $("<td></td>").append('<input type="button" value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');			
+		}else{
+			var cell7 = $("<td></td>").append('<input type="button" disabled value="修改" class="btn btn-default btn-xs" onclick="editGroup('+bean.團購編號+')">');		
+		}
 		var cell8 = $("<td></td>").append($('<input/>')
 								  .attr('type','button')
 								  .attr('value','刪除')

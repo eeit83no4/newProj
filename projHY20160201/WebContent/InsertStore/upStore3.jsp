@@ -56,6 +56,8 @@
 	
 	<div class="form-group">
 		<br />	
+		<br />
+		<br />
 		<label for="inputName" class="control-label">店家名稱</label>
 		<input type="text" value="草莓店" id="inputName" name="store" placeholder="店家名稱" required="required" class="form-control" />
 		<label for="inputName" class="control-label">電話</label>
@@ -64,7 +66,7 @@
 		<input type="text" value="大安區" id="address" name="address" placeholder="地址" class="form-control" />
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div> 					
-		<input type="submit" name="submit" value="送出" id="id" >
+		<input type="submit" class="btn btn-default"name="submit" value="送出" id="id" >
 		<input type="text" name="sub"  style="display:none" id="sub"/>		
 		</div>
 	</form>

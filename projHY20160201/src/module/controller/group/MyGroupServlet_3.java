@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import module.dao._16_Group_RecordDAO;
 import module.model._04_EmployeeVO;
-import module.model._16_Group_RecordVO;
 import module.service.MyGroupService;
 import module.service.MyGroupService2db;
+import module.service.attempGroupService;
 import net.sf.json.JSONArray;
 
 @WebServlet(
@@ -23,7 +22,7 @@ import net.sf.json.JSONArray;
 public class MyGroupServlet_3 extends HttpServlet {
 	private MyGroupService2db mg = new MyGroupService2db(); 
 	private MyGroupService myGroupService = new MyGroupService();
-
+	private attempGroupService att=new attempGroupService();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//接收資料		
@@ -50,23 +49,13 @@ public class MyGroupServlet_3 extends HttpServlet {
 		JSONArray jSONObject3=JSONArray.fromObject(detailByItem);//轉換json
 		
 		if(prodaction.equals("sucess")){
+			System.out.println("HHHHHHHHHHHHHH");
+			att.shipmentCount(group_no);
 			mg.updateGroupStatus_success(group_no);
 			
-			List<String[]> detailUpper= myGroupService.orderDetail_byGroup_upper(group_no);
-			long longSec =  Long.parseLong(detailUpper.get(0)[7],10);
-			String longDay =  myGroupService.getTimeDay(longSec);
-			req.setAttribute("status", detailUpper.get(0)[8]);
-			req.setAttribute("EndSec", longSec);
-			req.setAttribute("EndDay", longDay);
-			req.setAttribute("group_no", myGroupService.orderDetail_byGroup_upper(group_no).get(0)[9]);
-			req.setAttribute("group_status", myGroupService.findCo_holder(emp.getUser_id(), group_no));
-					
-			req.setAttribute("detail_Detail", jSONObject);
-			req.setAttribute("detail_ByUser", jSONObject2);
-			req.setAttribute("detail_ByItem", jSONObject3);
-			req.setAttribute("detailUpper", detailUpper);
-			req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);			
-	
+
+			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction=已完成的團購");			
+
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);
 			

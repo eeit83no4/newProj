@@ -222,11 +222,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 									class='btn btn-primary' id="clear" value="取消" />
 									
 							</div>
-							<div id="money">							 							
+							<div id="money">
+							<span>運費:</span>							 							
 							<label><input type="radio" name="gender" id="havemon">是</label>
 							<label><input type="radio" name="gender" id="havemon2">否</label>
-				             <span>運費:</span><input type="text" id="gold" style="width:50px"><br>
-				             </div>
+				            </div>
 				             
 				             <div id="money2">
 							
@@ -445,6 +445,10 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 		   //----------------運     費 ------------------------------------------------------------
 			
 	      $("#havemon").click(function(){
+	    	  $("#money2").append('<span>'+'金額:'+'</span>'+'<input type="text" id="gold" style="width:50px">')
+	    	  
+	    	  
+	    	  
 	    	  
 	    	  $("#money2").append(  	      	
 	  	    	    '<label><input type="radio" name="gender" value="人頭分攤">'+'人頭分攤'+'</label>'+

@@ -16,6 +16,7 @@
 <body  class="home">
 <div id="wrap">
 	<!-- 	載入導覽列 -->
+	<!-- 	零秒跳轉頁面-->
 	<jsp:include page="/header.jsp"/>
 	<form action="<c:url value='/insertStoreAction.action' />" method="get">
 	<input type="text" value="" id="id" name="sub"/>

@@ -146,7 +146,7 @@ public class userOrderAction extends ActionSupport{
 						FileOutputStream fileOutputStream;
 						try {
 							int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱					
-							newpicPath="e:/proj/detailPic/detail"+picname+"test"+picfilename;//設定目的地
+							newpicPath="C:/Images/detailPic/detail"+picname+"test"+picfilename;//設定目的地
 							FileInputStream fileInputStream=new FileInputStream(file);
 							fileOutputStream = new FileOutputStream(newpicPath);
 							//使用緩衝區

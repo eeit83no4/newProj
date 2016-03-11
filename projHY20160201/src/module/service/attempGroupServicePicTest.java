@@ -42,7 +42,7 @@ public class attempGroupServicePicTest {
 			
 			
 			String picpath=attP.xxxBuffer();//圖片路徑
-			_12_ItemVO itemvo=_12dao.findById(26);
+			_12_ItemVO itemvo=_12dao.findById(37);
 			if(picpath!=null&&picpath.length()>0){
 				itemvo.setPic(picpath.getBytes());
 				_12dao.update(itemvo);
@@ -103,13 +103,13 @@ public class attempGroupServicePicTest {
 	
 	//使用緩衝區
 	public String xxxBuffer(){		
-		File file=new File("C:/temp/zhaopai.jpg");//來源，使用者瀏覽器
+		File file=new File("C:/temp/匿名.png");//來源，使用者瀏覽器
 		byte[] bFile=new byte[(int)file.length()];		
 		String picPath=null;//目的地，本機儲存路徑		
 		FileOutputStream fileOutputStream;
 		try {
 			int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱
-			picPath="e:/projPic/proj"+picname+".jpg";//設定目的地
+			picPath="C:/Images/proj"+picname+".png";//設定目的地
 			FileInputStream fileInputStream=new FileInputStream(file);
 			fileOutputStream = new FileOutputStream(picPath);
 			//使用緩衝區

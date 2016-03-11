@@ -45,7 +45,7 @@ public class insertPicByBase64 {
 						
 			try {
 				int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱
-				newPicPath="e:/proj/detailPic/detail"+picname+"RRRRRRTodayTOday."+imgFilename;//設定目的地
+				newPicPath="C:/Images/detailPic/detail"+picname+"RRRRRRTodayTOday."+imgFilename;//設定目的地
 				InputStream inp=new ByteArrayInputStream(imageData);
 				FileOutputStream fileOutputStream= new FileOutputStream(newPicPath);
 				//使用緩衝區

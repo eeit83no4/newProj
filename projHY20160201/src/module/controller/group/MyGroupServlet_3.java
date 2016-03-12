@@ -125,6 +125,16 @@ public class MyGroupServlet_3 extends HttpServlet {
 			
 			
 		}else if(prodaction.equals("重新設定團購")){
+			
+			int start=gold.indexOf("(");
+			int end=gold.indexOf(")");
+			//判斷是否有填寫或不是數字
+			try {
+				System.out.println("如果轉型="+Double.parseDouble(gold.substring(start+1, end)));
+			} catch (NumberFormatException e) {
+				gold=null;
+			}
+			
 			mg.editGroup(group_no, name_new2, ann_new2, gold);
 			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 		}

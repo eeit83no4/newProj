@@ -34,7 +34,7 @@ public class _18_Order_DetailDAO implements _18_Order_Detail_InterfaceDAO {
 
 			_18_Order_Detail_InterfaceDAO dao = new _18_Order_DetailDAO();
 			_18_Order_DetailVO bean = new _18_Order_DetailVO();
-//			System.out.println(dao.getOdNo(1));
+			System.out.println(new String(dao.findById(12).getOimage()));
 			// ---------------------
 			// System.out.println(dao.getAll());
 			// ----------------------------

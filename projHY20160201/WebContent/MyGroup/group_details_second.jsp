@@ -9,7 +9,7 @@
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/table.css" /> --%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 </head>
 
 <body class="home">

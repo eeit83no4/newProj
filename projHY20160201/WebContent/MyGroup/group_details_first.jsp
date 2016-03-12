@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 </head>
 
 <body class="home">

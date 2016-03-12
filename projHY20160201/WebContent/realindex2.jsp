@@ -6,11 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <style>
 .Group{
-/* 	margin:0 auto; */
 	width:445px;
 	height:72px;
 	border:1px solid transparent;

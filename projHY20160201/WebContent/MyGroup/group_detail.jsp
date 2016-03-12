@@ -14,7 +14,7 @@
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 <script language=JavaScript src="${pageContext.request.contextPath}/js/FileSaver.min.js"></script>
 
-<title>Display</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <style>
 #uppertable th{
  	font-weight:bold; 

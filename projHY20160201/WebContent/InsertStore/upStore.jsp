@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 </head>
 <body>
 	<form action="<c:url value='/GetStoreDataAction.action' />" method="get">

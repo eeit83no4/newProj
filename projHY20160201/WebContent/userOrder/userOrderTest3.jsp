@@ -93,7 +93,7 @@ table,tr,td,th{
 			<div class="button_div">
 				<input type="button" class='btn btn-default' name="order" value="訂下去" id="confirm"/>
 				<input type="button" class='btn btn-default' name="clear" value="全部清除" id="clearBt"/>
-				<input type="button" class='btn btn-default' name="cancel" value="取消"/>
+				<input type="button" class='btn btn-default' id="cancel" value="取消"/>
 			</div>
 			<div id="totalDiv">
 				小計：<font id="total">0</font>
@@ -146,7 +146,9 @@ table,tr,td,th{
 <script>
 	$(function(){
 			
-		
+		$('#cancel').click(function(){
+			location.href='/projHY20160201/index/indexServlet.controller';
+		})
 		
 // 		------------一開始載入品項區塊-------------
 		<c:forEach var="itemno" items="${itemnos}">
@@ -360,12 +362,13 @@ table,tr,td,th{
 					"url":'<c:url value="/userOrder/userOrderAction.action"/>',
 					"data":{jsonString},											
 					"success":function(){
+						alert('訂購成功');
 						location.href='<c:url value='/index/indexServlet.controller'/>';
 					}
 				});		
 				
 			}else{
-				console.log('你尚未選購');
+				alert('你尚未選購');
 			}
 		});
 		

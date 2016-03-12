@@ -15,7 +15,7 @@
 	        <li><a style="text-decoration:none;" href="#">我的團購</a>
 	        <ul class="sub-menu">
 	            <li><a href="<c:url value='/xxx.controller?prodaction=進行中的團購'/>">進行中的團購</a></li>
-	            <li><a href="<c:url value='/xxx.controller?prodaction=已完成的團購'/>">已完成的團購</a></li>
+	            <li><a href="<c:url value='/xxx.controller?prodaction=finished'/>">已完成的團購</a></li>
 	            <li><a href="<c:url value='/xxx.controller?prodaction=個人歷史訂購紀錄'/>">個人歷史訂購紀錄</a></li>
 	          </ul></li>
 	        <c:if test='${!empty admin}'>

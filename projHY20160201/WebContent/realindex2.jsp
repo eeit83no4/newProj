@@ -57,7 +57,7 @@
 						<div class='userNumber'>${ingGroup.usersNumber}</div>
 						<div class='amount'>$${ingGroup.amount}</div>
 					</div>					
-					<div class='GroupRight'>${ingGroup.holderName}發起的${ingGroup.groupName}→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
+					<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${ingGroup.groupNo}'>${ingGroup.holderName}發起的${ingGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
 				</div>
 				<div class='divBlock'></div>
 			</c:forEach>
@@ -86,7 +86,7 @@
 						<div class='amount'>$${myGroup.amount}</div>									
 					</div>
 					
-					<div class='GroupRight'><a href='#'>我發起的${myGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${myGroup.groupNo}'>我也要訂</a></div>			
+					<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${myGroup.groupNo}'>我發起的${myGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${myGroup.groupNo}'>我也要訂</a></div>			
 				</div>
 				<div class='divBlock'></div>
 			</c:forEach>			

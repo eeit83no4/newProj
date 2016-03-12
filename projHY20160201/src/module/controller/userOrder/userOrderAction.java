@@ -25,7 +25,6 @@ import net.sf.json.JSONSerializer;
 public class userOrderAction extends ActionSupport{
 	private static _17_Group_UserDAO _17guDAO=new _17_Group_UserDAO();
 	private static final long serialVersionUID = 1L;
-	private final String[] pictureSubs = { "jpeg", "jpg", "gif", "png", "jpe" };
 	private String jsonString;	
 	public String getJsonString() {
 		return jsonString;
@@ -49,7 +48,6 @@ public class userOrderAction extends ActionSupport{
 		//將Object轉換成JsonArray格式
 		JSONArray jSONArray=JSONArray.fromObject(b);
 
-//		System.out.println(jSONArray);
 		for(int i=0;i<jSONArray.size();i++){
 			//將JsonObject轉換成JsonArray格式
 			JSONObject net=(JSONObject)jSONArray.get(i);
@@ -57,9 +55,7 @@ public class userOrderAction extends ActionSupport{
 			Object group_user_noobject=net.get("group_user_no");
 			String group_user_nostring=String.valueOf(group_user_noobject);
 			Integer group_user_noInt=Integer.parseInt(group_user_nostring);
-//			_17_Group_UserVO uservo=new _17_Group_UserVO();
 			_17_Group_UserVO uservo=_17guDAO.findById(group_user_noInt);
-//			uservo.setGroup_user_no(group_user_noInt);
 			//ostore_name
 			String ostore_name=String.valueOf(net.get("ostore_name"));
 			//oprice_no
@@ -98,8 +94,7 @@ public class userOrderAction extends ActionSupport{
 			String psstring=null;
 			try {
 				psstring=String.valueOf(net.get("ps"));
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+			} catch (Exception e1) {				
 				e1.printStackTrace();
 			}
 			//解析quantity					
@@ -111,65 +106,17 @@ public class userOrderAction extends ActionSupport{
 			}
 			//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓解析pic↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 			Object pic=net.get("pic");
-			String newpicPath=null;//目的地，本機儲存路徑	
-			
+			byte[] itempic=null;
 			int picno=0;//圖片編號
 			try {
 				picno=((Number)pic).intValue();
 			} catch (Exception e) {
 				System.out.println("userOrderAction-picno轉型失敗="+e.toString());				
-			}				
-			
-			if(picno>0){
-				_12_ItemDAO itemDao=new _12_ItemDAO();					
-				String picPath=null;//圖片來源路徑
-				try {
-					picPath = new String(itemDao.findById(picno).getPic());
-				} catch (Exception e) {
-					System.out.println("userOrderAction-資料庫沒有圖片="+e.toString());					
-				}
-				if(picPath!=null&&picPath.trim().length()>0){
-					//判斷圖片格式
-					boolean isPic=false;			
-					for(int j=0;j<pictureSubs.length;j++){
-						if(picPath.split("\\.")[1].toLowerCase().equals(pictureSubs[j])){
-							isPic=true;
-							break;
-						}else if (j == pictureSubs.length - 1){
-							System.out.println("不是圖片");
-						}
-					}
-					if(isPic){
-						String picfilename="."+picPath.split("\\.")[1].toLowerCase();//圖片副檔名
-						File file=new File(picPath);
-						byte[] bFile=new byte[(int)file.length()];
-						FileOutputStream fileOutputStream;
-						try {
-							int picname=(int)(Math.random()*10000000)+1;//存入的圖片名稱					
-							newpicPath="C:/Images/detailPic/detail"+picname+"test"+picfilename;//設定目的地
-							FileInputStream fileInputStream=new FileInputStream(file);
-							fileOutputStream = new FileOutputStream(newpicPath);
-							//使用緩衝區
-							BufferedInputStream bufferedInputStream=new BufferedInputStream(fileInputStream);
-							BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(fileOutputStream);			
-							
-							while(bufferedInputStream.read(bFile)!=-1){
-								bufferedOutputStream.write(bFile);
-							}
-							// 將緩衝區中的資料全部寫出
-							bufferedOutputStream.flush();
-							// 關閉串流
-							bufferedInputStream.close();
-							bufferedOutputStream.close();
-						} catch (FileNotFoundException e1) {
-							System.out.println("userOrderAction-圖片 FileNotFoundException:"+e1.toString());
-						} catch (IOException e1) {
-							System.out.println("userOrderAction-JAVA IO錯誤："+e1.toString());				
-						}								
-					}
-				}
 			}
-				
+			if(picno>0){
+				_12_ItemDAO itemDao=new _12_ItemDAO();				
+				itempic=itemDao.findById(picno).getPic();								
+			}				
 			//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑圖片處理完畢↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 			
 			_18_Order_DetailVO beanvo=new _18_Order_DetailVO();
@@ -177,8 +124,8 @@ public class userOrderAction extends ActionSupport{
 			beanvo.setOstore_name(ostore_name);
 			beanvo.setOprice_no(oprice_no);
 			beanvo.setOitem_name(oitem_namestring);
-			if(newpicPath!=null&&newpicPath.trim().length()>0){
-				beanvo.setOimage(newpicPath.getBytes());
+			if(itempic!=null){
+				beanvo.setOimage(itempic);
 			}			
 			beanvo.setOriginal_oprice(originitempricedouble);
 			beanvo.setOprice(opricedouble);
@@ -186,8 +133,6 @@ public class userOrderAction extends ActionSupport{
 			beanvo.setOclass(oclassstring);
 			beanvo.setPs(psstring);
 			beanvo.setQuantity(quantityinteger);
-//			beanvo.setPay_status(pay_status);
-//			beanvo.setTake_status(take_status);
 			beans.add(beanvo);
 		}
 		att.ordering(beans);

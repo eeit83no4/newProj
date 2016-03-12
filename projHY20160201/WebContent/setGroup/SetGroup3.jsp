@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -189,10 +189,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 							</div>
 
 							<div id="but">
-								<input type="button" class="btn btn-default" id="inser"
-									value="加入" /> <br> <br> <input type="reset"
-									class="btn btn-default" id="clear" value="取消" />
-									
+								<input type="button" class="btn btn-default" id="inser"	value="加入" /><br/> 
+								 
+								 
+								<input type="reset"	class="btn btn-default" id="clear" value="取消" /><br/>
+								<input type="button" class="btn btn-default" id="checkall"	value="全部邀請" />	
 							</div>
 							<div id="money">
 							<span>運費:</span>							 							
@@ -258,6 +259,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			holdUser='${LoginOK.user_id}';//主揪
 			var userIds = [];//已經邀請的，比對用
 			var realUser=null;//已經邀請的，傳值用
+			//----全部邀請按鈕
+			$('#checkall').click(function(){
+				$(':input:checkbox[name="inp"]').prop('checked',true);
+			})
+			
 			//-------------加入團員
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊

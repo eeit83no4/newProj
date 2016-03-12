@@ -41,14 +41,14 @@ border: 3px green double;
 width:430px;
 height:445px;
 overflow:scroll;
-font-size: 18px;
+font-size: 28px;
 margin-left: 10px;
 }
 #div2{
 width:430px;
 height:445px;
 overflow:scroll;
-font-size: 18px;
+font-size: 28px;
 margin-left:10px;
 }
 .txtSearch{

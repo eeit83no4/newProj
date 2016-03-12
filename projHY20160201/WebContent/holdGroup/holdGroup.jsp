@@ -8,9 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-<link type="text/css" rel="stylesheet" href="../css/table2.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
 <style>
 .btn {
   display: inline-block;
@@ -39,8 +37,7 @@
   border-color: #2e6da4;
 }
 table,tr,td{
-	text-align:center;
-	font-size: 18px;
+	font-size: 20px;
 }
 #holdGroup{
 	margin:5px
@@ -73,7 +70,7 @@ table,tr,td{
 	    <li><a href="#tabs-2">找一下</a></li>	    
 	  </ul>
 	  <div id="tabs-1"><!-- 最新店家 -->
-	    <table id='latestStore'>
+	    <table id='latestStore' class="table table-hover table-bordered table table-condensed">
 			<tr>
 				<c:forEach var="eachStore" items="${allStoresTiemSorted}" begin="1" end="8">					
 						<td><a href="#" id='${eachStore.store_no}'>${eachStore.store_name}</a></td>					

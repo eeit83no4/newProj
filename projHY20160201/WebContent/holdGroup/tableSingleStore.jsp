@@ -4,7 +4,7 @@
 <!-- 店家資訊與商品 -->
 	<div>
 		
-			<table id="sotreinfo">
+			<table id="sotreinfo" class="table table-hover table-bordered table table-condensed">
 				<c:set var="storeNo" value="${singleStore.store_no}"/>
 				<tr>
 					<td colspan="2">店家資訊</td>					
@@ -34,7 +34,7 @@
 					<td id="sotre_NO">${storeNo}</td>
 				</tr>
 			</table>
-			<table id="sotreitem">
+			<table id="sotreitem" class="table table-hover table-bordered table table-condensed">
 				<tr>
 					<td>商品清單</td>
 					<td>價格</td>

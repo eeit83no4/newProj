@@ -405,12 +405,19 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-// 					   console.log(ByUser);
-					   if(ByUser[ByUser.length-1]=='y'){
+					if(${group_status} >= 1){//為發起人或共同管理員
+					   if(ByUser[ByUser.length-1]=='y'){//已付款
 					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
-				   	   }else{
+				   	   }else{//未付款
 				   			aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
 				   	   }
+					}else{
+						if(ByUser[ByUser.length-1]=='y'){
+					   		aa[0] = $("<td></td>").append("<input type='checkbox' disabled value='"+ByUser[0]+"'checked />");
+				   	   }else{
+				   			aa[0] = $("<td></td>").append("<input type='checkbox'disabled value='"+ByUser[0]+"'/>");
+				   	   }
+					}
 				   }
 				   aa[j+1] = $("<td></td>").text(ByUser[j]);
 			    }else{

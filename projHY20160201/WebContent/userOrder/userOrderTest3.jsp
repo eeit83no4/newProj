@@ -7,33 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style>
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-.btn-primary {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-} 
 table,tr,td,th{
 	font-size:20px;
 	width:100%;
@@ -116,9 +91,9 @@ table,tr,td,th{
 	<div id="RightDiv">
 		<form action="#">
 			<div class="button_div">
-				<input type="button" class='btn btn-primary' name="order" value="訂下去" id="confirm"/>
-				<input type="button" class='btn btn-primary' name="clear" value="全部清除" id="clearBt"/>
-				<input type="button" class='btn btn-primary' name="cancel" value="取消"/>
+				<input type="button" class='btn btn-default' name="order" value="訂下去" id="confirm"/>
+				<input type="button" class='btn btn-default' name="clear" value="全部清除" id="clearBt"/>
+				<input type="button" class='btn btn-default' name="cancel" value="取消"/>
 			</div>
 			<div id="totalDiv">
 				小計：<font id="total">0</font>
@@ -158,7 +133,7 @@ table,tr,td,th{
 				</fieldset>
 			</div>
 			<div class="button_div">
-				<button type="button" class='btn btn-primary' id="addNewBt">加入</button>
+				<button type="button" class='btn btn-default' id="addNewBt">加入</button>
 			</div>
 		</form>		
 	</div>

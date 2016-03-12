@@ -65,12 +65,12 @@
 			  <c:if test='${EndSec <= 0 && status == "進行中"}'>
 <!-- 			  	<form action=""> -->
 <!-- 					<td class="tt"><input id="enddate"	 type="datetime-local"/></td> -->
-					<input type="button" value="重設時間" class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
+					<input type="button" value="重設時間" class="btn btn-default btn-xs" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
 <!-- 			 	</form> -->
 			  </c:if>
 			</td>
 			</tr>
-			<tr><th><span class="glyphicon glyphicon-phone-alt"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-piggy-bank"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
 			
 		</c:forEach>
 		</table>
@@ -444,7 +444,7 @@ function go3(groupno3){
 		   for(var j = 0; j<Detail.length-2; j++){
 			   if(j<Detail.length-3){
 			    aa[j] = $("<td></td>").text(Detail[j]);
-			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]){			   
+			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]&& "${EndDay}"!="已截止"){			   
 				   aa[j] = $("<td></td>").append($('<input/>')
 			  				  .attr('type','button')
 			  				  .attr('value','刪除')

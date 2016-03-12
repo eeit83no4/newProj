@@ -199,9 +199,15 @@ public class MyGroupService2db {
 	/*-------------複製團購----------------------------------------------------------------*/
 	public void editGroup( Integer group_no,String name_new2, String ann_new2, String ship){
 		_16_Group_RecordVO grvo = grdao.findById(group_no);
-		grvo.setGroup_name(name_new2);
-		grvo.setAnn(ann_new2);
-		grvo.setShipment(ship);
+		if(name_new2!=null){
+			grvo.setGroup_name(name_new2);
+		}
+		if(ann_new2!=null){
+			grvo.setAnn(ann_new2);
+		}
+		if(ship!=null){
+			grvo.setShipment(ship);
+		}		
 		grdao.update(grvo);
 	}
 

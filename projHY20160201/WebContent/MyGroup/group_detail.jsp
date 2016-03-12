@@ -50,7 +50,8 @@
 			<tr><th><span class="glyphicon glyphicon-user"></span>&nbsp發起人:</th> <td>${attr[6]}</td>  
 				<th><span class="glyphicon glyphicon-usd"></span>&nbsp當前累積金額:</th> <td>${attr[3]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-phone-alt"></span>&nbsp電話:</th> <td>${attr[5]}</td>
-				<th><span class="glyphicon glyphicon-time"></span>&nbsp剩餘時間:</th> <td id="reasonid">${EndDay}(${attr[8]})
+				<th><span class="glyphicon glyphicon-piggy-bank"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-time"></span>&nbsp剩餘時間:</th> <td colspan="2" id="reasonid">${EndDay}(${attr[8]})
 			<c:if test='${attr[10] != null}'>(${attr[10]})</c:if>
 			<c:if test='${group_status >= 1 && EndSec > 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default-xs btn-xs" value="立即截止"  onclick="go3(${group_no})">
@@ -67,7 +68,6 @@
 			  </c:if>
 			</td>
 			</tr>
-			<tr><th><span class="glyphicon glyphicon-piggy-bank"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
 			
 		</c:forEach>
 		</table>

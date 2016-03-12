@@ -31,7 +31,7 @@
 
 <div class="col-md-10 tab-content">
 <div id="groupDiv" class="tab-pane fade in active">
-	<h5 align="center" style='color:red'>※已截止的團購無法修改</h5>
+	<h5 align="center" style='color:gray'>※已截止的團購無法修改</h5>
 	<form>
 		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
@@ -69,7 +69,7 @@
 	</form>
 </div>
 <div id="adminDiv" class="tab-pane fade">
-	<h5 align="center" style='color:red'>※勾選即可設定管理員權限</h5>
+	<h5 align="center" style='color:gray'>※勾選即可設定管理員權限</h5>
 	<form>
 		<table class="table table-hover table-bordered table table-condensed">
 		<thead>

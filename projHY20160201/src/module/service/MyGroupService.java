@@ -458,8 +458,8 @@ public class MyGroupService {
 					m.put("備註", b.getOclass());	
 					m.put("原價", b.getOriginal_oprice());
 					m.put("數量", b.getQuantity());
-					m.put("實付金額", b.getOprice_after());
-					m.put("實付小計", b.getQuantity()*b.getOprice_after());	
+					m.put("實付金額", Math.round(b.getOprice_after().doubleValue()));
+					m.put("實付小計", Math.round(b.getQuantity()*b.getOprice_after()));	
 					finalResult.add(m);
 				}			
 			}

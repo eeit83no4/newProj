@@ -49,8 +49,9 @@
 	</c:forEach>
 	</tbody>
 </table>
-	<h5 align="center" style='color:red'>※點選查詢即可進入該筆團購</h5>
-	<h5 align="center" style='color:red'>※僅發起人或共同管理員可以修改相關設定</h5>
+	<h5 align="center" style='color:gray'>※點選查詢即可進入該筆團購</h5>
+	<h5 align="center" style='color:gray'>※僅發起人或共同管理員可以修改相關設定</h5>
+	<h5 align="center" style='color:gray'>※團員可刪除自己所訂購的商品</h5>
 </form>
 <!-------------------------------------內容寫在上面 --------------------------------------------->
 	<!-- 	載入底部 -->

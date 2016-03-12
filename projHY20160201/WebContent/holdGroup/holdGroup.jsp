@@ -40,24 +40,25 @@
 }
 table,tr,td{
 	text-align:center;
-	font-size: 15px;
+	font-size: 18px;
 }
 #holdGroup{
 	margin:5px
 }
 #latestStore{
-	width:600px
+	width:950px
 }
 #sotre_NO{
 	display:none
 }
 #sotreinfo{
 	float:left;
-	width:380px;
-	margin-left:230px
+	width:480px;
+	margin-left:60px
 }
 #sotreitem{
-	margin-left:620px
+	width:400px;
+	margin-left:560px
 }
 </style>
 </head>
@@ -66,7 +67,7 @@ table,tr,td{
 	<!-- 	載入導覽列 -->
 	<jsp:include page="/header.jsp"/>
 	<!-- AutoComplete -->
-	<div id="tabs" style='width:640px;margin:0 auto'>
+	<div id="tabs" style='width:1024px;margin:0 auto'>
 	  <ul>
 	    <li><a href="#tabs-1">最新店家</a></li>
 	    <li><a href="#tabs-2">找一下</a></li>	    
@@ -94,7 +95,7 @@ table,tr,td{
 	</div>
 	<!-- 發起團購按鈕 -->
 	<div style='text-align:center'>
-		<input type="button" class="btn btn-primary" value="發起團購" id="holdGroup" style="width:60%"/>
+		<input type="button" class="btn btn-primary" value="發起團購" id="holdGroup" style="width:30%"/>
 	</div>
 	
 	<c:choose>

@@ -78,8 +78,8 @@ public class _04_EmployeeDAO implements _04_Employee_interfaceDAO  {
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			_04_EmployeeDAO dao=new _04_EmployeeDAO();
 			_04_EmployeeVO bean=new _04_EmployeeVO();
-//			System.out.println(dao.getAll());
-			System.out.println(dao.findById(1));
+			System.out.println(dao.getAll());
+//			System.out.println(dao.findById(1));
 //			System.out.println(dao.findActive("email", "angela.wang@hy-tech.com.tw"));
 //			System.out.println(dao.getAllEmails());
 			//Insert

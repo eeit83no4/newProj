@@ -77,9 +77,9 @@ public class _05_AdminDAO implements _05_Admin_InterfaceDAO {
 			
 //			dao.updateAuthByUserId("1","A");
 			
-			System.out.println(dao.findAuthByUserId2(166));
+//			System.out.println(dao.findAuthByUserId2(166));
 //			System.out.println(dao.findById(1));
-//			System.out.println(dao.getAll());
+			System.out.println(dao.getAll());
 			
 			//Insert
 //			bean.setAuth("c");

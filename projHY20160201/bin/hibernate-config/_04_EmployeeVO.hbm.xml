@@ -18,7 +18,7 @@
         <many-to-one name="employee_StatusVO" class="module.model._02_Employee_StatusVO" lazy="false">
         	<column name="status"/>
         </many-to-one>		
-        <many-to-one name="jobVO" class="module.model._03_JobVO">
+        <many-to-one name="jobVO" class="module.model._03_JobVO" lazy="false">
         	<column name="job"/>
         </many-to-one>
 

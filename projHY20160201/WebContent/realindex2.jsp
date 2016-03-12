@@ -10,7 +10,6 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 <style>
 .Group{
-/* 	margin:0 auto; */
 	width:445px;
 	height:72px;
 	border:1px solid transparent;

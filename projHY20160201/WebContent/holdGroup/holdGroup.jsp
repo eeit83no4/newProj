@@ -100,7 +100,7 @@ table,tr,td{
 	    });
 	    $('#tags').change(function(){
 	    	var storeNofromAuto=parseInt(($(this).val().split(',')[0]).match(/[0-9]+/g));//商店編號
-// 	    	console.log(storeNofromAuto);	    	
+   	
 	    	<c:forEach var="eachStore" items="${allStores}">							
 				<c:set var="storeNo" value="${eachStore.store_no}"/>
 				if(storeNofromAuto=='${storeNo}'){

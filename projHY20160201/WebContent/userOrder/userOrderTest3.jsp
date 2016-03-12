@@ -13,7 +13,6 @@ table,tr,td,th{
 	font-size:20px;
 	width:100%;
 	margin:0 auto;
-/* 	border:1px solid gray; */
 	text-align: center;
 }
 #LefttDiv{ 
@@ -152,8 +151,7 @@ table,tr,td,th{
 		
 // 		------------一開始載入品項區塊-------------
 		<c:forEach var="itemno" items="${itemnos}">
-			<c:forEach var="itemname" items="${itemnames}">
-				console.log('${itemname[itemno]}:');		
+			<c:forEach var="itemname" items="${itemnames}">					
 				$('#itemZone').prepend($('<tr/>').append($('<td/>').append($('<a/>').text('${itemname[itemno]}').attr('href','#').attr('id','${itemno}'))));		
 			</c:forEach>
 		</c:forEach>
@@ -161,8 +159,7 @@ table,tr,td,th{
 		<c:forEach var="itemno" items="${itemnos}" begin="1" end="1">		
 			
 		
-			<c:forEach var="itemname" items="${itemnames}">
-				console.log('=======================${itemname[itemno]}:');
+			<c:forEach var="itemname" items="${itemnames}">				
 				<c:forEach var="class2List" items="${class2Lists}">				
 						//品項名稱
 						$('#itemname').text('${itemname[itemno]}');
@@ -174,8 +171,7 @@ table,tr,td,th{
 							<c:forEach var="sizeprice" items="${sizeprices[itemno]}">											
 								var y='${sizeprice}';
 								var priceno=y.split("=")[0];//價錢編號
-								var price=y.split("=")[1];//價錢
-								console.log('價錢編號:'+priceno+','+'價錢'+price);
+								var price=y.split("=")[1];//價錢								
 								$('#sizeZone').append($('<label/>').text(price).prepend($('<input/>').attr('checked','checked').attr('name','size').attr('type','radio').attr('value',y).attr('onclick','xxx(value)')));
 								var itemprice=($(':input:radio:checked').val().split("=")[1]).match(/[0-9]+/g);
 								$('#itemprice').val(itemprice);//改變單價區塊
@@ -185,21 +181,17 @@ table,tr,td,th{
 							</c:forEach>						
 						</c:forEach>
 						//第二第三屬性
-						<c:forEach var="class2" items="${class2List[itemno]}">
-							console.log('${class2}:');
+						<c:forEach var="class2" items="${class2List[itemno]}">							
 							$('#addHere').prepend($('<div/>').attr('id','test9').text('${class2}:'));
-							<c:forEach var="class3List" items="${class3Lists}">
-								console.log('${class3List[itemno][class2]}');						
+							<c:forEach var="class3List" items="${class3Lists}">													
 								<c:choose>
 									<c:when test='${class2=="加料"}'>//複選區
-										<c:forEach var="class3List" items="${class3List[itemno][class2]}">
-											console.log('${class3List}');
+										<c:forEach var="class3List" items="${class3List[itemno][class2]}">											
 											$('#test9').append($('<label/>').text('${class3List}').prepend($('<input/>').attr('type','checkbox').attr('name','${class2}').attr('value','${class3List}')));
 										</c:forEach>	
 									</c:when>
 									<c:otherwise>//單選區
-										<c:forEach var="class3List" items="${class3List[itemno][class2]}">
-											console.log('${class3List}');
+										<c:forEach var="class3List" items="${class3List[itemno][class2]}">											
 											$('#test9').append($('<label/>').text('${class3List}').prepend($('<input/>').attr('type','radio').attr('name','${class2}').attr('value','${class3List}')));
 										</c:forEach>
 									</c:otherwise>
@@ -212,8 +204,7 @@ table,tr,td,th{
 		</c:forEach>
 // 		----------按下物品改變特製區塊資料-------------
 		<c:forEach var="itemno" items="${itemnos}">
-			<c:forEach var="itemname" items="${itemnames}">
-				console.log('${itemname[itemno]}:');
+			<c:forEach var="itemname" items="${itemnames}">				
 				<c:forEach var="class2List" items="${class2Lists}">	
 					$('#${itemno}').click(function(){
 						$('#addHere').empty();
@@ -228,8 +219,7 @@ table,tr,td,th{
 							<c:forEach var="sizeprice" items="${sizeprices[itemno]}">
 								var y='${sizeprice}';
 								var priceno=y.split("=")[0];//價錢編號
-								var price=y.split("=")[1];//價錢
-								console.log('價錢編號:'+priceno+','+'價錢'+price);
+								var price=y.split("=")[1];//價錢								
 								$('#sizeZone').append($('<label/>').text(price).prepend($('<input/>').attr('checked','checked').attr('name','size').attr('type','radio').attr('value',y).attr('onclick','xxx(value)')));
 								var itemprice=($(':input:radio:checked').val().split("=")[1]).match(/[0-9]+/g);
 								$('#itemprice').val(itemprice);//改變單價區塊
@@ -238,21 +228,17 @@ table,tr,td,th{
 							</c:forEach>						
 						</c:forEach>
 						//第二第三屬性
-						<c:forEach var="class2" items="${class2List[itemno]}">
-							console.log('${class2}:');
+						<c:forEach var="class2" items="${class2List[itemno]}">							
 							$('#addHere').prepend($('<div/>').attr('id','test9').text('${class2}:'));
-							<c:forEach var="class3List" items="${class3Lists}">
-								console.log('${class3List[itemno][class2]}');						
+							<c:forEach var="class3List" items="${class3Lists}">														
 								<c:choose>
 									<c:when test='${class2=="加料"}'>//複選區
-										<c:forEach var="class3List" items="${class3List[itemno][class2]}">
-											console.log('${class3List}');
+										<c:forEach var="class3List" items="${class3List[itemno][class2]}">											
 											$('#test9').append($('<label/>').text('${class3List}').prepend($('<input/>').attr('type','checkbox').attr('name','${class2}').attr('value','${class3List}').attr('onclick','xxx2(this)')));
 										</c:forEach>	
 									</c:when>
 									<c:otherwise>//單選區
-										<c:forEach var="class3List" items="${class3List[itemno][class2]}">
-											console.log('${class3List}');
+										<c:forEach var="class3List" items="${class3List[itemno][class2]}">											
 											$('#test9').append($('<label/>').text('${class3List}').prepend($('<input/>').attr('type','radio').attr('name','${class2}').attr('value','${class3List}')));
 										</c:forEach>
 									</c:otherwise>
@@ -281,8 +267,7 @@ table,tr,td,th{
 			var itemname=$("#itemname").text();//商品名字
 			
 			//圖片
-			var pic=parseInt(($('#imgZone').attr('src').split("?")[1]).match(/[0-9]+/g));
-			console.log('============================'+pic);
+			var pic=parseInt(($('#imgZone').attr('src').split("?")[1]).match(/[0-9]+/g));			
 			
 			
 			var detail=null;//特製選項

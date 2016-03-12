@@ -30,7 +30,6 @@
 							location.href='/projHY20160201/index/indexServlet.controller'
 						}
 					});	
-// 				 location.href='/projHY20160201/login/loginAction.action?email='+user ;
 	    	 }else if(i==0){//不存在就強制登出	    		 
 	    		 var auth2 = gapi.auth2.getAuthInstance();
 	    		 auth2.disconnect();

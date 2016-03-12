@@ -11,7 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script language=JavaScript src="${pageContext.request.contextPath}/js/FileSaver.min.js"></script>
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 
 </head>
 

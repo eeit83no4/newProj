@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 
 <meta name="google-signin-client_id" content="695260937486-cc1ssubhsjtetadl71vqaf2mhsekmqsj.apps.googleusercontent.com">
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>

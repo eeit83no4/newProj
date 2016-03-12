@@ -29,6 +29,8 @@ table,tr,td,th{
 	float:right; 	
 	border:2px solid gray; 
 	width:500px;
+	overflow:scroll;
+	height:400px;
 } 
 .button_div{
 	text-align: center;
@@ -156,9 +158,7 @@ table,tr,td,th{
 			</c:forEach>
 		</c:forEach>
 // 		----------一開始載入特製區塊-------------
-		<c:forEach var="itemno" items="${itemnos}" begin="0" end="1">		
-			
-		
+		<c:forEach var="itemno" items="${itemnos}" begin="0" end="0">
 			<c:forEach var="itemname" items="${itemnames}">				
 				<c:forEach var="class2List" items="${class2Lists}">				
 						//品項名稱

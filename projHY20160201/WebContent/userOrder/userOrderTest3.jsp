@@ -156,7 +156,7 @@ table,tr,td,th{
 			</c:forEach>
 		</c:forEach>
 // 		----------一開始載入特製區塊-------------
-		<c:forEach var="itemno" items="${itemnos}" begin="1" end="1">		
+		<c:forEach var="itemno" items="${itemnos}" begin="0" end="1">		
 			
 		
 			<c:forEach var="itemname" items="${itemnames}">				

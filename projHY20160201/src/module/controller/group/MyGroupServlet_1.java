@@ -28,30 +28,32 @@ public class MyGroupServlet_1 extends HttpServlet {
 				String prodaction = request.getParameter("prodaction");
 				_04_EmployeeVO emp = (_04_EmployeeVO)request.getSession().getAttribute("LoginOK");
 				
-			
-
+				System.out.println("prodaction="+prodaction);
+				
 		//根據model執行結果顯示view
 				if(prodaction.equals("進行中的團購")){
 					List<String[]> group_ing = myGroupService.searchMyAllGroup_ing(emp.getUser_id());
 
 					JSONArray jSONObject=JSONArray.fromObject(group_ing);//轉換json
 //					System.out.println(jSONObject);
+					System.out.println("進行中的團購");
 					request.setAttribute("select", jSONObject);
 					request.getRequestDispatcher(
 							"/MyGroup/group_details_first.jsp").forward(request, response);
 					
-				}else if(prodaction.equals("已完成的團購")){
+				}else if(prodaction.equals("finished")){
 					List<String[]> group_ed = myGroupService.searchMyAllGroup_ed(emp.getUser_id());
 
 					JSONArray jSONObject=JSONArray.fromObject(group_ed);//轉換json
 //					System.out.println(jSONObject);
 					request.setAttribute("select", jSONObject);
+					System.out.println("已完成的團購");
 					request.getRequestDispatcher(
 							"/MyGroup/group_details_second.jsp").forward(request, response);
 					
 				}else if(prodaction.equals("個人歷史訂購紀錄")){
 					List<Map> personalHR= myGroupService.personalHistoryRecord(emp.getUser_id());
-
+					System.out.println("個人歷史訂購紀錄");
 					JSONArray jSONObject=JSONArray.fromObject(personalHR);//轉換json
 //					System.out.println(jSONObject);
 					request.setAttribute("select", jSONObject);

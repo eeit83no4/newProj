@@ -53,12 +53,12 @@ public class MyGroupServlet_3 extends HttpServlet {
 		JSONArray jSONObject3=JSONArray.fromObject(detailByItem);//轉換json
 		
 		if(prodaction.equals("sucess")){
-			System.out.println("HHHHHHHHHHHHHH");
+			System.out.println("訂購完成");
 			att.shipmentCount(group_no);
 			mg.updateGroupStatus_success(group_no);
-			
-
-			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction=已完成的團購");			
+			String finished="finished";
+			resp.setCharacterEncoding("UTF-8");
+			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction="+finished);			
 
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);

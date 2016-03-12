@@ -473,7 +473,7 @@ public class MyGroupService {
 	// ------------------查詢該團購訂單名細(上)------------------
 	public List<String[]> orderDetail_byGroup_upper(Integer group_no){
 		List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
-		String[] starray = new String[11];
+		String[] starray = new String[12];
 		_16_Group_RecordVO grvo = gr.findById(group_no);
 		starray[0] = grvo.getGroup_name();
 		starray[1] = grvo.getStoreVO().getStore_name();
@@ -486,6 +486,7 @@ public class MyGroupService {
 		starray[8] = grvo.getStatus();
 		starray[9] = grvo.getGroup_no().toString();
 		starray[10] = grvo.getFailure(); 
+		starray[11] = grvo.getShipment(); 
 		sbs.add(starray);
 		return sbs;
 	}

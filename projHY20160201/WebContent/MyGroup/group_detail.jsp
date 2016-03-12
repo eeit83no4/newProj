@@ -58,15 +58,13 @@
 			<c:if test='${group_status == 0 && EndSec > 0}'>
 					<input type="button" style="margin:3px" disabled class="btn btn-default btn-xs" value="立即截止"  onclick="go3(${group_no})">
 			</c:if> 
-<%-- 			<c:if test='${failure!=null}'> --%>
-<%-- 					${failure} --%>
-<%-- 			</c:if>  --%>
+
 				
-			  <c:if test='${EndSec <= 0 && status == "進行中"}'>
-<!-- 			  	<form action=""> -->
-<!-- 					<td class="tt"><input id="enddate"	 type="datetime-local"/></td> -->
+			  <c:if test='${EndSec <= 0 && status == "進行中" && group_status >= 1}'>
 					<input type="button" value="重設時間" class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
-<!-- 			 	</form> -->
+			  </c:if>
+			  <c:if test='${EndSec <= 0 && status == "進行中" && group_status == 0}'>
+					<input type="button" value="重設時間" disabled class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
 			  </c:if>
 			</td>
 			</tr>
@@ -78,10 +76,10 @@
 	
 	<div class="col-md-2" style="text-align:right;">
 		<c:if test='${status == "進行中"}'>
-			<c:if test='${EndSec > 0}'>
+			<c:if test='${EndSec > 0 && group_status >= 1}'>
 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
 			</c:if>
-			<c:if test='${EndSec <= 0}'>
+			<c:if test='${EndSec <= 0 || group_status == 0}'>
 				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
 			</c:if>
 			<c:if test='${group_status >= 1}'>

@@ -17,13 +17,13 @@ public class _16_Group_RecordVO {
 	private _07_StoreVO storeVO;	//�h��@  group_store
 	private java.util.Date start_date=new java.util.Date();
 	private java.util.Date end_date;
-	private String ann;
+	private String ann="-";
 	private Double group_amount=0.0;
 	private Double group_amount_after=0.0;	
 	private String status="進行中";	
 	private String failure;
 	private String discount;
-	private String shipment;
+	private String shipment="免運費(0)";
 	private Set<_17_Group_UserVO> group_Users = new HashSet<_17_Group_UserVO>();//�@��h
 
 //	public static void main(String[] args) {

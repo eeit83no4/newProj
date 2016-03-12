@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
 <style>
 table,tr,td{
-	font-size: 20px;
+	font-size: 18px;
 }
 #holdGroup{
 	margin:5px
@@ -46,7 +46,7 @@ table,tr,td{
 	  <div id="tabs-1"><!-- 最新店家 -->
 	    <table id='latestStore' class="table table-hover table-bordered table table-condensed">
 			<tr>
-				<c:forEach var="eachStore" items="${allStoresTiemSorted}" begin="1" end="8">					
+				<c:forEach var="eachStore" items="${allStoresTiemSorted}" begin="0" end="8">					
 						<td><a href="#" id='${eachStore.store_no}'>${eachStore.store_name}</a></td>					
 				</c:forEach>
 			</tr>

@@ -39,6 +39,10 @@
 .divBlock{
 	height:7px;
 }
+.scrollable{
+	overflow:scroll;
+	height:280px;
+}
 </style>
 </head>
 <body  class="home">
@@ -50,16 +54,18 @@
 		<h1>進行中的團購</h1>
 		<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 		<c:if test="${!empty ingGroups}">
-			<c:forEach var='ingGroup' items='${ingGroups}'>
-				<div class='Group'>
-					<div class='GroupLeft'>
-						<div class='userNumber'>${ingGroup.usersNumber}</div>
-						<div class='amount'>$${ingGroup.amount}</div>
-					</div>					
-					<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${ingGroup.groupNo}'>${ingGroup.holderName}發起的${ingGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
-				</div>
-				<div class='divBlock'></div>
-			</c:forEach>
+			<div class='scrollable'>
+				<c:forEach var='ingGroup' items='${ingGroups}'>
+					<div class='Group'>
+						<div class='GroupLeft'>
+							<div class='userNumber'>${ingGroup.usersNumber}</div>
+							<div class='amount'>$${ingGroup.amount}</div>
+						</div>					
+						<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${ingGroup.groupNo}'>${ingGroup.holderName}發起的${ingGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${ingGroup.groupNo}'>我也要訂</a></div>			
+					</div>
+					<div class='divBlock'></div>
+				</c:forEach>
+			</div>
 		</c:if>
 		<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->			
 	</div>
@@ -77,18 +83,20 @@
 	<c:if test='${!empty myGroups}'>
 		<div style='margin-left:455px;margin-right:160px'>
 			<h1>我發起的團購</h1>
-			<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->			
-			<c:forEach var='myGroup' items='${myGroups}'>
-				<div class='Group'>
-					<div class='GroupLeft'>
-						<div class='userNumber'>${myGroup.usersNumber}</div>
-						<div class='amount'>$${myGroup.amount}</div>									
+			<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+			<div class='scrollable'>			
+				<c:forEach var='myGroup' items='${myGroups}'>
+					<div class='Group'>
+						<div class='GroupLeft'>
+							<div class='userNumber'>${myGroup.usersNumber}</div>
+							<div class='amount'>$${myGroup.amount}</div>									
+						</div>
+						
+						<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${myGroup.groupNo}'>我發起的${myGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${myGroup.groupNo}'>我也要訂</a></div>			
 					</div>
-					
-					<div class='GroupRight'><a href='<c:url value="/MyGroup/group_detail.controller?xxx="/>${myGroup.groupNo}'>我發起的${myGroup.groupName}</a>→<a href='<c:url value="/userOrder/showItemsAction.action?groupno="/>${myGroup.groupNo}'>我也要訂</a></div>			
-				</div>
-				<div class='divBlock'></div>
-			</c:forEach>			
+					<div class='divBlock'></div>
+				</c:forEach>
+			</div>			
 			<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->			
 		</div>
 	</c:if>	

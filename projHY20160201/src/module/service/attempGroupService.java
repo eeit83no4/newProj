@@ -169,6 +169,8 @@ public class attempGroupService {
 			//--------------------------運費計算
 //			System.out.println(att.findShipmentByGroup(2));
 //			att.shipmentCount(3);
+			
+			System.out.println(att.getAllStoresTiemSorted());
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
 			HibernateUtil.closeSessionFactory();
@@ -590,26 +592,9 @@ public class attempGroupService {
 		return v;
 	}
 	//---------------找出所有商店(排除不可見+時間排序倒序)
-	public List<_07_StoreVO> getAllStoresTiemSorted(){		
-		List<_07_StoreVO> store=getAllStores();
-		//------------排序後
-		System.out.println("排序前");
-		for(_07_StoreVO a:store){
-			System.out.println(a.getFinal_update());
-		}
-		//---------開始排序
-		Collections.sort(store, new Comparator<_07_StoreVO>() {
-			@Override
-			public int compare(_07_StoreVO o1, _07_StoreVO o2) {
-				return o2.getFinal_update().compareTo(o1.getFinal_update());				
-			}			
-		});
-		//--------排序後
-		System.out.println("排序後");
-		for(_07_StoreVO a:store){
-			System.out.println(a.getFinal_update());
-		}
-		return store;
+	public List<_07_StoreVO> getAllStoresTiemSorted(){
+		return getSession().createQuery("from _07_StoreVO where public_state=1 order by final_update desc").list();
+		
 	}
 	
 	

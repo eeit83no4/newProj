@@ -69,8 +69,8 @@
 <!-- 			 	</form> -->
 			  </c:if>
 			</td>
-
 			</tr>
+			<tr><th><span class="glyphicon glyphicon-phone-alt"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
 			
 		</c:forEach>
 		</table>

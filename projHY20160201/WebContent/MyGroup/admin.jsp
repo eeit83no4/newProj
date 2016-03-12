@@ -31,6 +31,7 @@
 
 <div class="col-md-10 tab-content">
 <div id="groupDiv" class="tab-pane fade in active">
+	<h5 align="center" style='color:red'>※已截止的團購無法修改</h5>
 	<form>
 		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
@@ -48,7 +49,7 @@
 		<tbody id="tb_group">
 		</tbody>
 		</table>
-	</form>
+	</form>	
 </div>
 <div id="storeDiv" class="tab-pane fade">	
 	<form>
@@ -68,6 +69,7 @@
 	</form>
 </div>
 <div id="adminDiv" class="tab-pane fade">
+	<h5 align="center" style='color:red'>※勾選即可設定管理員權限</h5>
 	<form>
 		<table class="table table-hover table-bordered table table-condensed">
 		<thead>
@@ -112,7 +114,7 @@ $(function(){
 								  .attr('type','button')
 								  .attr('value','刪除')
 								  .attr('class','btn btn-default btn-xs')
-								  .attr('onclick','if(confirm("確定要刪除 :'+bean.團購編號+'號  '+bean.團購名稱+' 嗎??"))deletGroup('+bean.團購編號+')'))
+								  .attr('onclick','if(confirm("確定要刪除 :'+bean.團購編號+'號'+bean.團購名稱+' 嗎??"))deletGroup('+bean.團購編號+')'))
 								  .attr('id',bean.團購編號);
 		var row = $("<tr></tr>").append([cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]);
 		$('#tb_group').append(row);			
@@ -129,7 +131,7 @@ $(function(){
 				  				  .attr('type','button')
 				  				  .attr('value','刪除')
 				    			  .attr('class','btn btn-default btn-xs')
-				  				  .attr('onclick','if(confirm("確定要刪除 :'+bean.店家編號+'號  '+bean.店家名稱+' 嗎??"))deleteStore('+bean.店家編號+')'))
+				  				  .attr('onclick','if(confirm("確定要刪除 :'+bean.店家編號+'號'+bean.店家名稱+' 嗎??"))deleteStore('+bean.店家編號+')'))
 				  				  .attr('id',bean.店家編號);
 		                      
 		

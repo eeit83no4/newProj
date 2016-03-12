@@ -60,7 +60,6 @@
 
 	<div style='text-align:center;width:420px;height:320px;margin:0 auto'>
 		<div style='width:320px;margin-top:150px;margin-left:50px'>
-			<img src='images/logo.png'/>	
 			<div style='width:250px;margin-left:35px'>
 				<div id="my-signin2"></div>
 			</div>

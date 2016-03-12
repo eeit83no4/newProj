@@ -193,7 +193,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 								 
 								 
 								<input type="reset"	class="btn btn-default" id="clear" value="取消" /><br/>
-								<input type="button" class="btn btn-default" id="checkall"	value="全部邀請" />	
+								<input type="button" class="btn btn-default" id="checkall"	value="全部勾選" />	
 							</div>
 							<div id="money">
 							<span>運費:</span>							 							

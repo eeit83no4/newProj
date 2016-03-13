@@ -75,7 +75,8 @@ table,tr,td,th{
 	<!-- -------------------品項區塊--------------------------- -->
 
 	<div id="LefttDiv">
-		<div class='biaoTi'><h4>商品</h4></div>
+		<div class='biaoTi'><h4>店家名稱：</h4></div>
+		<div class='biaoTi'><h5>${notice.storeName}</h5></div>
 		<div class='ann'>
 			<table id="itemZone"></table>
 		</div>

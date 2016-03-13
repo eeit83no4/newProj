@@ -54,7 +54,7 @@ public class attempGroupService {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			attempGroupService att=new attempGroupService();
 			//找出該團購的商品
-			System.out.println(att.findItemsByGroup(1));
+			System.out.println(att.findStoreNameByGroup(1));
 //			System.out.println(att.findItemsNoByGroup(1));
 			//找出該團購的所有商品size,price----------------------------------
 //			System.out.println(att.findSizePricesbyGroup(1));
@@ -170,7 +170,7 @@ public class attempGroupService {
 //			System.out.println(att.findShipmentByGroup(2));
 //			att.shipmentCount(3);
 			
-			System.out.println(att.getAllStoresTiemSorted());
+//			System.out.println(att.getAllStoresTiemSorted());
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
 			HibernateUtil.closeSessionFactory();
@@ -239,7 +239,11 @@ public class attempGroupService {
 			return null;
 		}
 		
-	}	
+	}
+	//--------------------找出該團購的店家名稱--------------
+	public String findStoreNameByGroup(Integer group_no){
+		return _16grDAO.findById(group_no).getStoreVO().getStore_name();
+	}
 	//----------------找出該團購的商品------------------------
 	public List<Map<Integer,String>> findItemsByGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();

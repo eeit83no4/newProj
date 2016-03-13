@@ -55,6 +55,9 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 		//---------------------找出group_user_no
 		Integer group_user_no=att.getGroupUserNo(group_no, group_user_id);
 		request.put("group_user_no", group_user_no);//<------------------------
+		//----------------------找出該團購的店家名稱
+		String storeName=att.findStoreNameByGroup(group_no);
+		notice.put("storeName", storeName);//<------------------------
 		//-----------------找出該團購目前的訂購人數------------------
 		Integer users=att.findUserByGroup(group_no);
 		String usersString=String.valueOf(users);

@@ -73,7 +73,7 @@
 	<div style='float:right;width:150px'>
 		<h3>最新公用店家</h3>
 		<div>
-			<c:forEach var='latestStore' items='${latestStores}' begin='1' end='8'>
+			<c:forEach var='latestStore' items='${latestStores}' begin='0' end='8'>
 				<a href='<c:url value="/userOrder/holdGroupServlet.controller?storeNo="/>${latestStore.store_no}'>${latestStore.store_name}</a><br/>
 			</c:forEach>			
 		</div>

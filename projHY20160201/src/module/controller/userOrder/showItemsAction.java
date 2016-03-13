@@ -106,15 +106,15 @@ public class showItemsAction extends ActionSupport implements RequestAware,Sessi
 		//排序後		
 		request.put("itemnos", itemnosSorted);//<------------------------
 		//------------找出該物品的第三層屬性-------------------*
-		Map<Integer, Map<String, Set<String>>> class3=att.find3nds(group_no);		
-		List<Map<Integer, Map<String, Set<String>>>> class3List=new ArrayList<>();		
+		Map<Integer, Map<String, List<String>>> class3=att.find3nds(group_no);		
+		List<Map<Integer, Map<String, List<String>>>> class3List=new ArrayList<>();		
 		class3List.add(class3);		
 		
-		List<Map<Integer, Map<String, Set<String>>>> class3ListSorted=new ArrayList<>(class3List);
+		List<Map<Integer, Map<String, List<String>>>> class3ListSorted=new ArrayList<>(class3List);
 		//開始排序
-		Collections.sort(class3ListSorted, new Comparator<Map<Integer, Map<String, Set<String>>>>() {
+		Collections.sort(class3ListSorted, new Comparator<Map<Integer, Map<String, List<String>>>>() {
 			@Override
-			public int compare(Map<Integer, Map<String, Set<String>>> o1, Map<Integer, Map<String, Set<String>>> o2) {
+			public int compare(Map<Integer, Map<String, List<String>>> o1, Map<Integer, Map<String, List<String>>> o2) {
 				
 				return compare(o1, o2);
 			}										

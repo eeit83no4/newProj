@@ -340,14 +340,14 @@ public class attempGroupService {
 		}		
 	}	
 	//------------找出該物品的第三層屬性-------------------
-	public Map<Integer,Map<String,Set<String>>> find3nds(Integer group_no){
+	public Map<Integer,Map<String,List<String>>> find3nds(Integer group_no){
 		
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();//找到該團購的商店
 		if(store!=null){
 			Set<_12_ItemVO> items=store.getItems();//找到該商店內的商品s
-			Map<Integer,Map<String,Set<String>>> array=new HashMap<>();//用來存放所有商品資訊		
+			Map<Integer,Map<String,List<String>>> array=new HashMap<>();//用來存放所有商品資訊		
 			for(_12_ItemVO a:items){//解析個別商品
-				Map<String,Set<String>> c2c3=new HashMap<String,Set<String>>();//用來存放個別商品的第二層第三層
+				Map<String,List<String>> c2c3=new HashMap<String,List<String>>();//用來存放個別商品的第二層第三層
 				Integer itemno=a.getItem_no();
 				Set<_13_Item_Class_ThirdVO> icts=a.getItem_class_thirds();
 				for(_13_Item_Class_ThirdVO b:icts){
@@ -366,7 +366,18 @@ public class attempGroupService {
 							}
 						}						
 					}
-					c2c3.put(c2name, c3);
+					
+					List<String> newc3=new ArrayList<>(c3);
+					//開始排序
+					Collections.sort(newc3, new Comparator<String>() {
+						@Override
+						public int compare(String arg0, String arg1) {							
+							return arg0.compareTo(arg1);
+						}															
+					});
+					//排序後					
+					
+					c2c3.put(c2name, newc3);
 				}
 				if(c2c3.size()>0&&c2c3!=null){//檢查是否有第二第三層屬性
 					array.put(itemno,c2c3);

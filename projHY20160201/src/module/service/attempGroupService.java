@@ -421,21 +421,7 @@ public class attempGroupService {
 	}	
 	//------------------找出該團購目前的累積金額------------------
 	public double findAmountByGroup(Integer group_no){		
-		Set<_17_Group_UserVO> users=_16grDAO.findById(group_no).getGroup_Users();
-		Double total=0.0;
-		if(users!=null&&users.size()>0){
-			for(_17_Group_UserVO a:users){
-				Set<_18_Order_DetailVO> details=a.getOrder_Details();
-				for(_18_Order_DetailVO b:details){
-					Double oprice=b.getOprice_after();
-					Integer quantity=b.getQuantity();
-					total=total+(oprice*quantity);
-				}
-			}
-			return total;
-		}else{
-			return total;
-		}		
+		return _16grDAO.findById(group_no).getGroup_amount_after();		
 	}
 	//--------------------------顯示運費規則----------------------
 	public String findShipmentByGroup(Integer group_no){

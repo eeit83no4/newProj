@@ -75,7 +75,7 @@
 	
 	<div class="col-md-2" style="text-align:right;">
 		<c:if test='${status == "進行中"}'>
-			<c:if test='${EndSec > 0 && group_status >= 1}'>
+			<c:if test='${EndSec > 0 && group_status >= 1||prodaction==admin}'>
 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
 			</c:if>
 			<c:if test='${EndSec <= 0 || group_status == 0}'>
@@ -405,7 +405,7 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-					if(${group_status} >= 1){//為發起人或共同管理員
+					if(${group_status} >= 1||${prodaction==admin}){//為發起人或共同管理員
 					   if(ByUser[ByUser.length-1]=='y'){//已付款
 					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
 				   	   }else{//未付款

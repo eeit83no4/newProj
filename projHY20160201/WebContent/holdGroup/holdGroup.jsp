@@ -5,59 +5,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-<link type="text/css" rel="stylesheet" href="../css/table2.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
 <style>
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-.btn-primary {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
 table,tr,td{
-	text-align:center;
-	font-size: 15px;
+	font-size: 18px;
 }
 #holdGroup{
 	margin:5px
 }
 #latestStore{
-	width:600px
+	width:950px
 }
 #sotre_NO{
 	display:none
 }
 #sotreinfo{
 	float:left;
-	width:380px;
-	margin-left:230px
+	width:480px;
+	margin-left:60px
 }
 #sotreitem{
-	margin-left:620px
+	width:400px;
+	margin-left:560px
 }
 </style>
 </head>
@@ -66,15 +38,15 @@ table,tr,td{
 	<!-- 	載入導覽列 -->
 	<jsp:include page="/header.jsp"/>
 	<!-- AutoComplete -->
-	<div id="tabs" style='width:640px;margin:0 auto'>
+	<div id="tabs" style='width:1024px;margin:0 auto'>
 	  <ul>
 	    <li><a href="#tabs-1">最新店家</a></li>
 	    <li><a href="#tabs-2">找一下</a></li>	    
 	  </ul>
 	  <div id="tabs-1"><!-- 最新店家 -->
-	    <table id='latestStore'>
+	    <table id='latestStore' class="table table-hover table-bordered table table-condensed">
 			<tr>
-				<c:forEach var="eachStore" items="${allStoresTiemSorted}" begin="1" end="8">					
+				<c:forEach var="eachStore" items="${allStoresTiemSorted}" begin="0" end="8">					
 						<td><a href="#" id='${eachStore.store_no}'>${eachStore.store_name}</a></td>					
 				</c:forEach>
 			</tr>
@@ -94,7 +66,7 @@ table,tr,td{
 	</div>
 	<!-- 發起團購按鈕 -->
 	<div style='text-align:center'>
-		<input type="button" class="btn btn-primary" value="發起團購" id="holdGroup" style="width:60%"/>
+		<input type="button" class="btn btn-default" value="發起團購" id="holdGroup" style="width:30%"/>
 	</div>
 	
 	<c:choose>
@@ -128,7 +100,7 @@ table,tr,td{
 	    });
 	    $('#tags').change(function(){
 	    	var storeNofromAuto=parseInt(($(this).val().split(',')[0]).match(/[0-9]+/g));//商店編號
-// 	    	console.log(storeNofromAuto);	    	
+   	
 	    	<c:forEach var="eachStore" items="${allStores}">							
 				<c:set var="storeNo" value="${eachStore.store_no}"/>
 				if(storeNofromAuto=='${storeNo}'){

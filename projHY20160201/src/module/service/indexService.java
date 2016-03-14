@@ -114,7 +114,25 @@ public class indexService {
 		for(_16_Group_RecordVO a:grBefore){
 			int groupHolder=a.getEmployeeVO().getUser_id();//團購的建立者
 			if(userId==groupHolder){
-				grAfter.add(a);
+				//判斷剩餘時間
+				String endDate=a.getEnd_date().toString();//團購設定的截止時間
+				java.util.Date d = new java.util.Date();
+				String nowDate=format.format(d);//目前時間
+				
+				java.util.Date d1 = null;
+				java.util.Date d2 = null;
+				
+				try {
+					d1=format.parse(endDate);
+					d2=format.parse(nowDate);
+					//比對之後正在進行的團購(排除掉過期的)
+					if((d1.getTime()-d2.getTime())>0){						
+						grAfter.add(a);						
+					}
+					
+				} catch (ParseException e) {					
+					e.printStackTrace();
+				}				
 			}			
 		}			
 		return grAfter;

@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.Action;
@@ -41,13 +42,17 @@ public class showPicAction extends ActionSupport implements ServletResponseAware
 		_12_ItemDAO _12dao=new _12_ItemDAO();
 		//取得圖片來源，從資料庫
 		byte[] imgByte=_12dao.findById(itemno).getPic();
+		String imgString=null;
+		if(imgByte==null){//如果圖片不存在						
+			//預設圖片			
+			imgString=ServletActionContext.getServletContext().getRealPath("/images/anonymous.png");
+		}else{//如果圖片存在
+			imgString=new String(imgByte);						
+		}
 		
-		if(imgByte!=null&&imgByte.length>0){
-			String imgString=new String(imgByte);
-			File file=new File(imgString);
-			
-			byte[] photo=new byte[(int)file.length()];	
-			
+		if(imgString!=null){
+			File file=new File(imgString);		
+			byte[] photo=new byte[(int)file.length()];		
 			try {
 				FileInputStream fileInputStream=new FileInputStream(file);
 				OutputStream os =response.getOutputStream();
@@ -65,8 +70,7 @@ public class showPicAction extends ActionSupport implements ServletResponseAware
 			} catch (Exception e) {
 				System.out.println("圖片輸出失敗："+e.toString());				
 			}
-		}
-		
+		}		
 		return Action.NONE;
 	}
 	

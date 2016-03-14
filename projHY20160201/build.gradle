@@ -17,9 +17,7 @@ dependencies {						//宣告dependency library
 	runtime 'mysql:mysql-connector-java:5.1.38'
 	runtime 'log4j:log4j:1.2.17'
 	compile 'net.sf.json-lib:json-lib:2.4'
-	compile ('org.apache.struts:struts2-core:2.3.24.1'){
-		exclude group: 'javassist', module: 'javassist'
-	}
+	compile 'org.apache.struts:struts2-core:2.3.24.1'		
 	compile 'commons-codec:commons-codec:1.10'
 	compile 'org.json:json:20141113'
 }

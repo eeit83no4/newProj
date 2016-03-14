@@ -53,12 +53,12 @@ public class MyGroupServlet_3 extends HttpServlet {
 		JSONArray jSONObject3=JSONArray.fromObject(detailByItem);//轉換json
 		
 		if(prodaction.equals("sucess")){
-			System.out.println("HHHHHHHHHHHHHH");
+			System.out.println("訂購完成");
 			att.shipmentCount(group_no);
 			mg.updateGroupStatus_success(group_no);
-			
-
-			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction=已完成的團購");			
+			String finished="finished";
+			resp.setCharacterEncoding("UTF-8");
+			resp.sendRedirect("/projHY20160201/xxx.controller?prodaction="+finished);			
 
 		}else if(prodaction.equals("end")){
 			mg.updateGroupEndDate(group_no);
@@ -125,6 +125,16 @@ public class MyGroupServlet_3 extends HttpServlet {
 			
 			
 		}else if(prodaction.equals("重新設定團購")){
+			
+			int start=gold.indexOf("(");
+			int end=gold.indexOf(")");
+			//判斷是否有填寫或不是數字
+			try {
+				System.out.println("如果轉型="+Double.parseDouble(gold.substring(start+1, end)));
+			} catch (NumberFormatException e) {
+				gold=null;
+			}
+			
 			mg.editGroup(group_no, name_new2, ann_new2, gold);
 			req.getRequestDispatcher("/index/indexServlet.controller").forward(req, resp);
 		}

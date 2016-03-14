@@ -1,43 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style>
-.btn {
-	display: inline-block;
-	padding: 6px 12px;
-	margin-bottom: 0;
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 1.42857143;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	-ms-touch-action: manipulation;
-	touch-action: manipulation;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 4px;
-}
-
-.btn-primary {
-	color: #fff;
-	background-color: #337ab7;
-	border-color: #2e6da4;
-}
-
-
 
 .tt {
 	border-left: 0px;
@@ -217,10 +189,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 							</div>
 
 							<div id="but">
-								<input type="button" class='btn btn-primary' id="inser"
-									value="加入" /> <br> <br> <input type="reset"
-									class='btn btn-primary' id="clear" value="取消" />
-									
+								<input type="button" class="btn btn-default" id="inser"	value="加入" /><br/> 
+								 
+								 
+								<input type="reset"	class="btn btn-default" id="clear" value="取消" /><br/>
+								<input type="button" class="btn btn-default" id="checkall"	value="全部勾選" />	
 							</div>
 							<div id="money">
 							<span>運費:</span>							 							
@@ -245,8 +218,8 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 					
 				</table>
 			</div>
-			<input type="button" class='btn btn-primary' id="save" value="送出">
-			<input type="button" class='btn btn-primary' value="新增共同管理員"
+			<input type="button" class="btn btn-default" id="save" value="送出">
+			<input type="button" class="btn btn-default" value="新增共同管理員"
 				data-title="Edit" data-toggle="modal" data-target="#newadmin">
 		</form>
 
@@ -286,6 +259,11 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			holdUser='${LoginOK.user_id}';//主揪
 			var userIds = [];//已經邀請的，比對用
 			var realUser=null;//已經邀請的，傳值用
+			//----全部邀請按鈕
+			$('#checkall').click(function(){
+				$(':input:checkbox[name="inp"]').prop('checked',true);
+			})
+			
 			//-------------加入團員
 		  $("#inser").click(function() {
 				var name = null;//已邀請區塊
@@ -451,7 +429,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 	    	  
 	    	  
 	    	  $("#money2").append(  	      	
-	  	    	    '<label><input type="radio" name="gender" value="人頭分攤">'+'人頭分攤'+'</label>'+
+	  	    	    '<label><input type="radio" name="gender" checked value="人頭分攤">'+'人頭分攤'+'</label>'+
 	 	  			'<label><input type="radio" name="gender" value="主揪自己吸收">'+'主揪自己吸收'+'</label>')
 	  				$(this).prop('disabled',true);
 	  				
@@ -489,7 +467,7 @@ article, aside, figure, figcaption, footer, header, hgroup, menu, nav,
 			
 			if(groupna==0 || enddate==0){
 				alert("請輸入團購名稱及截止日");
-			}else if(groupna!=0 || enddate!=0){ 
+			}else if(groupna!=0 && enddate!=0){ 
 				realUser=realUser+','+holdUser;
 				arr.push({'store_name':'${sname}' ,'admin_id':adminIds,'user_Ids':realUser,'groupna':groupna,'ann':ann,'enddate':enddate,'store_no':'${store_no}','holdUser':holdUser,'shipment':gold});
 				if(!$.isEmptyObject(arr)){

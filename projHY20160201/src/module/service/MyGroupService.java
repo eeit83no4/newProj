@@ -273,9 +273,9 @@ public class MyGroupService {
 						result.add(sb[1]);//姓名
 						result.add(sb[3]);//數量
 						Double price = Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
-						result.add(price.toString());//原總價
+						result.add(String.valueOf(Math.round(price)));//原總價
 						Double price_after = Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
-						result.add(price_after.toString());//計算後原總價
+						result.add(String.valueOf(Math.round(price_after)));//計算後原總價
 //						result.add(sb[6]);//付款狀態
 //						result.add(sb[8]);//拿取狀態
 						result.add(sb[2]);//商品名稱
@@ -290,9 +290,9 @@ public class MyGroupService {
 						Integer quantity=Integer.parseInt(finalResult.get(j-1).get(2))+Integer.parseInt(sb[3]);
 						finalResult.get(j-1).set(2, quantity.toString());//數量
 						Double oprice = Double.parseDouble(finalResult.get(j-1).get(3))+Double.parseDouble(sb[4])*Integer.parseInt(sb[3]);
-						finalResult.get(j-1).set(3, oprice.toString());//原總價
+						finalResult.get(j-1).set(3, String.valueOf(Math.round(oprice)));//原總價
 						Double oprice_after = Double.parseDouble(finalResult.get(j-1).get(4))+Double.parseDouble(sb[5])*Integer.parseInt(sb[3]);
-						finalResult.get(j-1).set(4, oprice_after.toString());//計算後原總價
+						finalResult.get(j-1).set(4, String.valueOf(Math.round(oprice_after)));//計算後原總價
 						finalResult.get(j-1).add(sb[2]);//商品名稱
 						finalResult.get(j-1).add(sb[3]);//數量
 						finalResult.get(j-1).add(sb[7]);//商品備註						
@@ -307,7 +307,7 @@ public class MyGroupService {
 	}
 	// ------------------給"按人統計"中付款狀態用，輸入團購編號、員工ID會回傳此人是否付款------------------
 	public String getUserPayStatus(Integer group_no, String Suser_id){
-		System.out.println(group_no+"aaaaaaaaaaaaaaaa"+Suser_id);
+//		System.out.println(group_no+"aaaaaaaaaaaaaaaa"+Suser_id);
 		Integer user_id = Integer.parseInt(Suser_id);
 		_17_Group_UserDAO gudao = new _17_Group_UserDAO();
 		_18_Order_DetailDAO oddao = new _18_Order_DetailDAO();
@@ -340,8 +340,8 @@ public class MyGroupService {
 					
 					starray[2] = b.getOitem_name();
 					starray[3] = b.getQuantity().toString();
-					starray[4] = b.getOprice().toString();
-					starray[5] = b.getOprice_after().toString();
+					starray[4] = String.valueOf(Math.round(b.getOprice()));
+					starray[5] = String.valueOf(Math.round(b.getOprice_after()));
 					starray[6] = b.getPay_status();
 					starray[7] = b.getOclass();
 					starray[8] = b.getTake_status();
@@ -365,8 +365,8 @@ public class MyGroupService {
 						starray[1] = a.getEmployeeVO().getName(); // 員工姓名
 						starray[2] = b.getOitem_name();
 						starray[3] = b.getQuantity().toString();
-						starray[4] = b.getOprice().toString();
-						starray[5] = b.getOprice_after().toString();
+						starray[4] = String.valueOf(Math.round(b.getOprice()));
+						starray[5] = String.valueOf(Math.round(b.getOprice_after()));
 						starray[6] = b.getOclass();
 						starray[7] = format.format(a.getOrder_time()).toString(); // 訂購時間
 						starray[8] = b.getDetail_no().toString(); //團購編號
@@ -400,7 +400,7 @@ public class MyGroupService {
 				System.out.println(starray[3]);
 				starray[4] = myGroupService.findUserByGroup(b.getGroup_no());
 				System.out.println(starray[4]);
-				starray[5] = b.getGroup_amount_after().toString();
+				starray[5] = String.valueOf(Math.round(b.getGroup_amount_after()));
 				System.out.println(starray[5]);
 				starray[6] = String.valueOf(a.getGroup_RecordVO().getGroup_no());
 				System.out.println("group_no = " + starray[6]);
@@ -430,7 +430,7 @@ public class MyGroupService {
 					starray[2] = b.getStoreVO().getStore_name();
 					starray[3] = b.getEmployeeVO().getName();
 					starray[4] = myGroupService.findUserByGroup(b.getGroup_no());
-					starray[5] = b.getGroup_amount_after().toString();
+					starray[5] = String.valueOf(Math.round(b.getGroup_amount_after()));
 					starray[6] = String.valueOf(a.getGroup_RecordVO().getGroup_no());
 				} catch (NullPointerException e) {
 					System.out.println("錯誤啦="+e.toString());
@@ -458,8 +458,8 @@ public class MyGroupService {
 					m.put("備註", b.getOclass());	
 					m.put("原價", b.getOriginal_oprice());
 					m.put("數量", b.getQuantity());
-					m.put("實付金額", b.getOprice_after());
-					m.put("實付小計", b.getQuantity()*b.getOprice_after());	
+					m.put("實付金額", Math.round(b.getOprice_after().doubleValue()));
+					m.put("實付小計", Math.round(b.getQuantity()*b.getOprice_after()));	
 					finalResult.add(m);
 				}			
 			}
@@ -473,12 +473,12 @@ public class MyGroupService {
 	// ------------------查詢該團購訂單名細(上)------------------
 	public List<String[]> orderDetail_byGroup_upper(Integer group_no){
 		List<String[]> sbs = new ArrayList<String[]>(); // 大袋子
-		String[] starray = new String[11];
+		String[] starray = new String[12];
 		_16_Group_RecordVO grvo = gr.findById(group_no);
 		starray[0] = grvo.getGroup_name();
 		starray[1] = grvo.getStoreVO().getStore_name();
 		starray[2] = grvo.getAnn();
-		starray[3] = grvo.getGroup_amount_after().toString();
+		starray[3] = String.valueOf(Math.round(grvo.getGroup_amount_after()));
 		starray[4] = this.countAmountOfProduct(group_no).toString();
 		starray[5] = grvo.getStoreVO().getPhone().toString();
 		starray[6] = grvo.getEmployeeVO().getName();
@@ -486,6 +486,7 @@ public class MyGroupService {
 		starray[8] = grvo.getStatus();
 		starray[9] = grvo.getGroup_no().toString();
 		starray[10] = grvo.getFailure(); 
+		starray[11] = grvo.getShipment(); 
 		sbs.add(starray);
 		return sbs;
 	}

@@ -55,7 +55,7 @@
        <property name="public_state">
             <column name="public_state" />
         </property>
-        <many-to-one name="use_by_group" class="module.model._07_StoreVO">
+        <many-to-one name="use_by_group" class="module.model._07_StoreVO" lazy="false">
         	<column name="use_by_group"/>
         </many-to-one>
        

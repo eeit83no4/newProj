@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>鴻揚科技有限公司-團購系統</title>
 
 <meta name="google-signin-client_id" content="695260937486-cc1ssubhsjtetadl71vqaf2mhsekmqsj.apps.googleusercontent.com">
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -30,7 +30,6 @@
 							location.href='/projHY20160201/index/indexServlet.controller'
 						}
 					});	
-// 				 location.href='/projHY20160201/login/loginAction.action?email='+user ;
 	    	 }else if(i==0){//不存在就強制登出	    		 
 	    		 var auth2 = gapi.auth2.getAuthInstance();
 	    		 auth2.disconnect();
@@ -61,7 +60,6 @@
 
 	<div style='text-align:center;width:420px;height:320px;margin:0 auto'>
 		<div style='width:320px;margin-top:150px;margin-left:50px'>
-			<img src='images/logo.png'/>	
 			<div style='width:250px;margin-left:35px'>
 				<div id="my-signin2"></div>
 			</div>

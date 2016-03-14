@@ -3,6 +3,10 @@ package module.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.Session;
+
+import module.util.HibernateUtil;
+
 public class _04_EmployeeVO implements java.io.Serializable{
 	private Integer user_id;	
 	private String c_name;
@@ -21,19 +25,18 @@ public class _04_EmployeeVO implements java.io.Serializable{
 	private Set<_17_Group_UserVO> gus =new HashSet<_17_Group_UserVO>();
 	private Set<_19_FavoriteVO> fvo =new HashSet<_19_FavoriteVO>();
 	
-//	public String toString(){
-//		return 	  user_id +","
-//				+ c_name +","
-//				+ name +","
-//				+ comp_id +","
-//				+ organizationVO.getOrg_id() +","
-//				+ email +","
-//				+ employee_StatusVO.getStatus_no()+ ","
-//				+ jobVO.getJob_no()+","
-//				+ title +","
-//				+ level +","
-//				;
-//	}
+	public static void main(String[] args) {
+	try {
+		HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		System.out.println(session.createQuery("from _04_EmployeeVO").list());
+		
+		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
+	} finally {
+		HibernateUtil.closeSessionFactory();
+	}
+}
 
 	public Integer getUser_id() {
 		return user_id;

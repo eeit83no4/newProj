@@ -14,7 +14,7 @@
 <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
 <script language=JavaScript src="${pageContext.request.contextPath}/js/FileSaver.min.js"></script>
 
-<title>Display</title>
+<title>鴻揚科技有限公司-團購系統</title>
 <style>
 #uppertable th{
  	font-weight:bold; 
@@ -50,7 +50,8 @@
 			<tr><th><span class="glyphicon glyphicon-user"></span>&nbsp發起人:</th> <td>${attr[6]}</td>  
 				<th><span class="glyphicon glyphicon-usd"></span>&nbsp當前累積金額:</th> <td>${attr[3]}</td></tr>
 			<tr><th><span class="glyphicon glyphicon-phone-alt"></span>&nbsp電話:</th> <td>${attr[5]}</td>
-				<th><span class="glyphicon glyphicon-time"></span>&nbsp剩餘時間:</th> <td id="reasonid">${EndDay}(${attr[8]})
+				<th><span class="glyphicon glyphicon-piggy-bank"></span>&nbsp運費:</th> <td>${attr[11]}</td></tr>
+			<tr><th><span class="glyphicon glyphicon-time"></span>&nbsp剩餘時間:</th> <td colspan="2" id="reasonid">${EndDay}(${attr[8]})
 			<c:if test='${attr[10] != null}'>(${attr[10]})</c:if>
 			<c:if test='${group_status >= 1 && EndSec > 0}'>
 					<input type="button" style="margin:3px" class="btn btn-default-xs btn-xs" value="立即截止"  onclick="go3(${group_no})">
@@ -58,18 +59,14 @@
 			<c:if test='${group_status == 0 && EndSec > 0}'>
 					<input type="button" style="margin:3px" disabled class="btn btn-default btn-xs" value="立即截止"  onclick="go3(${group_no})">
 			</c:if> 
-<%-- 			<c:if test='${failure!=null}'> --%>
-<%-- 					${failure} --%>
-<%-- 			</c:if>  --%>
-				
-			  <c:if test='${EndSec <= 0 && status == "進行中"}'>
-<!-- 			  	<form action=""> -->
-<!-- 					<td class="tt"><input id="enddate"	 type="datetime-local"/></td> -->
+			<!-- group_status==1表示其權限為團購發起人或共同管理員 -->
+			  <c:if test='${EndSec <= 0 && status == "進行中" && group_status >= 1}'>
 					<input type="button" value="重設時間" class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
-<!-- 			 	</form> -->
+			  </c:if>
+			  <c:if test='${EndSec <= 0 && status == "進行中" && group_status == 0}'>
+					<input type="button" value="重設時間" disabled class="btn btn-default" id="resetTimeBtn" data-toggle="modal" data-target="#myModal_Time">
 			  </c:if>
 			</td>
-
 			</tr>
 			
 		</c:forEach>
@@ -78,10 +75,10 @@
 	
 	<div class="col-md-2" style="text-align:right;">
 		<c:if test='${status == "進行中"}'>
-			<c:if test='${EndSec > 0}'>
+			<c:if test='${EndSec > 0 && group_status >= 1}'>
 				<input type="button" style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
 			</c:if>
-			<c:if test='${EndSec <= 0}'>
+			<c:if test='${EndSec <= 0 || group_status == 0}'>
 				<input type="button" disabled style="margin:3px" class="btn btn-default" name="" value="修改團購設定" id="edit_Btn" data-toggle="modal" data-target="#myModal_edit"><br>		
 			</c:if>
 			<c:if test='${group_status >= 1}'>
@@ -408,12 +405,19 @@ function go3(groupno3){
 		   for(var j = 0; j<ByUser.length-1; j++){
 			   　if(j<5){
 				   if(j==0){
-// 					   console.log(ByUser);
-					   if(ByUser[ByUser.length-1]=='y'){
+					if(${group_status} >= 1){//為發起人或共同管理員
+					   if(ByUser[ByUser.length-1]=='y'){//已付款
 					   		aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'checked />");
-				   	   }else{
+				   	   }else{//未付款
 				   			aa[0] = $("<td></td>").append("<input type='checkbox' value='"+ByUser[0]+"'/>");
 				   	   }
+					}else{
+						if(ByUser[ByUser.length-1]=='y'){
+					   		aa[0] = $("<td></td>").append("<input type='checkbox' disabled value='"+ByUser[0]+"'checked />");
+				   	   }else{
+				   			aa[0] = $("<td></td>").append("<input type='checkbox'disabled value='"+ByUser[0]+"'/>");
+				   	   }
+					}
 				   }
 				   aa[j+1] = $("<td></td>").text(ByUser[j]);
 			    }else{
@@ -444,7 +448,7 @@ function go3(groupno3){
 		   for(var j = 0; j<Detail.length-2; j++){
 			   if(j<Detail.length-3){
 			    aa[j] = $("<td></td>").text(Detail[j]);
-			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]){			   
+			   }else if(j==Detail.length-3 && ${LoginOK.user_id}==Detail[0]&& "${EndDay}"!="已截止"){			   
 				   aa[j] = $("<td></td>").append($('<input/>')
 			  				  .attr('type','button')
 			  				  .attr('value','刪除')

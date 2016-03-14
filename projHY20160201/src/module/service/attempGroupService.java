@@ -54,7 +54,7 @@ public class attempGroupService {
 			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			attempGroupService att=new attempGroupService();
 			//找出該團購的商品
-//			System.out.println(att.findItemsByGroup(1));
+			System.out.println(att.findStoreNameByGroup(1));
 //			System.out.println(att.findItemsNoByGroup(1));
 			//找出該團購的所有商品size,price----------------------------------
 //			System.out.println(att.findSizePricesbyGroup(1));
@@ -168,7 +168,9 @@ public class attempGroupService {
 //			System.out.println(att.find3nds(1));			
 			//--------------------------運費計算
 //			System.out.println(att.findShipmentByGroup(2));
-			att.shipmentCount(3);
+//			att.shipmentCount(3);
+			
+//			System.out.println(att.getAllStoresTiemSorted());
 			HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 		} finally{
 			HibernateUtil.closeSessionFactory();
@@ -237,7 +239,11 @@ public class attempGroupService {
 			return null;
 		}
 		
-	}	
+	}
+	//--------------------找出該團購的店家名稱--------------
+	public String findStoreNameByGroup(Integer group_no){
+		return _16grDAO.findById(group_no).getStoreVO().getStore_name();
+	}
 	//----------------找出該團購的商品------------------------
 	public List<Map<Integer,String>> findItemsByGroup(Integer group_no){				
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();
@@ -255,7 +261,16 @@ public class attempGroupService {
 				}
 			}
 			items.add(x);
-			return items;
+			List<Map<Integer,String>> sortedItems=new ArrayList<>(items);//排序過後
+//			//---------開始排序
+			Collections.sort(sortedItems, new Comparator<Map<Integer,String>>() {
+				@Override
+				public int compare(Map<Integer, String> arg0, Map<Integer, String> arg1) {					
+					return compare(arg0, arg1);
+				}				
+			});
+			//--------排序後	
+			return sortedItems;
 		}else{
 			return null;
 		}
@@ -329,14 +344,14 @@ public class attempGroupService {
 		}		
 	}	
 	//------------找出該物品的第三層屬性-------------------
-	public Map<Integer,Map<String,Set<String>>> find3nds(Integer group_no){
+	public Map<Integer,Map<String,List<String>>> find3nds(Integer group_no){
 		
 		_07_StoreVO store=_16grDAO.findById(group_no).getStoreVO();//找到該團購的商店
 		if(store!=null){
 			Set<_12_ItemVO> items=store.getItems();//找到該商店內的商品s
-			Map<Integer,Map<String,Set<String>>> array=new HashMap<>();//用來存放所有商品資訊		
+			Map<Integer,Map<String,List<String>>> array=new HashMap<>();//用來存放所有商品資訊		
 			for(_12_ItemVO a:items){//解析個別商品
-				Map<String,Set<String>> c2c3=new HashMap<String,Set<String>>();//用來存放個別商品的第二層第三層
+				Map<String,List<String>> c2c3=new HashMap<String,List<String>>();//用來存放個別商品的第二層第三層
 				Integer itemno=a.getItem_no();
 				Set<_13_Item_Class_ThirdVO> icts=a.getItem_class_thirds();
 				for(_13_Item_Class_ThirdVO b:icts){
@@ -355,7 +370,18 @@ public class attempGroupService {
 							}
 						}						
 					}
-					c2c3.put(c2name, c3);
+					
+					List<String> newc3=new ArrayList<>(c3);
+					//開始排序
+					Collections.sort(newc3, new Comparator<String>() {
+						@Override
+						public int compare(String arg0, String arg1) {							
+							return arg0.compareTo(arg1);
+						}															
+					});
+					//排序後					
+					
+					c2c3.put(c2name, newc3);
 				}
 				if(c2c3.size()>0&&c2c3!=null){//檢查是否有第二第三層屬性
 					array.put(itemno,c2c3);
@@ -395,21 +421,7 @@ public class attempGroupService {
 	}	
 	//------------------找出該團購目前的累積金額------------------
 	public double findAmountByGroup(Integer group_no){		
-		Set<_17_Group_UserVO> users=_16grDAO.findById(group_no).getGroup_Users();
-		Double total=0.0;
-		if(users!=null&&users.size()>0){
-			for(_17_Group_UserVO a:users){
-				Set<_18_Order_DetailVO> details=a.getOrder_Details();
-				for(_18_Order_DetailVO b:details){
-					Double oprice=b.getOprice_after();
-					Integer quantity=b.getQuantity();
-					total=total+(oprice*quantity);
-				}
-			}
-			return total;
-		}else{
-			return total;
-		}		
+		return _16grDAO.findById(group_no).getGroup_amount_after();		
 	}
 	//--------------------------顯示運費規則----------------------
 	public String findShipmentByGroup(Integer group_no){
@@ -581,26 +593,9 @@ public class attempGroupService {
 		return v;
 	}
 	//---------------找出所有商店(排除不可見+時間排序倒序)
-	public List<_07_StoreVO> getAllStoresTiemSorted(){		
-		List<_07_StoreVO> store=getAllStores();
-		//------------排序後
-		System.out.println("排序前");
-		for(_07_StoreVO a:store){
-			System.out.println(a.getFinal_update());
-		}
-		//---------開始排序
-		Collections.sort(store, new Comparator<_07_StoreVO>() {
-			@Override
-			public int compare(_07_StoreVO o1, _07_StoreVO o2) {
-				return o2.getFinal_update().compareTo(o1.getFinal_update());				
-			}			
-		});
-		//--------排序後
-		System.out.println("排序後");
-		for(_07_StoreVO a:store){
-			System.out.println(a.getFinal_update());
-		}
-		return store;
+	public List<_07_StoreVO> getAllStoresTiemSorted(){
+		return getSession().createQuery("from _07_StoreVO where public_state=1 order by final_update desc").list();
+		
 	}
 	
 	

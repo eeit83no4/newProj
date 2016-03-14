@@ -41,7 +41,7 @@
 		<input type="text" value="" id="phone" name="address" placeholder="地址" class="form-control" />
 		<label for="inputName" class="control-label">類型</label>		
  		<div id="showBlock" ></div><br />				
-		<input type="submit" value="新增店家" name="submit" id="id">
+		<input type="submit" class='btn btn-default' value="新增店家" name="submit" id="id">
 <!--   		<input type="submit" name="sub" value="59"><br /> -->
 		</div>
 	</form>

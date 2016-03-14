@@ -177,7 +177,7 @@ $(function(){
 	
 	//團購維護--修改團購(deprecated)
 	function editGroup(groupno){
-		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'"/>';
+		location.href='<c:url value="/MyGroup/group_detail.controller?xxx='+groupno+'&prodaction=admin"/>';
 	}
 	
 	//團購維護--刪除店家

@@ -42,7 +42,8 @@ public class MyGroupServlet_2 extends HttpServlet {
 		JSONArray jSONObject2=JSONArray.fromObject(detailByUser);//轉換json		
 		List<List<String>> detailByItem = myGroupService.orderDetail_ByItem(group_no);
 		JSONArray jSONObject3=JSONArray.fromObject(detailByItem);//轉換json
-		
+			
+
 		List<String[]> detailUpper= myGroupService.orderDetail_byGroup_upper(group_no);
 		long longSec =  Long.parseLong(detailUpper.get(0)[7],10);
 		String longDay =  myGroupService.getTimeDay(longSec);
@@ -56,7 +57,9 @@ public class MyGroupServlet_2 extends HttpServlet {
 		req.setAttribute("detail_ByUser", jSONObject2);
 		req.setAttribute("detail_ByItem", jSONObject3);
 		req.setAttribute("detailUpper", detailUpper);
+		req.setAttribute("prodaction", prodaction);
 		req.getRequestDispatcher("/MyGroup/group_detail.jsp").forward(req, resp);
+		
 		
 	}
 

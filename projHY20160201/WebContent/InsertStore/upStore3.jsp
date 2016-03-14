@@ -25,7 +25,7 @@
   <input type="button" value="+" class='btn btn-default' id="but88" /><br />
 </div>							
 		<div style="float: left; border: 10px;margin: 100px" id="right" class="form-group">
-			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none" /><input type="button" id="delItem" value="刪除物品" class="btn btn-xs"><br /><br />
+			<span id="itemP" style="display:none">品名: </span> <input type="text" value="" name="item" id="itemName" style="display:none" /><input type="button" id="delItem" value="刪除物品" class="btn btn-xs" style="display:none" /><br /><br />
 			<span id="itemI" style="display:none">圖片: </span> <input id="img" type="file" value="上傳圖片" style="display:none" accept="image/*" onchange="show(this)"/>
 			<input type="button" id="bt0" value="+" style="display:none" />
 			<div id="second"><input type="button" id="but99" value="+" style="display:none" class='btn2 btn-danger'/></div>
